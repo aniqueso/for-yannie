@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>
+YannieFy Premium
+</title>
+
+<link rel="stylesheet"
+href="yanniefy.css">
+
+</head>
+
+<body>
+
+<div id="flowerBackground"></div>
+
+<header class="topBar">
+
+    <h1 id="logo">
+        🌸 YannieFy
+    </h1>
+
+    <input
+    id="searchInput"
+    type="text"
+    placeholder="Search songs...">
+
+</header>
+
+<section class="hero">
+
+    <h2>
+        Made For Yannie 💗
+    </h2>
+
+    <p>
+        Your personal soundtrack.
+    </p>
+
+</section>
+
+<section class="playlistGrid">
+
+   <div
+class="playlistCard"
+id="ourSongs">
+❤️ Our Songs
+</div>
+
+<div
+class="playlistCard"
+id="cakeEra">
+🍰 Moist Cake Era
+</div>
+
+<div
+class="playlistCard"
+id="lasagnaEra">
+🍝 Lasagna Arc
+</div>
+
+<div
+class="playlistCard"
+id="callEra">
+📞 Wake Up Calls
+</div>
+
+</section>
+
+<h2 class="sectionTitle">
+🎵 Songs
+</h2>
+
+<div id="playlist"></div>
+
+<div class="musicPlayer">
+
+    <img
+    id="cover"
+    class="playerCover"
+    src="covers/cover1.jpg">
+
+    <div class="songInfo">
+
+        <h2 id="songTitle">
+            Select a song
+        </h2>
+
+        <p id="songArtist">
+            YannieFy
+        </p>
+
+    </div>
+
+    <input
+    type="range"
+    id="progress"
+    value="0">
+
+    <div class="volumeArea">
+
+🔈
+
+<input
+type="range"
+id="volumeSlider"
+min="0"
+max="100"
+value="100">
+
+🔊
+
+</div>
+
+    <div class="controls">
+
+        <button id="prevBtn">
+            ⏮
+        </button>
+
+        <button id="playBtn"
+        class="mainPlayButton">
+            ▶
+        </button>
+
+        <button id="nextBtn">
+            ⏭
+        </button>
+
+    </div>
+
+    <div class="visualizer">
+
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+<div class="bar"></div>
+
+</div>
+
+    
+</div>
+
+<audio id="audio"></audio>
+
+<div id="lyricsPopup">
+
+    <div class="lyricsBox">
+
+        <h2>
+            Lyrics
+        </h2>
+
+        <p id="lyricsText"></p>
+
+        <button
+        onclick="
+        document.getElementById('lyricsPopup').style.display='none'
+        ">
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+<script src="yanniefy.js"></script>
+
+
+
+</body>
+
+</html>

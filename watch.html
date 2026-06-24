@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Watch</title>
+
+<link rel="stylesheet"
+href="watch.css">
+
+</head>
+
+<body>
+
+<div id="flowerBackground"></div>
+
+<a href="yannietube.html" class="back-btn">
+
+← Back
+
+</a>
+
+<video
+id="mainVideo"
+controls
+playsinline
+preload="metadata">
+</video>
+
+<h2 id="videoTitle"></h2>
+
+<p id="videoViews"></p>
+
+<div class="channel-row">
+
+    <img
+    src="images/channel.jpg"
+    class="channel-pic">
+
+    <div>
+
+        <strong>
+        Queque Productions ❤️
+        </strong>
+
+        <p>
+        1 subscriber
+        </p>
+
+    </div>
+
+    <button
+    id="subscribeButton">
+    Subscribe
+    </button>
+
+</div>
+
+<div class="actions">
+
+    <button id="likeButton">
+        ❤️ <span id="likeCount">999K</span>
+    </button>
+
+    <button>
+        💬 72K
+    </button>
+
+    <button>
+        ↗️ Share
+    </button>
+
+</div>
+
+<div class="comments">
+
+    <h3>
+        💬 Comments
+    </h3>
+
+    <div class="comment-input-row">
+
+        <input
+        id="commentInput"
+        type="text"
+        placeholder="Leave a comment...">
+
+        <button
+        id="commentButton">
+        Post
+        </button>
+
+    </div>
+
+    <div id="commentsList">
+
+    </div>
+
+</div>
+
+<script src="watch.js"></script>
+
+</body>
+
+</html>

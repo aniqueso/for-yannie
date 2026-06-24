@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For Hasrieyannie Iman Delaila !</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="backgroundDecor"></div>
+
+    <img
+class="squiggle"
+src="images/squiggle1.svg"
+style="top:10%;left:5%;width:120px;">
+
+<img
+class="squiggle"
+src="images/squiggle2.svg"
+style="bottom:15%;right:5%;width:150px;">
+<!-- LOCK SCREEN -->
+
+<div id="lockScreen">
+
+    <div class="lock-card">
+
+        <h1>💗</h1>
+
+        <h2>Welcome my lovee, Yanniee!</h2>
+
+        <p>Please enter the passwordd (or guess it huehue)</p>
+
+        <input
+        type="password"
+        id="passwordInput"
+        placeholder="Password">
+
+        <button onclick="checkPassword()">
+            Enter
+        </button>
+
+    </div>
+
+</div>
+
+<!-- MAIN SITE -->
+
+<div id="website">
+
+<header>
+
+    <div class="browser-top">
+
+        <div class="browser-buttons">
+            <span class="red"></span>
+            <span class="yellow"></span>
+            <span class="green"></span>
+        </div>
+
+        <div class="address-bar">
+            🔒 https://yannie-world.com
+        </div>
+
+    </div>
+
+</header>
+
+<nav>
+
+    <button onclick="showSection('home')">🏠</button>
+    <button onclick="showSection('about')">💕</button>
+    <button onclick="showSection('memories')">📸</button>
+    <button onclick="showSection('gallery')">🖼️</button>
+    <button onclick="showSection('letter')">💌</button>
+    <button onclick="showSection('envelopes')">✉️</button>
+
+</nav>
+
+<!-- HOME -->
+
+<section id="home" class="active">
+
+    <h1>For Yannie 💗</h1>
+
+    <div class="countdown-card">
+
+        <h3>🎂 Birthday Countdown</h3>
+
+        <div id="countdown">
+            Loading...
+        </div>
+
+    </div>
+    <div class="yannie-search">
+
+    <input
+    type="text"
+    id="searchInput"
+    placeholder="Search anything..."
+    >
+
+    <button onclick="searchYannie()">
+        🔍
+    </button>
+
+    <div id="searchResult"></div>
+
+</div>
+
+    <div class="message-card">
+        <h3>💭 Today's Message</h3>
+        <p id="dailyMessage"></p>
+    </div>
+
+    <div class="love-machine">
+
+<h2>💕 Love Machine</h2>
+
+<button id="loveButton">
+Generate Love
+</button>
+
+<div id="loveResult">
+Click the button ❤️
+</div>
+
+</div>
+
+<button id="openCookieShop">
+🍪 Limited Edition Dubai Cookie
+</button>
+
+<div
+class="app-icon"
+onclick="
+location.href=
+'yanniefy.html'
+">
+
+🎵
+
+<span>
+YannieFy
+</span>
+
+</div>
+
+<a href="MemoryWorld/index.html">
+
+🌸 Our Story
+
+</a>
+
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+
+    <h2>💕 About You</h2>
+
+    <div class="card">
+        <p>
+            All about Yannie’s
+
+- Birthday ! : 2nd August ‘09
+- Born Sunday, at 8:41 am
+- overall a fun and “always there for anything” partner to talk to
+- smol human 
+- fav colour : pinkies (not hot pink tho) and brownies
+- has an obsession with Watermelons
+- surprisingly a spicy eater
+- suka baju stripes
+- tak jj = tak kawan
+- likes soury-type foods like tomyum, pasta bolognese
+- soury drinks is top (also mineral water)
+- jangan sesekali melawan kata masa yannie period
+- sangat sangat sensitive masa period
+- make yannie laugh to reduce period pain
+- tido = makin ngantuk
+- eyes is big af (esp no glasses)
+- lowkey has two different personalities
+- omg her parents just talked about me dawg 
+- suka 100 plus 
+- TAKE IT SERIOUSLY with her after spm
+- “saya tak rasa ada orang boleh tunggu saya sampai habis spm”
+- we held hands :0
+- dont forget her “missyouuu” before bed bro
+- jangan wat yannie nangis nanti mama dia amik dia balik
+- yannie owe me 100 kissess
+- her being jealous will be the WORST thing to happen so do NOT make her jealous
+- I REPEAT DO NOT MAKE HER JEALOUS
+- jangan bagi dia hilang trust la, duk sorry ii tak ubah takle gak
+- im weird, but she still loves me hshhshshs
+- craving sweets masa period
+- remind yannie that she is constantly being loved and missed by me everyday
+- love daisies, lilies, and roses
+- “okay ke tak?” jangan guna masa yannie marah, but guna masa lain
+- jangan ulang ayat yannie
+- ajak slowtalk kalau yannie diam
+- dont make yannie rasa bersalah do
+        
+
+        <ul>
+            
+            <li></li>
+        </ul>
+    </div>
+
+</section>
+
+<!-- MEMORIES -->
+
+<section id="memories">
+
+    <h2>📸 Our Memories</h2>
+
+    <div class="memory">
+        <h3>💗 First Time I fell for you</h3>
+        <p>I still remember clearly the first day that I fell in love with you. I was ordering desserts from you when I noticed, the longer we texted each other, the more I knew that we have a lot in common, and your updates and your kindness made me fell in love deeply with you.   </p>
+    </div>
+
+    <div class="memory">
+        <h3>🌸 First Date</h3>
+        <p>I still remember our first real date, at the stadium. Back then, I have no knowledge about fashion haha. We ate a burger and I cant help but notice you ate a burger with a spoon! but I won't judge you for that!</p>
+    </div>
+
+    <div class="memory">
+        <h3>🥰 Favourite Memory</h3>
+        <p>My favourite memory would surely be when we had our first call, where you asks me to wake you up but instead we talked for an hour! oh how I love you for that..!</p>
+    </div>
+
+    <div class="app-icon" onclick="openYannieTube()">
+
+    <img
+    class="yannietube-icon"
+    src="images/yannietube-icon.png"
+    alt="YannieTube">
+
+    <span>YannieTube</span>
+
+</div>
+
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+
+<h2>🖼️ Gallery</h2>
+
+<div class="gallery">
+
+    <div
+    class="polaroid"
+    onclick="openPhoto(
+    'images/us5.jpg',
+    'One of my favourite memories ❤️'
+    )">
+
+        <img src="images/us5.jpg">
+
+        <p>Yannie ❤️</p>
+
+    </div>
+
+    <div
+    class="polaroid"
+    onclick="openPhoto(
+    'images/us2.jpg',
+    'You looked so cute here 🌸'
+    )">
+
+        <img src="images/us2.jpg">
+
+        <p>Cutie Yannie 🌸</p>
+
+    </div>
+
+    <div
+    class="polaroid"
+    onclick="openPhoto(
+    'images/us3.jpg',
+    'One of the happiest days ever 💗'
+    )">
+
+        <img src="images/us3.jpg">
+
+        <p>My Favourite Person 💗</p>
+
+    </div>
+
+    <div
+    class="polaroid"
+    onclick="openPhoto(
+    'images/us4.jpg',
+    'I wish we could relive this day ❤️'
+    )">
+
+        <img src="images/us4.jpg">
+
+        <p>Forever Us ❤️</p>
+
+    </div>
+
+</div>
+
+</section>
+
+<!-- LETTER -->
+
+<section id="letter">
+
+    <h2>💌 My Letter To You</h2>
+
+    <div class="card">
+
+        <p>
+            Dear Hasrieyannie Iman Delaila,
+
+        </p>
+
+        <p>
+            Please remember that I will always wait for you,even after we become anything (insha-Allah).
+            I will always wait for youu, my love. Anytime, anywhere I will be here for you okayyyy, sayangg?
+
+        </p>
+
+        <p>
+
+            Love,<br>
+            queque ❤️
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ENVELOPES -->
+
+<section id="envelopes">
+
+<h2>💌 Open When Letters</h2>
+
+<div class="letters-grid">
+
+<div class="envelope" onclick="openLetter(0)">
+    ✉️
+    <span>Miss Me</span>
+</div>
+
+<div class="envelope" onclick="openLetter(1)">
+    ✉️
+    <span>Sad</span>
+</div>
+
+<div class="envelope" onclick="openLetter(2)">
+    ✉️
+    <span>Stressed</span>
+</div>
+
+<div class="envelope" onclick="openLetter(3)">
+    ✉️
+    <span>Overthinking</span>
+</div>
+
+</div>
+
+<div id="letterModal" class="modal">
+
+<div class="letter-paper">
+
+<span class="close"
+onclick="closeLetter()">
+✕
+</span>
+
+<div id="letterText"></div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MUSIC -->
+
+<div class="music-player">
+
+<button onclick="playMusic()">
+🎵 Play Our Song
+</button>
+
+<audio id="music" loop>
+<source src="music/Firasat.mp3" type="audio/mpeg">
+</audio>
+
+</div>
+
+</div>
+
+<div id="photoModal"
+class="photo-modal">
+
+<div class="photo-card">
+
+<span
+class="close"
+onclick="closePhoto()">
+✕
+</span>
+
+<img id="modalImage">
+
+<p id="modalMemory"></p>
+
+</div>
+
+</div>
+
+<p class="subtitle">
+Welcome to a world all about youu, Hasrieyannie Iman Delaila! 🌸
+</p>
+
+<div id="cookieShop" class="cookie-shop">
+
+    <div class="cookie-card">
+
+        <span class="close"
+        onclick="closeCookieShop()">
+        ✕
+        </span>
+
+        <img
+        src="images/cookie0.png"
+        class="shop-cookie">
+
+        <h2>Dubai Chewy Cookie 🍪</h2>
+
+        <p>⭐⭐⭐⭐⭐ 4.9</p>
+
+        <p>17.2k sold</p>
+
+        <p class="price">
+            RM18.90
+        </p>
+
+        <p class="stock">
+            🔥 Only 1 left
+        </p>
+
+        <p id="viewerCount">
+⚡ 300 people viewing now
+</p>
+        <button
+        id="buyCookieButton">
+        BUY NOW
+        </button>
+
+        <div id="cookieStatus"></div>
+
+    </div>
+
+</div>
+<div id="cookieSimulator"
+class="cookie-shop">
+
+    <div class="cookie-card">
+
+         <span
+class="close"
+onclick="closeCookieSimulator()">
+✕
+</span>
+
+        <h2>
+        🍪 Cookie Simulator
+        </h2>
+
+        <img
+        id="cookieImage"
+        src="images/cookie0.png"
+        class="shop-cookie">
+
+        <p id="cookieText">
+        Tap the cookie 😋
+        </p>
+
+   
+
+    </div>
+
+</div>
+
+
+<div id="facetimePopup" class="facetime-popup">
+
+    <div class="facetime-screen">
+
+        <img
+        src="images/yannie-profile.jpg"
+        class="caller-photo">
+
+        <div class="incomingText">
+
+    Incoming Call
+
+</div>
+
+        <h2>
+            queque bambam ❤️
+        </h2>
+
+        <p>
+📹 FaceTime Video
+</p>
+        <button id="acceptCall">
+            Accept
+        </button>
+
+    </div>
+
+</div>
+
+<div id="videoCallScreen">
+
+    <video
+    id="callVideo"
+    controls
+    playsinline>
+
+        <source
+        src="videos/yanniecall.mp4"
+        type="video/mp4">
+
+    </video>
+
+</div>
+
+<div id="callEndedScreen">
+
+    <h1>
+        Call Ended
+    </h1>
+
+    <p>
+        Welcome home from the campp, babyy! ❤️
+    </p>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
+
+
