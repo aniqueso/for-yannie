@@ -2,117 +2,83 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>For Hasrieyannie Iman Delaila !</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>For Hasrieyannie Iman Delaila!</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-    <div id="backgroundDecor"></div>
+<div id="backgroundDecor" aria-hidden="true"></div>
+<img class="squiggle" src="images/squiggle1.svg" style="top:10%;left:5%;width:120px;" alt="">
+<img class="squiggle" src="images/squiggle2.svg" style="bottom:15%;right:5%;width:150px;" alt="">
 
-    <img
-class="squiggle"
-src="images/squiggle1.svg"
-style="top:10%;left:5%;width:120px;">
-
-<img
-class="squiggle"
-src="images/squiggle2.svg"
-style="bottom:15%;right:5%;width:150px;">
 <!-- LOCK SCREEN -->
-
 <div id="lockScreen">
-
     <div class="lock-card">
-
         <h1>💗</h1>
-
         <h2>Welcome my lovee, Yanniee!</h2>
-
-        <p>Please enter the passwordd (or guess it huehue)</p>
-
-        <input
-        type="password"
-        id="passwordInput"
-        placeholder="Password">
-
-        <button onclick="checkPassword()">
-            Enter
-        </button>
-
+        <p>Please enter the passwordd, or guess it huehue.</p>
+        <input type="password" id="passwordInput" placeholder="Password" autocomplete="off">
+        <button onclick="checkPassword()">Enter</button>
+        <small class="tiny-hint">Hint: the day a princess was born.</small>
     </div>
-
 </div>
 
 <!-- MAIN SITE -->
-
 <div id="website">
-
 <header>
-
     <div class="browser-top">
-
-        <div class="browser-buttons">
+        <div class="browser-buttons" aria-hidden="true">
             <span class="red"></span>
             <span class="yellow"></span>
             <span class="green"></span>
         </div>
-
-        <div class="address-bar">
-            🔒 https://yannie-world.com
-        </div>
-
+        <div class="address-bar">🔒 https://yannie-world.com</div>
     </div>
-
 </header>
 
-<nav>
-
-    <button onclick="showSection('home')">🏠</button>
-    <button onclick="showSection('about')">💕</button>
-    <button onclick="showSection('memories')">📸</button>
-    <button onclick="showSection('gallery')">🖼️</button>
-    <button onclick="showSection('letter')">💌</button>
-    <button onclick="showSection('envelopes')">✉️</button>
-
+<nav aria-label="Yannie World navigation">
+    <button onclick="showSection('home')"><span>🏠</span><small>Home</small></button>
+    <button onclick="showSection('daily')"><span>🌞</span><small>Daily</small></button>
+    <button onclick="showSection('mood')"><span>🧸</span><small>Mood</small></button>
+    <button onclick="showSection('about')"><span>💕</span><small>Care</small></button>
+    <button onclick="showSection('memories')"><span>📸</span><small>Memories</small></button>
+    <button onclick="showSection('gallery')"><span>🖼️</span><small>Gallery</small></button>
+    <button onclick="showSection('letter')"><span>💌</span><small>Letter</small></button>
+    <button onclick="showSection('envelopes')"><span>✉️</span><small>Open</small></button>
+    <button onclick="showSection('achievements')"><span>🏆</span><small>Badges</small></button>
+    <button onclick="showSection('vault')"><span>🎁</span><small>Vault</small></button>
 </nav>
 
 <!-- HOME -->
-
 <section id="home" class="active">
-
+    <p class="subtitle">Welcome to a world all about youu, Hasrieyannie Iman Delaila! 🌸</p>
     <h1>For Yannie 💗</h1>
 
     <div class="countdown-card">
-
         <h3>🎂 Birthday Countdown</h3>
-
-        <div id="countdown">
-            Loading...
-        </div>
-
+        <div id="countdown">Loading...</div>
     </div>
-    <div class="yannie-search">
 
-    <input
-    type="text"
-    id="searchInput"
-    placeholder="Search anything..."
-    >
+    <div class="daily-preview card soft-glow">
+        <h3>🌞 Today's Little Love</h3>
+        <p id="homeDailyPreview">Loading today's surprise...</p>
+        <button onclick="showSection('daily')">Open Daily Love</button>
+    </div>
 
-    <button onclick="searchYannie()">
-        🔍
-    </button>
-
-    <div id="searchResult"></div>
-
-</div>
+    <div class="yannie-search card">
+        <h3>🔍 Yannie Search</h3>
+        <p class="muted">Try words like <b>lasagna</b>, <b>watermelon</b>, <b>cake</b>, <b>miss you</b>, or <b>queque</b>.</p>
+        <div class="search-row">
+            <input type="text" id="searchInput" placeholder="Search anything...">
+            <button onclick="searchYannie()">🔍</button>
+        </div>
+        <div id="searchResult"></div>
+    </div>
 
     <div class="message-card">
         <h3>💭 Today's Message</h3>
@@ -120,446 +86,255 @@ style="bottom:15%;right:5%;width:150px;">
     </div>
 
     <div class="love-machine">
+        <h2>💕 Love Machine</h2>
+        <button id="loveButton">Generate Love</button>
+        <div id="loveResult">Click the button ❤️</div>
+    </div>
 
-<h2>💕 Love Machine</h2>
+    <button id="openCookieShop">🍪 Limited Edition Dubai Cookie</button>
 
-<button id="loveButton">
-Generate Love
-</button>
-
-<div id="loveResult">
-Click the button ❤️
-</div>
-
-</div>
-
-<button id="openCookieShop">
-🍪 Limited Edition Dubai Cookie
-</button>
-
-<div
-class="app-icon"
-onclick="
-location.href=
-'yanniefy.html'
-">
-
-🎵
-
-<span>
-YannieFy
-</span>
-
-</div>
-
-<a href="MemoryWorld_V2/index.html">
-
-🌸 How It All Started..
-
-</a>
-
+    <div class="app-grid">
+        <div class="app-icon" onclick="location.href='yanniefy.html'">🎵<span>YannieFy</span></div>
+        <div class="app-icon" onclick="openYannieTube()">
+            <img class="yannietube-icon" src="images/yannietube-icon.png" alt="YannieTube">
+            <span>YannieTube</span>
+        </div>
+        <a class="app-icon app-link" id="memoryWorldLink" href="MemoryWorld_V2/index.html" onclick="unlockAchievement('pov_player')">🌸<span>Memory World</span></a>
+    </div>
 </section>
 
-<!-- ABOUT -->
-
-<section id="about">
-
-    <h2>💕 About You</h2>
+<!-- DAILY LOVE -->
+<section id="daily">
+    <h2>🌞 Daily Love</h2>
+    <div class="card daily-card">
+        <h3>Today's Mission</h3>
+        <p id="dailyMission">Loading...</p>
+        <button id="completeMissionBtn" onclick="completeDailyMission()">Complete Today's Mission</button>
+        <p id="missionStatus" class="muted"></p>
+    </div>
 
     <div class="card">
-        <p>
-            All about Yannie’s
+        <h3>Today's Memory</h3>
+        <p id="dailyMemory">Loading...</p>
+    </div>
 
-- Birthday ! : 2nd August ‘09
-- Born Sunday, at 8:41 am
-- overall a fun and “always there for anything” partner to talk to
-- smol human 
-- fav colour : pinkies (not hot pink tho) and brownies
-- has an obsession with Watermelons
-- surprisingly a spicy eater
-- suka baju stripes
-- tak jj = tak kawan
-- likes soury-type foods like tomyum, pasta bolognese
-- soury drinks is top (also mineral water)
-- jangan sesekali melawan kata masa yannie period
-- sangat sangat sensitive masa period
-- make yannie laugh to reduce period pain
-- tido = makin ngantuk
-- eyes is big af (esp no glasses)
-- lowkey has two different personalities
-- omg her parents just talked about me dawg 
-- suka 100 plus 
-- TAKE IT SERIOUSLY with her after spm
-- “saya tak rasa ada orang boleh tunggu saya sampai habis spm”
-- we held hands :0
-- dont forget her “missyouuu” before bed bro
-- jangan wat yannie nangis nanti mama dia amik dia balik
-- yannie owe me 100 kissess
-- her being jealous will be the WORST thing to happen so do NOT make her jealous
-- I REPEAT DO NOT MAKE HER JEALOUS
-- jangan bagi dia hilang trust la, duk sorry ii tak ubah takle gak
-- im weird, but she still loves me hshhshshs
-- craving sweets masa period
-- remind yannie that she is constantly being loved and missed by me everyday
-- love daisies, lilies, and roses
-- “okay ke tak?” jangan guna masa yannie marah, but guna masa lain
-- jangan ulang ayat yannie
-- ajak slowtalk kalau yannie diam
-- dont make yannie rasa bersalah do
-        
+    <div class="card streak-card">
+        <h3>Visit Streak</h3>
+        <div id="streakNumber">0</div>
+        <p class="muted">Come back anytime. This little world will remember you.</p>
+    </div>
+</section>
 
-        <ul>
-            
-            <li></li>
+<!-- MOOD CHECK-IN -->
+<section id="mood">
+    <h2>🧸 Mood Check-In</h2>
+    <div class="card">
+        <p>How are you feeling today, sayangg?</p>
+        <div class="mood-grid">
+            <button onclick="chooseMood('happy')">🥰 Happy</button>
+            <button onclick="chooseMood('miss')">🥺 Miss You</button>
+            <button onclick="chooseMood('sad')">😔 Sad</button>
+            <button onclick="chooseMood('mad')">😡 Mad</button>
+            <button onclick="chooseMood('tired')">😴 Tired</button>
+            <button onclick="chooseMood('stress')">🤯 Stressed</button>
+        </div>
+        <div id="moodResult" class="mood-result">Pick one and I’ll say something for youu.</div>
+    </div>
+</section>
+
+<!-- CARE GUIDE -->
+<section id="about">
+    <h2>💕 Yannie Care Guide</h2>
+    <div class="card">
+        <h3>Things I Remember About You</h3>
+        <ul class="about-list">
+            <li>Birthday: 2nd August 2009.</li>
+            <li>Born on Sunday, at 8:41 AM.</li>
+            <li>Favourite colours: soft pink and brown.</li>
+            <li>Obsessed with watermelons.</li>
+            <li>Surprisingly spicy eater.</li>
+            <li>Suka baju stripes.</li>
+            <li>Sour foods and sour drinks are top tier.</li>
+            <li>100 Plus has a special place.</li>
+            <li>Loves daisies, lilies, and roses.</li>
         </ul>
     </div>
 
+    <div class="care-grid">
+        <button onclick="showCare('period')">🌙 Period Mode</button>
+        <button onclick="showCare('silent')">🤍 When You Go Quiet</button>
+        <button onclick="showCare('sad')">🥺 When You Feel Sad</button>
+        <button onclick="showCare('stress')">📚 When You’re Stressed</button>
+        <button onclick="showCare('jealous')">🫣 When You’re Jealous</button>
+        <button onclick="showCare('miss')">💌 When You Miss Me</button>
+    </div>
+
+    <div id="careResult" class="card care-result">
+        Tap a care button, babyy.
+    </div>
 </section>
 
 <!-- MEMORIES -->
-
 <section id="memories">
-
     <h2>📸 Our Memories</h2>
 
-    <div class="memory">
-        <h3>💗 First Time I fell for you</h3>
-        <p>I still remember clearly the first day that I fell in love with you. I was ordering desserts from you when I noticed, the longer we texted each other, the more I knew that we have a lot in common, and your updates and your kindness made me fell in love deeply with you.   </p>
+    <div class="memory" onclick="unlockAchievement('memory_reader')">
+        <h3>💗 First Time I Fell For You</h3>
+        <p>I still remember clearly the first day that I fell in love with you. I was ordering desserts from you when I noticed, the longer we texted each other, the more I knew that we had a lot in common. Your updates and your kindness made me fall deeply for you.</p>
     </div>
 
-    <div class="memory">
+    <div class="memory" onclick="unlockAchievement('memory_reader')">
         <h3>🌸 First Date</h3>
-        <p>I still remember our first real date, at the stadium. Back then, I have no knowledge about fashion haha. We ate a burger and I cant help but notice you ate a burger with a spoon! but I won't judge you for that!</p>
+        <p>I still remember our first real date, at the stadium. Back then, I had no knowledge about fashion haha. We ate a burger and I could not help but notice you ate a burger with a spoon! I will not judge you for that.</p>
     </div>
 
-    <div class="memory">
+    <div class="memory" onclick="unlockAchievement('memory_reader')">
         <h3>🥰 Favourite Memory</h3>
-        <p>My favourite memory would surely be when we had our first call, where you asks me to wake you up but instead we talked for an hour! oh how I love you for that..!</p>
+        <p>My favourite memory would surely be when we had our first call, where you asked me to wake you up but instead we talked for so long. Oh how I love you for that.</p>
     </div>
-
-    <div class="app-icon" onclick="openYannieTube()">
-
-    <img
-    class="yannietube-icon"
-    src="images/yannietube-icon.png"
-    alt="YannieTube">
-
-    <span>YannieTube</span>
-
-</div>
-
 </section>
 
 <!-- GALLERY -->
 <section id="gallery">
-
-<h2>🖼️ Gallery</h2>
-
-<div class="gallery">
-
-    <div
-    class="polaroid"
-    onclick="openPhoto(
-    'images/us5.jpg',
-    'One of my favourite memories ❤️'
-    )">
-
-        <img src="images/us5.jpg">
-
-        <p>Yannie ❤️</p>
-
+    <h2>🖼️ Gallery</h2>
+    <div class="gallery">
+        <div class="polaroid" onclick="openPhoto('images/us5.jpg','One of my favourite memories ❤️')">
+            <img src="images/us5.jpg" alt="Memory photo 1">
+            <p>Yannie ❤️</p>
+        </div>
+        <div class="polaroid" onclick="openPhoto('images/us2.jpg','You looked so cute here 🌸')">
+            <img src="images/us2.jpg" alt="Memory photo 2">
+            <p>Cutie Yannie 🌸</p>
+        </div>
+        <div class="polaroid" onclick="openPhoto('images/us3.jpg','One of the happiest days ever 💗')">
+            <img src="images/us3.jpg" alt="Memory photo 3">
+            <p>My Favourite Person 💗</p>
+        </div>
+        <div class="polaroid" onclick="openPhoto('images/us4.jpg','I wish we could relive this day ❤️')">
+            <img src="images/us4.jpg" alt="Memory photo 4">
+            <p>Forever Us ❤️</p>
+        </div>
     </div>
-
-    <div
-    class="polaroid"
-    onclick="openPhoto(
-    'images/us2.jpg',
-    'You looked so cute here 🌸'
-    )">
-
-        <img src="images/us2.jpg">
-
-        <p>Cutie Yannie 🌸</p>
-
-    </div>
-
-    <div
-    class="polaroid"
-    onclick="openPhoto(
-    'images/us3.jpg',
-    'One of the happiest days ever 💗'
-    )">
-
-        <img src="images/us3.jpg">
-
-        <p>My Favourite Person 💗</p>
-
-    </div>
-
-    <div
-    class="polaroid"
-    onclick="openPhoto(
-    'images/us4.jpg',
-    'I wish we could relive this day ❤️'
-    )">
-
-        <img src="images/us4.jpg">
-
-        <p>Forever Us ❤️</p>
-
-    </div>
-
-</div>
-
 </section>
 
 <!-- LETTER -->
-
 <section id="letter">
-
     <h2>💌 My Letter To You</h2>
-
-    <div class="card">
-
-        <p>
-            Dear Hasrieyannie Iman Delaila,
-
-        </p>
-
-        <p>
-            Please remember that I will always wait for you,even after we become anything (insha-Allah).
-            I will always wait for youu, my love. Anytime, anywhere I will be here for you okayyyy, sayangg?
-
-        </p>
-
-        <p>
-
-            Love,<br>
-            queque ❤️
-        </p>
-
+    <div class="card letter-card-main">
+        <p>Dear Hasrieyannie Iman Delaila,</p>
+        <p>Please remember that I will always wait for you, even after we become anything, insha-Allah. I will always wait for youu, my love. Anytime, anywhere, I will be here for you okayyyy, sayangg?</p>
+        <p>I made this little world so you can visit it anytime you miss me, feel sad, feel bored, or just want to be reminded that you are loved.</p>
+        <p>Love,<br>queque ❤️</p>
+        <button onclick="finishMainLetter()">I finished reading 💗</button>
     </div>
-
 </section>
 
 <!-- ENVELOPES -->
-
 <section id="envelopes">
+    <h2>💌 Open When Letters</h2>
+    <div class="letters-grid">
+        <div class="envelope" onclick="openLetter(0)">✉️<span>Miss Me</span></div>
+        <div class="envelope" onclick="openLetter(1)">✉️<span>Sad</span></div>
+        <div class="envelope" onclick="openLetter(2)">✉️<span>Stressed</span></div>
+        <div class="envelope" onclick="openLetter(3)">✉️<span>Overthinking</span></div>
+        <div class="envelope" onclick="openLetter(4)">✉️<span>Birthday</span></div>
+        <div class="envelope" onclick="openLetter(5)">✉️<span>After SPM</span></div>
+    </div>
 
-<h2>💌 Open When Letters</h2>
-
-<div class="letters-grid">
-
-<div class="envelope" onclick="openLetter(0)">
-    ✉️
-    <span>Miss Me</span>
-</div>
-
-<div class="envelope" onclick="openLetter(1)">
-    ✉️
-    <span>Sad</span>
-</div>
-
-<div class="envelope" onclick="openLetter(2)">
-    ✉️
-    <span>Stressed</span>
-</div>
-
-<div class="envelope" onclick="openLetter(3)">
-    ✉️
-    <span>Overthinking</span>
-</div>
-
-</div>
-
-<div id="letterModal" class="modal">
-
-<div class="letter-paper">
-
-<span class="close"
-onclick="closeLetter()">
-✕
-</span>
-
-<div id="letterText"></div>
-
-</div>
-
-</div>
-
+    <div id="letterModal" class="modal">
+        <div class="letter-paper">
+            <span class="close" onclick="closeLetter()">✕</span>
+            <div id="letterText"></div>
+        </div>
+    </div>
 </section>
 
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+    <h2>🏆 Achievement Badges</h2>
+    <div class="card">
+        <p>Unlock cute badges by exploring Yannie World.</p>
+        <div id="achievementList" class="achievement-list"></div>
+    </div>
+</section>
+
+<!-- SECRET VAULT -->
+<section id="vault">
+    <h2>🎁 Secret Vault</h2>
+    <div id="vaultContent" class="card vault-card">
+        Loading vault...
+    </div>
+</section>
 
 <!-- MUSIC -->
-
 <div class="music-player">
-
-<button onclick="playMusic()">
-🎵 Play Our Song
-</button>
-
-<audio id="music" loop>
-<source src="music/Firasat.mp3" type="audio/mpeg">
-</audio>
-
+    <button onclick="playMusic()">🎵 Play Our Song</button>
+    <audio id="music" loop>
+        <source src="music/Firasat.mp3" type="audio/mpeg">
+    </audio>
 </div>
 
+</div><!-- end website -->
+
+<!-- PHOTO MODAL -->
+<div id="photoModal" class="photo-modal">
+    <div class="photo-card">
+        <span class="close" onclick="closePhoto()">✕</span>
+        <img id="modalImage" alt="Selected memory">
+        <p id="modalMemory"></p>
+    </div>
 </div>
 
-<div id="photoModal"
-class="photo-modal">
-
-<div class="photo-card">
-
-<span
-class="close"
-onclick="closePhoto()">
-✕
-</span>
-
-<img id="modalImage">
-
-<p id="modalMemory"></p>
-
-</div>
-
-</div>
-
-<p class="subtitle">
-Welcome to a world all about youu, Hasrieyannie Iman Delaila! 🌸
-</p>
-
+<!-- COOKIE SHOP -->
 <div id="cookieShop" class="cookie-shop">
-
     <div class="cookie-card">
-
-        <span class="close"
-        onclick="closeCookieShop()">
-        ✕
-        </span>
-
-        <img
-        src="images/cookie0.png"
-        class="shop-cookie">
-
+        <span class="close" onclick="closeCookieShop()">✕</span>
+        <img src="images/cookie0.png" class="shop-cookie" alt="Dubai chewy cookie">
         <h2>Dubai Chewy Cookie 🍪</h2>
-
         <p>⭐⭐⭐⭐⭐ 4.9</p>
-
         <p>17.2k sold</p>
-
-        <p class="price">
-            RM18.90
-        </p>
-
-        <p class="stock">
-            🔥 Only 1 left
-        </p>
-
-        <p id="viewerCount">
-⚡ 300 people viewing now
-</p>
-        <button
-        id="buyCookieButton">
-        BUY NOW
-        </button>
-
+        <p class="price">RM18.90</p>
+        <p class="stock">🔥 Only 1 left</p>
+        <p id="viewerCount">⚡ 18 people viewing now</p>
+        <button id="buyCookieButton">BUY NOW</button>
         <div id="cookieStatus"></div>
-
     </div>
-
 </div>
-<div id="cookieSimulator"
-class="cookie-shop">
 
+<div id="cookieSimulator" class="cookie-shop">
     <div class="cookie-card">
-
-         <span
-class="close"
-onclick="closeCookieSimulator()">
-✕
-</span>
-
-        <h2>
-        🍪 Cookie Simulator
-        </h2>
-
-        <img
-        id="cookieImage"
-        src="images/cookie0.png"
-        class="shop-cookie">
-
-        <p id="cookieText">
-        Tap the cookie 😋
-        </p>
-
-   
-
+        <span class="close" onclick="closeCookieSimulator()">✕</span>
+        <h2>🍪 Cookie Simulator</h2>
+        <img id="cookieImage" src="images/cookie0.png" class="shop-cookie" alt="Cookie simulator">
+        <p id="cookieText">Tap the cookie 😋</p>
     </div>
-
 </div>
 
-
+<!-- FACETIME SURPRISE -->
 <div id="facetimePopup" class="facetime-popup">
-
     <div class="facetime-screen">
-
-        <img
-        src="images/yannie-profile.jpg"
-        class="caller-photo">
-
-        <div class="incomingText">
-
-    Incoming Call
-
-</div>
-
-        <h2>
-            queque bambam ❤️
-        </h2>
-
-        <p>
-📹 FaceTime Video
-</p>
-        <button id="acceptCall">
-            Accept
-        </button>
-
+        <img src="images/yannie-profile.jpg" class="caller-photo" alt="Caller photo">
+        <div class="incomingText">Incoming Call</div>
+        <h2>queque bambam ❤️</h2>
+        <p>📹 FaceTime Video</p>
+        <button id="acceptCall">Accept</button>
+        <button class="decline-call" onclick="closeFacetimePopup()">Later</button>
     </div>
-
 </div>
 
 <div id="videoCallScreen">
-
-    <video
-    id="callVideo"
-    controls
-    playsinline>
-
-        <source
-        src="videos/yanniecall.mp4"
-        type="video/mp4">
-
+    <video id="callVideo" controls playsinline>
+        <source src="videos/yanniecall.mp4" type="video/mp4">
     </video>
-
 </div>
 
 <div id="callEndedScreen">
-
-    <h1>
-        Call Ended
-    </h1>
-
-    <p>
-        Welcome home from the campp, babyy! ❤️
-    </p>
-
+    <h1>Call Ended</h1>
+    <p>Welcome home from the campp, babyy! ❤️</p>
 </div>
 
-<script src="script.js"></script>
+<div id="achievementToast" class="achievement-toast"></div>
 
+<script src="script.js"></script>
 </body>
 </html>
-
-
-
