@@ -483,27 +483,151 @@ function scheduleNotification(){
 }
 
 function setupCookieShop(){
-    document.getElementById("openCookieShop").addEventListener("click",()=>{
-        document.getElementById("cookieShop").style.display="flex";
-    });
-    document.getElementById("buyCookieButton").addEventListener("click",()=>{
-        const status = document.getElementById("cookieStatus");
-        status.innerHTML = "Processing payment...";
-        setTimeout(()=>status.innerHTML="Verifying Yannie status...",900);
-        setTimeout(()=>status.innerHTML="Approved ❤️",1800);
-        setTimeout(()=>status.innerHTML="Preparing cookie...",2700);
-        setTimeout(()=>status.innerHTML="🚚 Out for delivery",3600);
+    const shop = document.getElementById("cookieShop");
+    const cart = document.getElementById("cookieCart");
+    const orderComplete = document.getElementById("cookieOrderComplete");
+    const simulator = document.getElementById("cookieSimulator");
+
+    const cartBubble = document.getElementById("cartBubble");
+    const cartEmpty = document.getElementById("cartEmpty");
+    const cartFilled = document.getElementById("cartFilled");
+    const cartQty = document.getElementById("cartQty");
+    const cookieQty = document.getElementById("cookieQty");
+    const cartSubtotal = document.getElementById("cartSubtotal");
+    const cartTotal = document.getElementById("cartTotal");
+    const status = document.getElementById("cookieStatus");
+    const biteFill = document.getElementById("biteProgressFill");
+    const biteCounter = document.getElementById("biteCounter");
+
+    let qty = 1;
+    let cartItems = 0;
+    let checkoutRunning = false;
+
+    function money(amount){
+        return `RM${amount.toFixed(2)}`;
+    }
+
+    function updateCartUI(){
+        cookieQty.innerHTML = qty;
+        cartQty.innerHTML = cartItems || qty;
+        cartBubble.innerHTML = cartItems;
+
+        const subtotal = 18.90 * (cartItems || qty);
+        const total = Math.max(subtotal - 5, 0);
+
+        cartSubtotal.innerHTML = money(subtotal);
+        cartTotal.innerHTML = money(total);
+
+        cartEmpty.classList.toggle("hidden", cartItems > 0);
+        cartFilled.classList.toggle("active", cartItems > 0);
+    }
+
+    function openShop(){
+        shop.style.display = "flex";
+        updateCartUI();
+        showNotification("YannieTok Shop is live. Dubai Cookie drop is waiting 🍪");
+    }
+
+    function addToCart(){
+        cartItems = qty;
+        updateCartUI();
+        showNotification("Dubai Cookie added to cart 🛒");
+    }
+
+    function setStep(index, message){
+        document.querySelectorAll("#orderProgress .step").forEach((step,stepIndex)=>{
+            step.classList.toggle("active", stepIndex <= index);
+        });
+        status.innerHTML = message;
+    }
+
+    function startCheckout(){
+        if(checkoutRunning) return;
+
+        checkoutRunning = true;
+        cartItems = cartItems || qty;
+        updateCartUI();
+
+        shop.style.display = "flex";
+        cart.style.display = "none";
+
+        setStep(0, "Cookie added to cart...");
+        setTimeout(()=>setStep(1,"Voucher applied. Payment approved ❤️"),850);
+        setTimeout(()=>setStep(2,"Packing cookie carefully for Yannie..."),1700);
+        setTimeout(()=>setStep(3,"Out for delivery to Yannie’s hand 🚚"),2550);
         setTimeout(()=>{
-            document.getElementById("cookieShop").style.display="none";
-            document.getElementById("cookieSimulator").style.display="flex";
-        },4500);
+            checkoutRunning = false;
+            shop.style.display = "none";
+            orderComplete.style.display = "flex";
+            showNotification("Order delivered! Cookie simulator unlocked 🍪");
+        },3400);
+    }
+
+    function updateBiteUI(){
+        document.getElementById("cookieImage").src = `images/cookie${cookieBites}.png`;
+        biteFill.style.width = `${Math.min((cookieBites/7)*100,100)}%`;
+        biteCounter.innerHTML = `${Math.min(cookieBites,7)}/7 bites`;
+    }
+
+    function resetCookie(){
+        cookieBites = 0;
+        document.getElementById("cookieText").innerHTML = "Tap the cookie to take a bite 😋";
+        updateBiteUI();
+    }
+
+    document.getElementById("openCookieShop").addEventListener("click", openShop);
+    document.getElementById("openCartBtn").addEventListener("click",()=>{
+        cart.style.display = "flex";
+        updateCartUI();
     });
 
-    const cookieMessages = ["Fresh from the oven 😋","Marshmallow layer detected 🍫","KUNAFA CORE DISCOVERED 😭","One more biteee","Yannie is enjoying this cookie 🌸","Cookie integrity critical ⚠️","Last bite incoming 🥺"];
+    document.getElementById("qtyMinus").addEventListener("click",()=>{
+        qty = Math.max(1, qty - 1);
+        updateCartUI();
+    });
+
+    document.getElementById("qtyPlus").addEventListener("click",()=>{
+        qty = 1;
+        showNotification("Only one left, babyyy. This drop is exclusive 😭");
+        updateCartUI();
+    });
+
+    document.getElementById("addToCartButton").addEventListener("click", addToCart);
+    document.getElementById("buyCookieButton").addEventListener("click", startCheckout);
+    document.getElementById("checkoutCartBtn").addEventListener("click", startCheckout);
+
+    document.getElementById("openCookieSimulatorBtn").addEventListener("click",()=>{
+        orderComplete.style.display = "none";
+        simulator.style.display = "flex";
+        updateBiteUI();
+    });
+
+    document.getElementById("resetCookieBtn").addEventListener("click", resetCookie);
+
+    document.querySelectorAll(".product-tabs .tab").forEach(tab=>{
+        tab.addEventListener("click",()=>{
+            document.querySelectorAll(".product-tabs .tab").forEach(item=>item.classList.remove("active"));
+            document.querySelectorAll(".tab-panel").forEach(panel=>panel.classList.remove("active"));
+
+            tab.classList.add("active");
+            document.getElementById(`tab${tab.dataset.tab[0].toUpperCase()}${tab.dataset.tab.slice(1)}`).classList.add("active");
+        });
+    });
+
+    const cookieMessages = [
+        "First bite. Crispy outside, soft inside 😋",
+        "Chocolate layer discovered 🍫",
+        "Pistachio kunafa core unlocked 💚",
+        "Yannie rating increased to 999/10 🌸",
+        "Cookie happiness level: critical 😭",
+        "Almost gone, babyyy...",
+        "Last bite incoming 🥺"
+    ];
+
     document.getElementById("cookieImage").addEventListener("click",()=>{
         if(cookieBites < 7){
             cookieBites++;
-            document.getElementById("cookieImage").src = `images/cookie${cookieBites}.png`;
+            updateBiteUI();
             document.getElementById("cookieText").innerHTML = cookieMessages[cookieBites-1];
         }
         else{
@@ -516,11 +640,16 @@ function setupCookieShop(){
     });
 
     setInterval(()=>{
-        document.getElementById("viewerCount").innerHTML = `⚡ ${10 + Math.floor(Math.random()*10)} people viewing now`;
-    },3000);
+        document.getElementById("viewerCount").innerHTML = `⚡ ${12 + Math.floor(Math.random()*280)} people viewing now`;
+    },2800);
+
+    updateCartUI();
+    updateBiteUI();
 }
 
 function closeCookieShop(){ document.getElementById("cookieShop").style.display="none"; }
+function closeCookieCart(){ document.getElementById("cookieCart").style.display="none"; }
+function closeOrderComplete(){ document.getElementById("cookieOrderComplete").style.display="none"; }
 function closeCookieSimulator(){ document.getElementById("cookieSimulator").style.display="none"; }
 
 function triggerFacetime(){

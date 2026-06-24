@@ -91,7 +91,10 @@
         <div id="loveResult">Click the button ❤️</div>
     </div>
 
-    <button id="openCookieShop">🍪 Limited Edition Dubai Cookie</button>
+    <button id="openCookieShop" class="shop-launch-btn">
+        🛒 Open YannieTok Shop
+        <small>Dubai Cookie Drop • Live now</small>
+    </button>
 
     <div class="app-grid">
         <div class="app-icon" onclick="location.href='yanniefy.html'">🎵<span>YannieFy</span></div>
@@ -285,28 +288,238 @@
     </div>
 </div>
 
-<!-- COOKIE SHOP -->
-<div id="cookieShop" class="cookie-shop">
-    <div class="cookie-card">
-        <span class="close" onclick="closeCookieShop()">✕</span>
-        <img src="images/cookie0.png" class="shop-cookie" alt="Dubai chewy cookie">
-        <h2>Dubai Chewy Cookie 🍪</h2>
-        <p>⭐⭐⭐⭐⭐ 4.9</p>
-        <p>17.2k sold</p>
-        <p class="price">RM18.90</p>
-        <p class="stock">🔥 Only 1 left</p>
-        <p id="viewerCount">⚡ 18 people viewing now</p>
-        <button id="buyCookieButton">BUY NOW</button>
-        <div id="cookieStatus"></div>
+<!-- YANNIETOK COOKIE SHOP -->
+<div id="cookieShop" class="cookie-shop yannietok-shop">
+    <div class="shop-sheet">
+        <div class="shop-topbar">
+            <button class="shop-back" onclick="closeCookieShop()" type="button">‹</button>
+
+            <div>
+                <h2>YannieTok Shop</h2>
+                <p>Dubai Cookie Drop • Live</p>
+            </div>
+
+            <button id="openCartBtn" class="shop-cart-btn" type="button">
+                🛒
+                <span id="cartBubble">0</span>
+            </button>
+        </div>
+
+        <div class="live-strip">
+            <span>LIVE</span>
+            <p id="viewerCount">⚡ 18 people viewing now</p>
+        </div>
+
+        <div class="shop-scroll">
+            <div class="product-showcase">
+                <div class="product-image-wrap">
+                    <img
+                        id="shopCookieImage"
+                        src="images/cookie0.png"
+                        class="shop-cookie"
+                        alt="Dubai chewy cookie"
+                    >
+
+                    <div class="floating-badge">Limited Drop</div>
+                </div>
+
+                <div class="product-main-info">
+                    <h1>Dubai Chewy Cookie 🍪</h1>
+
+                    <div class="rating-row">
+                        <span>⭐⭐⭐⭐⭐ 4.9</span>
+                        <span>17.2k sold</span>
+                    </div>
+
+                    <div class="price-row">
+                        <span class="price">RM18.90</span>
+                        <del>RM29.90</del>
+                    </div>
+
+                    <p class="stock" id="stockText">🔥 Only 1 left for Yannie</p>
+                </div>
+            </div>
+
+            <div class="voucher-row">
+                <button type="button" class="voucher active">RM5 OFF</button>
+                <button type="button" class="voucher">FREE DELIVERY</button>
+                <button type="button" class="voucher">YANNIE ONLY</button>
+            </div>
+
+            <div class="product-tabs">
+                <button class="tab active" data-tab="details" type="button">Details</button>
+                <button class="tab" data-tab="reviews" type="button">Reviews</button>
+                <button class="tab" data-tab="shipping" type="button">Shipping</button>
+            </div>
+
+            <div id="tabDetails" class="tab-panel active">
+                <h3>Product Details</h3>
+                <p>Soft chewy cookie with chocolate, pistachio-kunafa filling, and maximum babyyy energy.</p>
+
+                <ul>
+                    <li>🍫 Chocolate shell</li>
+                    <li>💚 Pistachio kunafa core</li>
+                    <li>🔥 Freshly packed for Yannie</li>
+                    <li>💗 Comes with fake love receipt</li>
+                </ul>
+            </div>
+
+            <div id="tabReviews" class="tab-panel">
+                <h3>Customer Reviews</h3>
+
+                <div class="review-card">
+                    <b>queque bambam ❤️</b>
+                    <p>10/10. Would buy again just to see Yannie happy.</p>
+                </div>
+
+                <div class="review-card">
+                    <b>Mofusand Cat 🐱</b>
+                    <p>Meow meow approved. Crumbs detected.</p>
+                </div>
+            </div>
+
+            <div id="tabShipping" class="tab-panel">
+                <h3>Shipping</h3>
+                <p>Delivery route: Queque’s heart → Yannie’s hand → cookie simulator.</p>
+                <p class="shipping-note">Estimated delivery: immediately after checkout.</p>
+            </div>
+
+            <div class="quantity-box">
+                <div>
+                    <h3>Quantity</h3>
+                    <p>Maximum one because this drop is too exclusive.</p>
+                </div>
+
+                <div class="quantity-control">
+                    <button id="qtyMinus" type="button">−</button>
+                    <span id="cookieQty">1</span>
+                    <button id="qtyPlus" type="button">＋</button>
+                </div>
+            </div>
+
+            <div class="order-progress" id="orderProgress">
+                <h3>Order Status</h3>
+                <div class="progress-line">
+                    <span class="step active">Cart</span>
+                    <span class="step">Pay</span>
+                    <span class="step">Pack</span>
+                    <span class="step">Deliver</span>
+                </div>
+
+                <p id="cookieStatus">Ready to checkout.</p>
+            </div>
+        </div>
+
+        <div class="shop-actions">
+            <button id="addToCartButton" class="secondary-shop-btn" type="button">
+                Add to Cart
+            </button>
+
+            <button id="buyCookieButton" class="primary-shop-btn" type="button">
+                Buy Now
+            </button>
+        </div>
     </div>
 </div>
 
-<div id="cookieSimulator" class="cookie-shop">
-    <div class="cookie-card">
+<!-- CART DRAWER -->
+<div id="cookieCart" class="cookie-shop cart-drawer">
+    <div class="cart-sheet">
+        <span class="close" onclick="closeCookieCart()">✕</span>
+
+        <h2>🛒 YannieTok Cart</h2>
+
+        <div id="cartEmpty" class="cart-empty">
+            <p>Your cart is empty, babyyy.</p>
+            <button onclick="closeCookieCart()" type="button">Continue Shopping</button>
+        </div>
+
+        <div id="cartFilled" class="cart-filled">
+            <div class="cart-item">
+                <img src="images/cookie0.png" alt="Dubai cookie">
+
+                <div>
+                    <h3>Dubai Chewy Cookie</h3>
+                    <p>Qty: <span id="cartQty">1</span></p>
+                    <b>RM18.90</b>
+                </div>
+            </div>
+
+            <div class="cart-summary">
+                <div>
+                    <span>Subtotal</span>
+                    <b id="cartSubtotal">RM18.90</b>
+                </div>
+
+                <div>
+                    <span>Voucher</span>
+                    <b>-RM5.00</b>
+                </div>
+
+                <div class="cart-total">
+                    <span>Total</span>
+                    <b id="cartTotal">RM13.90</b>
+                </div>
+            </div>
+
+            <button id="checkoutCartBtn" class="primary-shop-btn" type="button">
+                Checkout
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ORDER COMPLETE -->
+<div id="cookieOrderComplete" class="cookie-shop order-complete-modal">
+    <div class="order-card">
+        <span class="close" onclick="closeOrderComplete()">✕</span>
+
+        <div class="order-icon">✅</div>
+
+        <h2>Order Delivered!</h2>
+
+        <p>
+            Dubai Chewy Cookie has arrived safely for Yannie.
+            Cookie simulator is now unlocked.
+        </p>
+
+        <button id="openCookieSimulatorBtn" class="primary-shop-btn" type="button">
+            🍪 Eat Cookie
+        </button>
+
+        <button class="secondary-shop-btn" onclick="closeOrderComplete()" type="button">
+            Later
+        </button>
+    </div>
+</div>
+
+<!-- COOKIE SIMULATOR -->
+<div id="cookieSimulator" class="cookie-shop cookie-simulator-modal">
+    <div class="cookie-sim-card">
         <span class="close" onclick="closeCookieSimulator()">✕</span>
-        <h2>🍪 Cookie Simulator</h2>
-        <img id="cookieImage" src="images/cookie0.png" class="shop-cookie" alt="Cookie simulator">
-        <p id="cookieText">Tap the cookie 😋</p>
+
+        <p class="eyebrow">Unlocked Reward</p>
+
+        <h2>🍪 Cookie Bite Simulator</h2>
+
+        <img
+            id="cookieImage"
+            src="images/cookie0.png"
+            class="shop-cookie bite-cookie"
+            alt="Cookie simulator"
+        >
+
+        <p id="cookieText">Tap the cookie to take a bite 😋</p>
+
+        <div class="bite-progress">
+            <div id="biteProgressFill"></div>
+        </div>
+
+        <p id="biteCounter">0/7 bites</p>
+
+        <button id="resetCookieBtn" class="secondary-shop-btn" type="button">
+            Reset Cookie
+        </button>
     </div>
 </div>
 
