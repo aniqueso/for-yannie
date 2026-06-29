@@ -123,23 +123,23 @@ const defaultPosts = [
         type: "image",
         title: "For Yannie",
         location: "Close Friends",
-        caption: "A soft feed post from Anique: hi sayangg, this little app is made to feel like a cute place you can open anytime.",
+        caption: "Do you remember our first real planned outing, babyyy? I wore the outfit that you bought for me!",
         tags: ["sayangg", "cute", "aniq"],
         likes: 1289,
         time: "2 hours ago",
         comments: [
             { name: "Mofusand Cat", text: "Meow. Soft post approved." },
-            { name: "Anique", text: "For my pretty girl, always 💗" }
+            { name: "Anique", text: "Very, very special moment 💗" }
         ]
     },
     {
         id: "post-2",
-        user: "Cute Notes",
-        handle: "@sayangg.notes",
+        user: "Cutie Yannie",
+        handle: "@sayangg.only",
         avatar: YG_ASSETS.cuteNotesAvatar,
         media: "images/yanniegram/post-02.jpg",
         type: "image",
-        title: "Sayangg Reminder",
+        title: "Beautiful Girl.",
         location: "Soft Reminder Board",
         caption: "Tiny reminder: you do not need to be perfect today. Just breathe slowly, babyy.",
         tags: ["sayangg", "soft", "reminder"],
