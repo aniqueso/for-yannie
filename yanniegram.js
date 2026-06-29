@@ -33,8 +33,8 @@ const defaultStories = [
         avatar: YG_ASSETS.aniqAvatar,
         media: "images/yanniegram/story-01.jpg",
         kicker: "for yannie only",
-        title: "Hi sayangg 💗",
-        text: "A soft little story space made by Anique, so Yannie can open something cute whenever she wants.",
+        title: "Yannie, holding flowers.",
+        text: "A lovable girl.",
         time: "4m",
         music: "music/song2.mp3",
         musicName: "Ingat"
