@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>YannieGram — For Yannie</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="yanniegram.css">
+</head>
+<body>
+    <div id="sparkleLayer" aria-hidden="true"></div>
+
+    <div id="app" class="app-shell">
+        <header class="topbar">
+            <button id="backBtn" class="icon-btn" type="button" aria-label="Back">‹</button>
+            <button id="brandBtn" class="brand" type="button" aria-label="Go home">
+                <span class="brand-mark">✦</span>
+                <span>YannieGram</span>
+            </button>
+            <button id="notifBtn" class="icon-btn" type="button" aria-label="Notifications">♡</button>
+        </header>
+
+        <main>
+            <section id="homePage" class="page active">
+                <section class="hero-card premium-glow">
+                    <p class="eyebrow">for hasrieyannie iman delaila</p>
+                    <h1>Yannie’s soft private little world.</h1>
+                    <p>A cute, soft, believable YannieGram built quietly by Anique — from Aniq Iskandar, made only for her.</p>
+                </section>
+
+                <section class="yannie-pulse-card">
+                    <div><span>🐱</span><b>Mofusand</b><small>guardian mode</small></div>
+                    <div><span>🤎</span><b>Pink + brown</b><small>soft theme locked</small></div>
+                    <div><span>💗</span><b>Sayangg</b><small>soft reminders</small></div>
+                    <div><span>👑</span><b>Princess</b><small>pretty mode</small></div>
+                </section>
+
+                <section class="stories-card">
+                    <div class="section-title stories-title-row">
+                        <div>
+                            <h2>Stories</h2>
+                            <span>tap to watch • post from camera</span>
+                        </div>
+                    </div>
+                    <div id="storiesStrip" class="stories-strip"></div>
+                </section>
+
+                <section class="feed-block">
+                    <div class="section-title">
+                        <h2>For You</h2>
+                        <span id="feedCount">0 posts</span>
+                    </div>
+                    <div id="feed"></div>
+                </section>
+            </section>
+
+            <section id="explorePage" class="page">
+                <section class="page-heading">
+                    <h1>Explore ✨</h1>
+                    <p>Search cute posts, reels, music, Mofusand, and soft reminders.</p>
+                </section>
+
+                <section class="search-card">
+                    <div class="search-box">
+                        <span>🔍</span>
+                        <input id="searchInput" type="search" placeholder="Search YannieGram..." autocomplete="off">
+                        <button id="clearSearchBtn" type="button" aria-label="Clear search">✕</button>
+                    </div>
+                    <div id="searchChips" class="chip-row"></div>
+                </section>
+
+                <section class="explore-results">
+                    <div class="section-title">
+                        <h2>Discover</h2>
+                        <span id="exploreCount">0 results</span>
+                    </div>
+                    <div id="exploreGrid" class="explore-grid"></div>
+                    <div id="exploreEmpty" class="empty-state">
+                        <h3>No results yet 🥺</h3>
+                        <p>Try searching “sayangg”, “babyy”, “princess”, “pretty”, “mofusand”, or “music”.</p>
+                    </div>
+                </section>
+            </section>
+
+            <section id="reelsPage" class="page reels-page">
+                <div class="reels-header">
+                    <h1>Reels</h1>
+                    <span>swipe energy</span>
+                </div>
+                <div id="reelsFeed" class="reels-feed"></div>
+            </section>
+
+            <section id="inboxPage" class="page">
+                <section class="page-heading">
+                    <h1>Inbox 💌</h1>
+                    <p>Private messages from Anique / Aniq Iskandar, made for Yannie to read whenever she misses him.</p>
+                </section>
+
+                <div id="chatList" class="chat-list"></div>
+
+                <section id="chatPanel" class="chat-panel">
+                    <div class="chat-top">
+                        <button id="closeChatBtn" type="button">‹</button>
+                        <img id="chatAvatar" src="images/yanniegram/profile-aniq-iskandar.jpg" alt="Chat avatar">
+                        <div>
+                            <h2 id="chatName">Yannie</h2>
+                            <p id="chatStatus">online in your heart</p>
+                        </div>
+                    </div>
+                    <div id="chatMessages" class="chat-messages"></div>
+                    <form id="chatForm" class="chat-form">
+                        <input id="chatInput" type="text" placeholder="Reply to Aniq..." autocomplete="off">
+                        <button type="submit">Send</button>
+                    </form>
+                </section>
+            </section>
+
+            <section id="profilePage" class="page">
+                <section class="profile-hero">
+                    <div class="profile-cover"></div>
+                    <img class="profile-avatar" src="images/yanniegram/profile-yannie.jpg" alt="Profile avatar">
+                    <h1>@yanniegram</h1>
+                    <p>Soft pink, cocoa brown, Mofusand, music, cute reminders, and little princess-treatment posts arranged quietly by Anique.</p>
+                    <div class="profile-stats">
+                        <div><b id="profilePosts">0</b><span>Posts</span></div>
+                        <div><b id="profileLikes">0</b><span>Likes</span></div>
+                        <div><b id="profileSaved">0</b><span>Saved</span></div>
+                    </div>
+                    <button id="editProfileBtn" type="button">Edit Profile Theme</button>
+                </section>
+
+                <section class="profile-tabs">
+                    <button class="profile-tab active" data-profile-tab="posts" type="button">▦ Posts</button>
+                    <button class="profile-tab" data-profile-tab="saved" type="button">♡ Saved</button>
+                    <button class="profile-tab" data-profile-tab="liked" type="button">♥ Liked</button>
+                </section>
+
+                <div id="profileGrid" class="explore-grid profile-grid"></div>
+                <div id="profileEmpty" class="empty-state">
+                    <h3>Nothing here yet</h3>
+                    <p>Yannie has not posted on her profile yet. Tap ＋ and choose Feed Post to add her first one.</p>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav" aria-label="YannieGram navigation">
+            <button class="nav-item active" data-page="home" type="button">🏠<span>Home</span></button>
+            <button class="nav-item" data-page="explore" type="button">🔍<span>Explore</span></button>
+            <button class="nav-item" data-page="reels" type="button">🎬<span>Reels</span></button>
+            <button class="nav-item" data-page="inbox" type="button">💌<span>Inbox</span></button>
+            <button class="nav-item" data-page="profile" type="button">👤<span>You</span></button>
+        </nav>
+
+        <button id="fabCreateBtn" class="floating-create" type="button" aria-label="Create post or story">＋</button>
+    </div>
+
+    <div id="notifBubble" class="notif-bubble" aria-hidden="true">0</div>
+    <div id="inAppNotification" class="in-app-notification" role="status" aria-live="polite"></div>
+
+    <!-- CREATE ACTION SHEET -->
+    <section id="createActionSheet" class="modal action-sheet-modal" aria-hidden="true">
+        <div class="action-sheet">
+            <div class="sheet-handle"></div>
+            <h2>Create</h2>
+            <p>One clean create button. Choose Story Camera or Feed Post.</p>
+            <button id="sheetStoryBtn" class="sheet-action" type="button">
+                <span>📷</span>
+                <div><b>Story Camera</b><small>camera/gallery, drawing, text, music</small></div>
+            </button>
+            <button id="sheetPostBtn" class="sheet-action" type="button">
+                <span>▦</span>
+                <div><b>Feed Post</b><small>photo or text memory card</small></div>
+            </button>
+            <button id="closeCreateSheetBtn" class="sheet-cancel" type="button">Cancel</button>
+        </div>
+    </section>
+
+    <!-- STORY VIEWER -->
+    <section id="storyViewer" class="story-viewer" aria-hidden="true">
+        <div class="story-progress"><div id="storyProgressFill"></div></div>
+        <button id="closeStoryBtn" class="story-close" type="button">✕</button>
+        <button id="storyPrevZone" class="story-zone story-prev" type="button" aria-label="Previous story"></button>
+        <button id="storyNextZone" class="story-zone story-next" type="button" aria-label="Next story"></button>
+        <div id="storyCanvasDisplay" class="story-canvas-display"></div>
+        <button id="storyMusicPill" class="story-music-pill" type="button">🎵 Story music</button>
+        <div class="story-card-full">
+            <div class="story-user">
+                <img id="storyAvatar" src="images/yanniegram/profile-yannie.jpg" alt="Story avatar">
+                <div>
+                    <h2 id="storyUser">YannieGram</h2>
+                    <p id="storyTime">just now</p>
+                </div>
+            </div>
+            <div class="story-copy">
+                <p id="storyKicker" class="eyebrow">chapter</p>
+                <h1 id="storyTitle">Story title</h1>
+                <p id="storyText">Story text</p>
+            </div>
+            <div class="story-reactions">
+                <button data-react="💗" type="button">💗</button>
+                <button data-react="😭" type="button">😭</button>
+                <button data-react="🌸" type="button">🌸</button>
+                <button data-react="✨" type="button">✨</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CREATE STORY MODAL -->
+    <section id="storyCreateModal" class="modal story-create-modal" aria-hidden="true">
+        <div class="modal-card story-maker-card">
+            <button id="closeStoryCreateBtn" class="modal-close" type="button">✕</button>
+            <p class="eyebrow">yannie story camera</p>
+            <h2>Create Story</h2>
+            <p class="modal-subtitle">Use camera or gallery, draw on it, type a message, add YannieFy music, then publish it to Stories.</p>
+
+            <div class="story-camera-actions">
+                <label class="mini-upload-btn" for="storyCameraInput">📷 Camera
+                    <input id="storyCameraInput" type="file" accept="image/*" capture="environment">
+                </label>
+                <label class="mini-upload-btn" for="storyGalleryInput">🖼️ Gallery
+                    <input id="storyGalleryInput" type="file" accept="image/*">
+                </label>
+                <button id="storyClearCanvasBtn" class="mini-upload-btn" type="button">🧽 Clear Draw</button>
+            </div>
+
+            <div class="story-editor-wrap">
+                <canvas id="storyCanvas" width="360" height="640"></canvas>
+                <div id="storyCanvasHint">Add a photo, type text, or draw here ✨</div>
+            </div>
+
+            <input id="storyTitleInput" type="text" placeholder="Story title, e.g. Hi Yannie 💗">
+            <textarea id="storyTextInput" placeholder="Type anything for the story..."></textarea>
+
+            <div class="story-tool-grid">
+                <label>Pen colour
+                    <input id="storyPenColor" type="color" value="#ff69b4">
+                </label>
+                <label>Pen size
+                    <input id="storyPenSize" type="range" min="2" max="22" value="7">
+                </label>
+                <label>Text colour
+                    <input id="storyTextColor" type="color" value="#ffffff">
+                </label>
+                <label>Text size
+                    <input id="storyTextSize" type="range" min="22" max="48" value="34">
+                </label>
+            </div>
+
+            <label class="music-select-label">Story music from YannieFy
+                <select id="storyMusicSelect">
+                    <option value="">No music</option>
+                    <option value="music/song1.mp3">Rahsia Tuhan</option>
+                    <option value="music/song2.mp3">Ingat</option>
+                    <option value="music/song3.mp3">Pulang</option>
+                    <option value="music/song7.mp3">Mengejar Rindu</option>
+                    <option value="music/song8.mp3">Bahagiamu Deritaku</option>
+                    <option value="music/song9.mp3">Bintang</option>
+                    <option value="music/song10.mp3">Cinta Muka Buku</option>
+                    <option value="music/Firasat.mp3">Firasat</option>
+                </select>
+            </label>
+
+            <button id="publishStoryBtn" class="primary-btn" type="button">Publish Story 💗</button>
+        </div>
+    </section>
+
+    <!-- CREATE POST MODAL -->
+    <section id="createModal" class="modal" aria-hidden="true">
+        <div class="modal-card create-card">
+            <button id="closeCreateBtn" class="modal-close" type="button">✕</button>
+            <p class="eyebrow">new upload</p>
+            <h2>Create Profile Post</h2>
+            <p class="modal-subtitle">Upload a photo from your device or post a text-memory card.</p>
+
+            <label class="upload-box" for="postImageInput">
+                <input id="postImageInput" type="file" accept="image/*">
+                <img id="postPreview" alt="Post preview">
+                <span id="uploadHint">Tap to add photo</span>
+            </label>
+
+            <input id="postTitleInput" type="text" placeholder="Post title, e.g. Hi sayangg 💗">
+            <input id="postLocationInput" type="text" placeholder="Location, e.g. Stadium date">
+            <textarea id="postCaptionInput" placeholder="Write a cute caption..."></textarea>
+
+            <select id="postTagInput">
+                <option value="memory">Memory</option>
+                <option value="date">Date</option>
+                <option value="outfit">Outfit</option>
+                <option value="love">Love</option>
+                <option value="raya">Raya</option>
+                <option value="food">Food</option>
+            </select>
+
+            <button id="publishPostBtn" class="primary-btn" type="button">Publish Post ✨</button>
+        </div>
+    </section>
+
+    <!-- COMMENTS MODAL -->
+    <section id="commentsModal" class="modal" aria-hidden="true">
+        <div class="modal-card comments-card">
+            <button id="closeCommentsBtn" class="modal-close" type="button">✕</button>
+            <h2>Comments</h2>
+            <div id="commentsList" class="comments-list"></div>
+            <form id="commentForm" class="comment-form">
+                <input id="commentInput" type="text" placeholder="Add a cute comment..." autocomplete="off">
+                <button type="submit">Post</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- NOTIFICATIONS DRAWER -->
+    <section id="notifDrawer" class="modal drawer-modal" aria-hidden="true">
+        <div class="drawer-card">
+            <button id="closeNotifBtn" class="modal-close" type="button">✕</button>
+            <h2>Activity</h2>
+            <div id="notifList" class="notif-list"></div>
+        </div>
+    </section>
+
+    <!-- PROFILE THEME MODAL -->
+    <section id="themeModal" class="modal" aria-hidden="true">
+        <div class="modal-card theme-card">
+            <button id="closeThemeBtn" class="modal-close" type="button">✕</button>
+            <h2>Choose App Mood</h2>
+            <p class="modal-subtitle">Changes save on this device.</p>
+            <div class="theme-options">
+                <button data-theme="pink" type="button">💗 Soft Pink</button>
+                <button data-theme="brown" type="button">🤎 Cocoa</button>
+                <button data-theme="night" type="button">🌙 Night Glow</button>
+                <button data-theme="peach" type="button">🍑 Peach</button>
+            </div>
+        </div>
+    </section>
+
+    <div id="heartBurst" aria-hidden="true"></div>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <audio id="storyMusicAudio" preload="auto"></audio>
+
+    <script src="yanniegram.js"></script>
+</body>
+</html>

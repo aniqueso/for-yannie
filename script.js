@@ -225,7 +225,6 @@ function showCare(type){
 
 const secretSearches = {
     lasagna: "🍝 Secret Memory: The lasagna arc was dangerous because you were not even selling it, but you still gave it to me. For free. How was I supposed to not fall harder?",
-    watermelon: "🍉 Search Result: Yannie detected. Watermelon obsession confirmed.",
     cake: "🍰 Secret Memory: It started with chocolate moist cake, but somehow became the start of everything.",
     "miss you": "🥺 Search Result: I miss you more. This is not negotiable.",
     queque: "❤️ Search Result: Your queque is currently loving you at maximum capacity.",
