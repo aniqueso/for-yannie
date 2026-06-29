@@ -832,7 +832,7 @@ function publishStory() {
     addNotification(`Yannie posted a new story: “${title}”. Anique would smile so hard.`, { from: "YannieGram" });
     burstHearts(16, "💗");
 
-    $("#storyCammemoryInput").value = "";
+    $("#storyCameraInput").value = "";
     $("#storyGalleryInput").value = "";
     $("#storyTitleInput").value = "";
     $("#storyTextInput").value = "";
@@ -1123,7 +1123,15 @@ function renderReels() {
         const card = document.createElement("article");
         card.className = "reel-card";
         card.innerHTML = `
-            <video src="${esc(reel.src)}" poster="${esc(reel.poster)}" muted loop playsinline preload="metadata"></video>
+            <video
+    class="reel-video"
+    src="${esc(reel.src)}"
+    poster="${esc(reel.poster)}"
+    muted
+    loop
+    playsinline
+    preload="metadata"
+></video>
             <div class="reel-user-chip">
                 <img src="${esc(reel.avatar || reel.poster || YG_ASSETS.yannieAvatar)}" alt="${esc(reel.user || "YannieGram")}">
                 <div><b>${esc(reel.user || "YannieGram")}</b><small>${esc(reel.handle || "@yanniegram")}</small></div>
@@ -1168,8 +1176,96 @@ function renderReels() {
         });
         feed.appendChild(card);
     });
+    setupReelAutoplay();
+}
+const REEL_SOUND_KEY = "yg_reel_sound_on";
+let reelSoundOn = localStorage.getItem(REEL_SOUND_KEY) === "true";
+let reelObserver = null;
+
+function getReelVideos() {
+    return Array.from(document.querySelectorAll(".reel-video"));
 }
 
+function applyReelSound() {
+    const videos = getReelVideos();
+
+    videos.forEach(video => {
+        video.muted = !reelSoundOn;
+        video.volume = reelSoundOn ? 1 : 0;
+        video.playsInline = true;
+        video.loop = true;
+    });
+
+    const btn = document.getElementById("reelSoundBtn");
+
+    if (btn) {
+        btn.textContent = reelSoundOn ? "🔊 Sound on" : "🔇 Tap for sound";
+    }
+}
+
+async function playReelSafely(video) {
+    if (!video) return;
+
+    try {
+        await video.play();
+    } catch (error) {
+        video.muted = true;
+
+        try {
+            await video.play();
+        } catch (secondError) {
+            console.log("Mobile blocked reel autoplay:", secondError);
+        }
+    }
+}
+
+function setupReelAutoplay() {
+    const videos = getReelVideos();
+
+    if (reelObserver) {
+        reelObserver.disconnect();
+    }
+
+    applyReelSound();
+
+    reelObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            const video = entry.target;
+
+            if (entry.isIntersecting) {
+                playReelSafely(video);
+            } else {
+                video.pause();
+            }
+        });
+    }, {
+        threshold: 0.65
+    });
+
+    videos.forEach(video => {
+        reelObserver.observe(video);
+    });
+}
+
+document.addEventListener("click", event => {
+    const btn = event.target.closest("#reelSoundBtn");
+
+    if (!btn) return;
+
+    reelSoundOn = !reelSoundOn;
+    localStorage.setItem(REEL_SOUND_KEY, String(reelSoundOn));
+
+    applyReelSound();
+
+    const visibleVideo = getReelVideos().find(video => {
+        const rect = video.getBoundingClientRect();
+        return rect.top < window.innerHeight * 0.75 && rect.bottom > window.innerHeight * 0.25;
+    });
+
+    if (visibleVideo) {
+        playReelSafely(visibleVideo);
+    }
+});
 function renderChats() {
     const list = $("#chatList");
     if (!list) return;
@@ -1382,7 +1478,7 @@ function bindEvents() {
     $("#postImageInput")?.addEventListener("change", handleImageUpload);
 
     $("#closeStoryCreateBtn")?.addEventListener("click", closeStoryCreator);
-    $("#storyCammemoryInput")?.addEventListener("change", handleStoryImageUpload);
+    $("#storyCameraInput")?.addEventListener("change", handleStoryImageUpload);
     $("#storyGalleryInput")?.addEventListener("change", handleStoryImageUpload);
     $("#storyTitleInput")?.addEventListener("input", renderStoryEditor);
     $("#storyTextInput")?.addEventListener("input", renderStoryEditor);
