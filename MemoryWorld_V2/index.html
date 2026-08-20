@@ -21,6 +21,11 @@
             </div>
         </header>
 
+        <section id="timelineStatus" aria-label="Timeline status">
+            <div class="timelineChip"><span>Timeline Risk</span><strong id="timelineRiskValue">12%</strong></div>
+            <div class="timelineChip"><span>Fumbles</span><strong id="fumbleValue">♡ ♡ ♡</strong></div>
+        </section>
+
         <aside id="hud" aria-label="Player stats">
             <div class="statRow" data-stat="affection">
                 <span class="statName">Affection</span>
@@ -57,7 +62,7 @@
         <section id="characters" aria-label="Characters">
             <img id="aniq" class="characterSprite" src="images/aniq.png" alt="Aniq">
             <img id="yannie" class="characterSprite" src="images/yannie.png" alt="Yannie">
-            <img id="dad" class="characterSprite" src="images/dad.png" alt="Dad">
+            <img id="dad" class="characterSprite" src="images/aniq.png" alt="" aria-hidden="true" style="display:none">
         </section>
 
         <section id="choiceBox" aria-label="Choices"></section>
@@ -103,16 +108,30 @@
                 <ul id="memoryList" class="menuList"></ul>
             </section>
             <section class="menuSection">
+                <h3>Achievements</h3>
+                <ul id="achievementList" class="menuList"></ul>
+            </section>
+            <section class="menuSection">
                 <h3>Story Log</h3>
                 <ul id="historyList" class="menuList"></ul>
             </section>
         </aside>
 
+        <section id="challengeLayer" aria-label="Memory challenge" aria-live="polite">
+            <div id="challengeCard">
+                <div id="challengeKicker">MEMORY CHECK</div>
+                <h2 id="challengeTitle">Challenge</h2>
+                <p id="challengePrompt"></p>
+                <div id="challengeMeta"></div>
+                <div id="challengeBody"></div>
+            </div>
+        </section>
+
         <div id="toast" role="status" aria-live="polite"></div>
         <div id="fadeLayer"></div>
     </main>
 
-    <script src="js/story.js"></script>
-    <script src="js/engine.js"></script>
+    <script src="js/story.js?v=3.1.1"></script>
+    <script src="js/engine.js?v=3.1.1"></script>
 </body>
 </html>

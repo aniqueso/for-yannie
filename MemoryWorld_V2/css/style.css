@@ -1091,3 +1091,359 @@ body,
         display: none;
     }
 }
+
+/* =========================================================
+   MEMORY WORLD v3 — REAL CHAT / RISK SYSTEM
+   ========================================================= */
+
+/* Choices must not spoil which option is "correct". */
+.choiceBtn.goodChoice,
+.choiceBtn.badChoice,
+.choiceBtn.neutralChoice,
+.choiceBtn.badEndChoice,
+.choiceBtn.weakChoice,
+.choiceBtn.canonChoice,
+.choiceBtn.signalChoice {
+    border-color: rgba(255, 255, 255, 0.20);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+#timelineStatus {
+    position: absolute;
+    top: 82px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 24;
+    display: flex;
+    gap: 8px;
+    pointer-events: none;
+}
+
+.timelineChip {
+    min-width: 112px;
+    padding: 8px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    background: rgba(19, 9, 17, 0.62);
+    box-shadow: 0 8px 26px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(14px);
+    text-align: center;
+}
+
+.timelineChip span {
+    display: block;
+    color: rgba(255, 255, 255, 0.70);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.timelineChip strong {
+    display: block;
+    margin-top: 2px;
+    color: #ffd1e5;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+}
+
+.choiceTimer {
+    overflow: hidden;
+    padding: 10px 13px 11px;
+    border: 1px solid rgba(255, 92, 168, 0.35);
+    border-radius: 16px;
+    background: rgba(20, 8, 16, 0.76);
+    box-shadow: 0 12px 30px rgba(0,0,0,.28);
+}
+
+.choiceTimer > span,
+.choiceTimer > strong {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 850;
+}
+
+.choiceTimer > strong {
+    float: right;
+    color: #ff9ac8;
+}
+
+.choiceTimer > div {
+    clear: both;
+    height: 5px;
+    margin-top: 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255,255,255,.12);
+}
+
+.choiceTimer i {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #ff3186, #ff8fbd);
+    transition: width .92s linear;
+}
+
+.riskChoiceBtn {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 12px;
+    align-items: center;
+}
+
+.riskChoiceBtn .choiceText,
+.riskChoiceBtn .choiceHint {
+    grid-column: 1;
+}
+
+.riskChance {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    display: flex;
+    min-width: 78px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+    font-variant-numeric: tabular-nums;
+}
+
+.riskChance b {
+    color: #ffb0d3;
+    font-size: 9.5px;
+    letter-spacing: .08em;
+}
+
+.riskChance i {
+    color: #fff;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 900;
+}
+
+#challengeLayer {
+    position: absolute;
+    inset: 0;
+    z-index: 120;
+    display: none;
+    place-items: center;
+    padding: 24px;
+    background: rgba(8, 3, 7, .72);
+    backdrop-filter: blur(12px);
+}
+
+#challengeLayer.active {
+    display: grid;
+}
+
+#challengeCard {
+    width: min(620px, 94vw);
+    max-height: min(720px, 86dvh);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 25px;
+    border: 1px solid rgba(255, 143, 189, .42);
+    border-radius: 26px;
+    background:
+        radial-gradient(circle at 12% 0%, rgba(255, 71, 143, .22), transparent 38%),
+        linear-gradient(150deg, rgba(45, 17, 35, .98), rgba(17, 8, 15, .98));
+    box-shadow: 0 28px 90px rgba(0,0,0,.58);
+}
+
+#challengeKicker {
+    color: #ff8fbd;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .15em;
+}
+
+#challengeTitle {
+    margin-top: 7px;
+    color: #fff;
+    font-size: clamp(24px, 5vw, 36px);
+    line-height: 1.05;
+}
+
+#challengePrompt {
+    margin-top: 10px;
+    color: rgba(255,255,255,.78);
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+#challengeMeta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 14px;
+}
+
+#challengeMeta span {
+    padding: 6px 9px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 999px;
+    background: rgba(255,255,255,.07);
+    color: #ffd4e7;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+#challengeBody {
+    display: grid;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.challengeContinue,
+.signalOption,
+.sequenceOption {
+    min-height: 48px;
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 15px;
+    background: rgba(255,255,255,.09);
+    color: #fff;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    text-align: left;
+    cursor: pointer;
+    transition: transform .16s ease, border-color .16s ease, background .16s ease;
+}
+
+.challengeContinue {
+    text-align: center;
+    background: linear-gradient(135deg, #ef3981, #ff6fa8);
+    border-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .challengeContinue:hover,
+    .signalOption:hover,
+    .sequenceOption:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255,143,189,.72);
+    }
+}
+
+.signalOption.correct {
+    border-color: rgba(119, 255, 182, .70);
+    background: rgba(74, 190, 128, .18);
+}
+
+.signalOption.wrong {
+    border-color: rgba(255, 111, 111, .72);
+    background: rgba(190, 62, 79, .18);
+}
+
+.sequenceOptions {
+    display: grid;
+    gap: 9px;
+}
+
+.sequenceSelected {
+    min-height: 46px;
+    padding: 11px 13px;
+    border: 1px dashed rgba(255,143,189,.38);
+    border-radius: 14px;
+    color: rgba(255,255,255,.72);
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.sequenceChosen {
+    opacity: .38;
+    pointer-events: none;
+}
+
+.shake {
+    animation: mwShake .28s linear;
+}
+
+@keyframes mwShake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+
+@media (max-width: 768px) {
+    #timelineStatus {
+        top: calc(72px + env(safe-area-inset-top));
+        width: calc(100vw - 24px);
+        justify-content: center;
+    }
+
+    .timelineChip {
+        flex: 0 1 132px;
+        min-width: 0;
+        padding: 7px 10px;
+    }
+
+    #hud {
+        top: calc(122px + env(safe-area-inset-top));
+    }
+
+    #challengeLayer {
+        padding: 12px;
+    }
+
+    #challengeCard {
+        width: 100%;
+        max-height: calc(100dvh - 28px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+        padding: 20px 16px;
+        border-radius: 22px;
+    }
+
+    .riskChoiceBtn {
+        grid-template-columns: minmax(0,1fr) 65px;
+        padding: 13px 15px;
+    }
+
+    .riskChance {
+        min-width: 60px;
+    }
+
+    .riskChance i {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    #timelineStatus {
+        gap: 6px;
+    }
+
+    .timelineChip span {
+        font-size: 8.5px;
+    }
+
+    .timelineChip strong {
+        font-size: 12px;
+    }
+
+    #choiceBox {
+        gap: 8px;
+    }
+
+    .choiceBtn,
+    .challengeContinue,
+    .signalOption,
+    .sequenceOption {
+        min-height: 46px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .choiceTimer i,
+    .challengeContinue,
+    .signalOption,
+    .sequenceOption {
+        transition: none;
+    }
+
+    .shake {
+        animation: none;
+    }
+}

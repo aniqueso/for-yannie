@@ -13,7 +13,7 @@
 (() => {
     "use strict";
 
-    const STORAGE_KEY = "memoryWorldSave_v2";
+    const STORAGE_KEY = "memoryWorldSave_v3";
     const STORY = window.MW_STORY;
 
     if (!STORY) {
@@ -59,6 +59,18 @@
         signalList: $("#signalList"),
         memoryList: $("#memoryList"),
         historyList: $("#historyList"),
+        achievementList: $("#achievementList"),
+
+        timelineRiskValue: $("#timelineRiskValue"),
+        fumbleValue: $("#fumbleValue"),
+
+        challengeLayer: $("#challengeLayer"),
+        challengeCard: $("#challengeCard"),
+        challengeKicker: $("#challengeKicker"),
+        challengeTitle: $("#challengeTitle"),
+        challengePrompt: $("#challengePrompt"),
+        challengeMeta: $("#challengeMeta"),
+        challengeBody: $("#challengeBody"),
 
         toast: $("#toast"),
         fadeLayer: $("#fadeLayer"),
@@ -80,6 +92,8 @@
     let fullDialogueText = "";
     let chatIndex = 0;
     let toastTimer = null;
+    let challengeTimer = null;
+    let challengeDeadlineTimer = null;
 
     function createInitialState() {
         const stats = {};
@@ -95,7 +109,10 @@
             inventory: [],
             signals: [],
             memories: [],
+            achievements: [],
             history: [],
+            fumbles: 0,
+            riskRolls: {},
             appliedSceneEffects: {},
             appliedChoiceEffects: {}
         };
@@ -123,6 +140,8 @@
             return;
         }
 
+        clearChallengeTimers();
+        hideChallengeLayer();
         state.currentSceneId = sceneId;
         activeScene = scene;
 
@@ -150,6 +169,22 @@
             case "choice":
             case "explore":
                 renderChoiceScene(scene);
+                break;
+
+            case "timedChoice":
+                renderTimedChoiceScene(scene);
+                break;
+
+            case "riskChoice":
+                renderRiskChoiceScene(scene);
+                break;
+
+            case "signalCheck":
+                renderSignalCheckScene(scene);
+                break;
+
+            case "sequence":
+                renderSequenceScene(scene);
                 break;
 
             case "chat":
@@ -266,6 +301,239 @@
         renderChoices(scene.choices || [], dom.choiceBox);
     }
 
+    function showChallengeLayer() {
+        if (dom.challengeLayer) dom.challengeLayer.classList.add("active");
+    }
+
+    function hideChallengeLayer() {
+        if (dom.challengeLayer) dom.challengeLayer.classList.remove("active");
+        if (dom.challengeBody) dom.challengeBody.innerHTML = "";
+        if (dom.challengeMeta) dom.challengeMeta.innerHTML = "";
+    }
+
+    function clearChallengeTimers() {
+        clearInterval(challengeTimer);
+        clearTimeout(challengeDeadlineTimer);
+        challengeTimer = null;
+        challengeDeadlineTimer = null;
+    }
+
+    function renderTimedChoiceScene(scene) {
+        showDialogueBox();
+        setSpeaker(scene.speaker || "Moment");
+        typeDialogue(scene.question || scene.text || "Choose before the moment passes.");
+        if (dom.nextBtn) dom.nextBtn.style.display = "none";
+
+        renderChoices(scene.choices || [], dom.choiceBox);
+
+        const seconds = Math.max(3, Number(scene.timeLimit || 8));
+        let remaining = seconds;
+        const timer = document.createElement("div");
+        timer.className = "choiceTimer";
+        timer.innerHTML = `<span>Moment closes in</span><strong>${remaining}s</strong><div><i></i></div>`;
+        dom.choiceBox?.prepend(timer);
+        const fill = timer.querySelector("i");
+        const value = timer.querySelector("strong");
+
+        challengeTimer = setInterval(() => {
+            remaining -= 1;
+            if (value) value.textContent = `${Math.max(0, remaining)}s`;
+            if (fill) fill.style.width = `${Math.max(0, (remaining / seconds) * 100)}%`;
+        }, 1000);
+
+        challengeDeadlineTimer = setTimeout(() => {
+            clearChallengeTimers();
+            const timeoutEffects = scene.timeoutEffects || [];
+            const timeoutAlreadyAddsFumble = timeoutEffects.some(effect => effect?.type === "addFumble");
+            if (!timeoutAlreadyAddsFumble) {
+                addFumble(1, "You hesitated and the moment moved without you.");
+            }
+            applyEffects(timeoutEffects);
+            if (scene.timeoutNext) renderScene(scene.timeoutNext);
+            else if (scene.next) renderScene(scene.next);
+        }, seconds * 1000);
+    }
+
+    function calculateChoiceChance(choice) {
+        let chance = Number(choice.baseChance ?? 65);
+        Object.entries(choice.boostFrom || {}).forEach(([key, multiplier]) => {
+            chance += Number(state.stats[key] || 0) * Number(multiplier || 0);
+        });
+        Object.entries(choice.penaltyFrom || {}).forEach(([key, multiplier]) => {
+            chance -= Number(state.stats[key] || 0) * Number(multiplier || 0);
+        });
+        chance -= Number(state.fumbles || 0) * 4;
+        return clamp(Math.round(chance), 5, 95);
+    }
+
+    function renderRiskChoiceScene(scene) {
+        showDialogueBox();
+        setSpeaker(scene.speaker || "Risk");
+        typeDialogue(scene.question || scene.text || "How far do you push the moment?");
+        if (dom.nextBtn) dom.nextBtn.style.display = "none";
+        clearChoiceBox();
+
+        (scene.choices || []).forEach((choice, index) => {
+            const isUnlocked = checkRequirement(choice.require);
+            const chance = calculateChoiceChance(choice);
+            const button = document.createElement("button");
+            button.className = "choiceBtn riskChoiceBtn";
+            button.type = "button";
+            button.disabled = !isUnlocked;
+            if (!isUnlocked) button.classList.add("locked");
+
+            const textNode = document.createElement("span");
+            textNode.className = "choiceText";
+            textNode.textContent = choice.text || `Choice ${index + 1}`;
+            const meter = document.createElement("span");
+            meter.className = "riskChance";
+            const label = chance >= 78 ? "LOW RISK" : chance >= 50 ? "MEDIUM RISK" : "HIGH RISK";
+            meter.innerHTML = `<b>${label}</b><i>${chance}%</i>`;
+            const hint = document.createElement("span");
+            hint.className = "choiceHint";
+            hint.textContent = isUnlocked ? (choice.hint || "The timeline can bend here.") : (choice.lockedHint || "Locked for now.");
+            button.append(textNode, meter, hint);
+
+            if (isUnlocked) button.addEventListener("click", () => selectRiskChoice(choice, index, chance));
+            dom.choiceBox?.appendChild(button);
+        });
+    }
+
+    function selectRiskChoice(choice, index, chance) {
+        const key = `${state.currentSceneId}:${index}`;
+        if (!state.riskRolls[key]) {
+            const roll = Math.floor(Math.random() * 100) + 1;
+            state.riskRolls[key] = { roll, chance, success: roll <= chance };
+        }
+        const result = state.riskRolls[key];
+
+        showChallengeLayer();
+        dom.challengeKicker.textContent = "RISK CHECK";
+        dom.challengeTitle.textContent = result.success ? "It landed." : "Timeline wobble.";
+        dom.challengePrompt.textContent = result.success
+            ? (choice.successText || "The moment survives the risk.")
+            : (choice.failText || "Not every brave choice lands cleanly.");
+        dom.challengeMeta.innerHTML = `<span>Chance ${result.chance}%</span><span>Roll ${result.roll}</span>`;
+        dom.challengeBody.innerHTML = "";
+        const continueBtn = document.createElement("button");
+        continueBtn.className = "challengeContinue";
+        continueBtn.type = "button";
+        continueBtn.textContent = result.success ? "Keep going →" : "Recover →";
+        continueBtn.addEventListener("click", () => {
+            hideChallengeLayer();
+            const effects = result.success ? (choice.effects || choice.successEffects || []) : (choice.failEffects || []);
+            applyEffects(effects);
+            if (!result.success && choice.fumbleOnFail !== false) addFumble(1, choice.fumbleText || "That could have gone smoother.");
+            const next = result.success ? (choice.next || choice.successNext) : (choice.failNext || choice.next);
+            if (next) renderScene(next);
+        });
+        dom.challengeBody.appendChild(continueBtn);
+    }
+
+    function renderSignalCheckScene(scene) {
+        hideDialogueBox();
+        clearChoiceBox();
+        showChallengeLayer();
+        dom.challengeKicker.textContent = scene.kicker || "SIGNAL CHECK";
+        dom.challengeTitle.textContent = scene.title || "What actually mattered?";
+        dom.challengePrompt.textContent = scene.prompt || "Pick the line you think mattered most in this memory.";
+        dom.challengeMeta.textContent = scene.meta || "Read the wording, not just the obvious event.";
+        dom.challengeBody.innerHTML = "";
+
+        (scene.options || []).forEach((option, index) => {
+            const button = document.createElement("button");
+            button.className = "signalOption";
+            button.type = "button";
+            button.innerHTML = `<span>${option.speaker || "Chat"}</span><strong>${option.text || ""}</strong>`;
+            button.addEventListener("click", () => {
+                [...dom.challengeBody.querySelectorAll("button")].forEach((b) => b.disabled = true);
+                const correct = option.correct === true;
+                button.classList.add(correct ? "correct" : "wrong");
+                if (correct) {
+                    applyEffects(scene.correctEffects || []);
+                    if (scene.signal) addSignal(scene.signal, Number(scene.signalAmount ?? 1));
+                    dom.challengeMeta.textContent = scene.correctText || "You caught it.";
+                } else {
+                    applyEffects(scene.wrongEffects || []);
+                    addFumble(Number(scene.fumbleOnWrong ?? 1), scene.wrongText || "You read the moment wrong.");
+                    dom.challengeMeta.textContent = scene.wrongText || "Not quite. Context matters.";
+                }
+                const nextBtn = document.createElement("button");
+                nextBtn.className = "challengeContinue";
+                nextBtn.type = "button";
+                nextBtn.textContent = "Continue →";
+                nextBtn.addEventListener("click", () => renderScene(scene.next));
+                dom.challengeBody.appendChild(nextBtn);
+            });
+            dom.challengeBody.appendChild(button);
+        });
+    }
+
+    function renderSequenceScene(scene) {
+        hideDialogueBox();
+        clearChoiceBox();
+        showChallengeLayer();
+        dom.challengeKicker.textContent = scene.kicker || "MEMORY RECONSTRUCTION";
+        dom.challengeTitle.textContent = scene.title || "Put the messages back in order";
+        dom.challengePrompt.textContent = scene.prompt || "Tap the messages in the order they happened.";
+        dom.challengeMeta.textContent = "0 / " + (scene.items?.length || 0);
+        dom.challengeBody.innerHTML = "";
+
+        let progress = 0;
+        const items = (scene.items || []).map((item, index) => ({ ...item, originalIndex: index }));
+        const shuffled = [...items].sort(() => Math.random() - 0.5);
+        const selectedWrap = document.createElement("div");
+        selectedWrap.className = "sequenceSelected";
+        const optionWrap = document.createElement("div");
+        optionWrap.className = "sequenceOptions";
+        dom.challengeBody.append(selectedWrap, optionWrap);
+
+        function resetAttempt() {
+            progress = 0;
+            selectedWrap.innerHTML = "";
+            optionWrap.innerHTML = "";
+            shuffled.forEach((item) => addItemButton(item));
+            dom.challengeMeta.textContent = `0 / ${items.length}`;
+        }
+
+        function addItemButton(item) {
+            const button = document.createElement("button");
+            button.className = "sequenceOption";
+            button.type = "button";
+            button.textContent = item.text;
+            button.addEventListener("click", () => {
+                const expected = items[progress];
+                if (item.originalIndex === expected.originalIndex) {
+                    const chosen = document.createElement("div");
+                    chosen.className = "sequenceChosen";
+                    chosen.textContent = item.text;
+                    selectedWrap.appendChild(chosen);
+                    button.remove();
+                    progress += 1;
+                    dom.challengeMeta.textContent = `${progress} / ${items.length}`;
+                    if (progress === items.length) {
+                        applyEffects(scene.effects || []);
+                        if (scene.achievement) addAchievement(scene.achievement);
+                        const nextBtn = document.createElement("button");
+                        nextBtn.className = "challengeContinue";
+                        nextBtn.type = "button";
+                        nextBtn.textContent = "Memory restored →";
+                        nextBtn.addEventListener("click", () => renderScene(scene.next));
+                        optionWrap.appendChild(nextBtn);
+                    }
+                } else {
+                    addFumble(1, scene.failText || "Wrong order. The memory glitches.");
+                    optionWrap.classList.add("shake");
+                    setTimeout(() => optionWrap.classList.remove("shake"), 380);
+                    resetAttempt();
+                }
+            });
+            optionWrap.appendChild(button);
+        }
+
+        resetAttempt();
+    }
+
     function renderChoices(choices, container) {
         if (!container) return;
         container.innerHTML = "";
@@ -305,22 +573,13 @@
     }
 
     function buildChoiceHint(choice) {
-        const labelMap = {
-            badEnd: "Bad ending",
-            weak: "Weak choice",
-            good: "Good choice",
-            canon: "Canon route",
-            signal: "Signal moment"
-        };
-
-        const label = labelMap[choice.choiceType];
         const hint = choice.hint || "";
-
-        if (!label) return hint;
-        return hint ? `${label} — ${hint}` : label;
+        if (choice.riskLabel) return hint ? `${choice.riskLabel} risk · ${hint}` : `${choice.riskLabel} risk`;
+        return hint;
     }
 
     function selectChoice(choice, index) {
+        clearChallengeTimers();
         const sceneId = state.currentSceneId;
         const effectKey = `${sceneId}:${index}`;
 
@@ -453,6 +712,14 @@
                     addSignal(effect.value, Number(effect.amount ?? 1));
                     break;
 
+                case "addFumble":
+                    addFumble(Number(effect.amount ?? 1), effect.message);
+                    break;
+
+                case "addAchievement":
+                    addAchievement(effect.value);
+                    break;
+
                 case "toast":
                     showToast(effect.message, effect.tone || "neutral");
                     break;
@@ -473,6 +740,31 @@
         }
 
         if (STORY.stats?.signal) addStat("signal", amount, false);
+    }
+
+    function addAchievement(value) {
+        if (!value) return;
+        const before = state.achievements.length;
+        addUnique(state.achievements, value);
+        if (state.achievements.length > before) showToast(`Achievement: ${value}`, "good");
+        updateMenuLists();
+    }
+
+    function addFumble(amount = 1, message = "Fumble") {
+        state.fumbles = clamp(Number(state.fumbles || 0) + Number(amount || 0), 0, 3);
+        if (message) showToast(`${message} (${state.fumbles}/3)`, state.fumbles >= 3 ? "bad" : "neutral");
+        if (state.fumbles >= 3) state.flags.timelineUnstable = true;
+        updateHud();
+        updateMenuLists();
+    }
+
+    function calculateTimelineRisk() {
+        const awkward = Number(state.stats.awkwardness || 0) * 5;
+        const confidence = Number(state.stats.confidence || 0) * 1.6;
+        const trust = Number(state.stats.trust || 0) * 1.4;
+        const comfort = Number(state.stats.comfort || 0) * 1.2;
+        const fumble = Number(state.fumbles || 0) * 14;
+        return clamp(Math.round(28 + awkward + fumble - confidence - trust - comfort), 4, 96);
     }
 
     function addStat(key, amount, show = true) {
@@ -550,6 +842,9 @@
             if (!ok) return false;
         }
 
+        if (requirement.fumblesAtMost !== undefined && Number(state.fumbles || 0) > Number(requirement.fumblesAtMost)) return false;
+        if (requirement.fumblesAtLeast !== undefined && Number(state.fumbles || 0) < Number(requirement.fumblesAtLeast)) return false;
+
         return true;
     }
 
@@ -563,12 +858,20 @@
             if (dom.statValues[key]) dom.statValues[key].textContent = value;
             if (dom.statBars[key]) dom.statBars[key].style.width = `${clamp(percentage, 0, 100)}%`;
         });
+
+        if (dom.timelineRiskValue) dom.timelineRiskValue.textContent = `${calculateTimelineRisk()}%`;
+        if (dom.fumbleValue) {
+            const used = Number(state.fumbles || 0);
+            dom.fumbleValue.textContent = `${"♥ ".repeat(3 - used)}${"♡ ".repeat(used)}`.trim();
+            dom.fumbleValue.dataset.level = used;
+        }
     }
 
     function updateMenuLists() {
         renderList(dom.inventoryList, state.inventory, "No items yet.");
         renderList(dom.signalList, state.signals, "No signals noticed yet.");
         renderList(dom.memoryList, state.memories, "No memories unlocked yet.");
+        renderList(dom.achievementList, state.achievements, "No achievements yet.");
         renderList(dom.historyList, state.history.map((entry) => entry.label), "No story log yet.");
     }
 
@@ -705,13 +1008,18 @@
             inventory: savedState.inventory || [],
             signals: savedState.signals || [],
             memories: savedState.memories || [],
+            achievements: savedState.achievements || [],
             history: savedState.history || [],
+            fumbles: Number(savedState.fumbles || 0),
+            riskRolls: savedState.riskRolls || {},
             appliedSceneEffects: savedState.appliedSceneEffects || {},
             appliedChoiceEffects: savedState.appliedChoiceEffects || {}
         };
     }
 
     function restartGame() {
+        clearChallengeTimers();
+        hideChallengeLayer();
         state = createInitialState();
         closeMenu();
         showToast("Restarted", "neutral");

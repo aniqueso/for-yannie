@@ -11,8 +11,8 @@
 window.MW_STORY = {
     meta: {
         title: "Memory World",
-        version: "0.3.0",
-        authorNote: "Interactive Aniq x Yannie arc: Bazaar to Open House."
+        version: "0.5.1",
+        authorNote: "Real-chat edition: bazaar, pudding, lasagna, wake-up calls, open house, and hidden call-era routes."
     },
 
     startScene: "ch1_morning_start",
@@ -145,7 +145,6 @@ window.MW_STORY = {
             chapterTitle: "The Bazaar",
             background: "images/livingroom.jpg",
             speaker: "Dad",
-            character: "dad",
             text: "Nak ikut pergi bazaar? Dekat Lima Kedai.",
             next: "ch1_dad_choice"
         },
@@ -159,7 +158,7 @@ window.MW_STORY = {
             choices: [
                 {
                     text: "Yes, ikut pergi bazaar",
-                    hint: "Canon route. A small yes creates the whole story.",
+                    hint: "A small yes changes what happens next.",
                     choiceType: "canon",
                     tone: "canon",
                     next: "ch1_bazaar_arrival",
@@ -171,7 +170,7 @@ window.MW_STORY = {
                 },
                 {
                     text: "No, stay home",
-                    hint: "Bad ending. No bazaar, no cake, no Yannie.",
+                    hint: "You can always go home. The bazaar will not wait forever.",
                     choiceType: "badEnd",
                     tone: "bad",
                     next: "ending_stayed_home",
@@ -193,20 +192,21 @@ window.MW_STORY = {
         },
 
         ch1_bazaar_explore: {
-            type: "explore",
+            type: "timedChoice",
             chapterLabel: "Chapter 1",
-            chapterTitle: "Bazaar Gameplay",
+            chapterTitle: "Bazaar Rush",
             background: "images/bazaar.jpg",
-            location: "Lima Kedai Bazaar",
-            time: "35 minutes before Maghrib",
-            status: "Goal: buy food first, then find dessert.",
-            question: "Where do you walk?",
+            speaker: "Timeline",
+            question: "Maghrib is getting closer. Pick your route before the bazaar moment passes.",
+            timeLimit: 14,
+            timeoutNext: "ending_left_bazaar_early",
+            timeoutEffects: [
+                { type: "addFumble", amount: 1, message: "You spent too long deciding." }
+            ],
             choices: [
                 {
-                    text: "Main food stall",
-                    hint: "Buy your meal first. Responsible route.",
-                    choiceType: "good",
-                    tone: "good",
+                    text: "Buy the main meal first",
+                    hint: "Safe. You can circle back for dessert.",
                     next: "ch1_food_stall",
                     effects: [
                         { type: "setFlag", key: "boughtMeal", value: true },
@@ -215,21 +215,8 @@ window.MW_STORY = {
                     ]
                 },
                 {
-                    text: "Drinks stall",
-                    hint: "Useful, but you still need food.",
-                    choiceType: "weak",
-                    tone: "neutral",
-                    next: "ch1_drinks_stall",
-                    effects: [
-                        { type: "setFlag", key: "boughtDrink", value: true },
-                        { type: "addInventory", value: "Cold Drink" }
-                    ]
-                },
-                {
-                    text: "Walk around with no plan",
-                    hint: "You might notice something interesting.",
-                    choiceType: "good",
-                    tone: "good",
+                    text: "Wander and scan the dessert tents",
+                    hint: "You might notice the stall that matters.",
                     next: "ch1_random_walk",
                     effects: [
                         { type: "setFlag", key: "wanderedBazaar", value: true },
@@ -237,19 +224,8 @@ window.MW_STORY = {
                     ]
                 },
                 {
-                    text: "Go toward the dessert tents",
-                    hint: "This is where the memory begins.",
-                    lockedHint: "Buy a meal or walk around first. You have not naturally reached that area yet.",
-                    choiceType: "canon",
-                    tone: "canon",
-                    require: { anyFlagTrue: ["boughtMeal", "wanderedBazaar"] },
-                    next: "ch1_dees_desserts"
-                },
-                {
-                    text: "Leave the bazaar early",
-                    hint: "Bad ending. You avoid the exact tent that changes everything.",
-                    choiceType: "badEnd",
-                    tone: "bad",
+                    text: "Leave early",
+                    hint: "Fastest route home. Very bad for the timeline.",
                     next: "ending_left_bazaar_early"
                 }
             ]
@@ -261,8 +237,12 @@ window.MW_STORY = {
             chapterTitle: "Bazaar Gameplay",
             background: "images/bazaar.jpg",
             speaker: "Narrator",
-            text: "You buy your meal. Dad looks satisfied. One problem solved. Now something sweet sounds nice.",
-            next: "ch1_bazaar_explore"
+            text: "You buy your meal. Dad looks satisfied. One problem solved. Now something sweet sounds nice. You turn toward the dessert tents instead of looping around the bazaar again.",
+            next: "ch1_dees_desserts",
+            effects: [
+                { type: "setFlag", key: "foundDessertStall", value: true },
+                { type: "addMemory", value: "After buying the main meal, Aniq finally found Dee's Desserts." }
+            ]
         },
 
         ch1_drinks_stall: {
@@ -271,8 +251,8 @@ window.MW_STORY = {
             chapterTitle: "Bazaar Gameplay",
             background: "images/bazaar.jpg",
             speaker: "Narrator",
-            text: "You buy a drink first. Not wrong, but your stomach reminds you that berbuka needs more than sugar water.",
-            next: "ch1_bazaar_explore"
+            text: "You buy a drink first. Not wrong, but your stomach reminds you that berbuka needs more than sugar water. You grab the main meal, then drift toward the dessert tents.",
+            next: "ch1_food_stall"
         },
 
         ch1_random_walk: {
@@ -281,8 +261,12 @@ window.MW_STORY = {
             chapterTitle: "Bazaar Gameplay",
             background: "images/bazaar.jpg",
             speaker: "Narrator",
-            text: "You walk through the crowd with no plan. Somehow, the random path brings you closer to the dessert tents.",
-            next: "ch1_bazaar_explore"
+            text: "You walk through the crowd with no plan. Somehow, the random path brings you closer to the dessert tents. One sign finally catches your eye: Dee's Desserts.",
+            next: "ch1_dees_desserts",
+            effects: [
+                { type: "setFlag", key: "foundDessertStall", value: true },
+                { type: "addSignal", value: "Dee's Desserts spotted at Lima Kedai bazaar." }
+            ]
         },
 
         ch1_dees_desserts: {
@@ -315,7 +299,7 @@ window.MW_STORY = {
             choices: [
                 {
                     text: "Chocolate moist cake satu",
-                    hint: "Canon route. This cake becomes the excuse for everything later.",
+                    hint: "Simple, specific, and easy to say.",
                     choiceType: "canon",
                     tone: "canon",
                     next: "ch1_buy_cake",
@@ -329,7 +313,7 @@ window.MW_STORY = {
                 },
                 {
                     text: "Apa yang paling sedap dekat sini?",
-                    hint: "Good choice. It gives her space to recommend something.",
+                    hint: "Let the seller choose where the conversation goes.",
                     choiceType: "good",
                     tone: "good",
                     next: "ch1_yannie_recommend",
@@ -340,7 +324,7 @@ window.MW_STORY = {
                 },
                 {
                     text: "Uhh... kejap, saya tengok dulu",
-                    hint: "Weak choice. You survive, but the pause is awkward.",
+                    hint: "Buying time is safe, but silence has a cost.",
                     choiceType: "weak",
                     tone: "neutral",
                     next: "ch1_recover_at_tent",
@@ -350,7 +334,7 @@ window.MW_STORY = {
                 },
                 {
                     text: "Nothing, just looking",
-                    hint: "Bad ending. You met her, then immediately removed yourself from the plot.",
+                    hint: "You can leave without buying anything.",
                     choiceType: "badEnd",
                     tone: "bad",
                     next: "ending_just_looking"
@@ -390,7 +374,7 @@ window.MW_STORY = {
                 },
                 {
                     text: "Panic and walk away",
-                    hint: "Bad ending. The cake route dies here.",
+                    hint: "You can decide this was only a one-time bazaar stop.",
                     choiceType: "badEnd",
                     tone: "bad",
                     next: "ending_walked_away"
@@ -455,7 +439,7 @@ window.MW_STORY = {
                 },
                 {
                     text: "Do nothing. Just enjoy the cake.",
-                    hint: "Bad ending. You had the bridge but refused to cross it.",
+                    hint: "No message means no chance of saying the wrong thing.",
                     choiceType: "badEnd",
                     tone: "bad",
                     next: "ending_no_number"
@@ -539,7 +523,7 @@ window.MW_STORY = {
             choices: [
                 {
                     text: "hola yannie ke ni",
-                    hint: "Canon route. Casual, real, and slightly brave.",
+                    hint: "Casual, real, and slightly brave.",
                     choiceType: "canon",
                     tone: "canon",
                     next: "ch2_hola_reply",
@@ -573,7 +557,7 @@ window.MW_STORY = {
                 },
                 {
                     text: "Hi, I saw you at bazaar. You cute lah.",
-                    hint: "Bad ending. Too much, too early.",
+                    hint: "Very direct. She may not read it the way you intend.",
                     choiceType: "badEnd",
                     tone: "bad",
                     next: "ending_too_direct_first_text"
@@ -584,37 +568,29 @@ window.MW_STORY = {
         ch2_hola_reply: {
             type: "phoneChoice",
             chapterLabel: "Chapter 2",
-            chapterTitle: "First Reply",
+            chapterTitle: "The First Chat",
             background: "images/phone.jpg",
             chatName: "Yannie",
-            chatStatus: "Online",
+            chatStatus: "1 March 2026 · 9:55 PM",
             messages: [
                 { from: "me", text: "hola yannie ke ni" },
                 { from: "her", text: "yep nak order kan" },
-                { from: "signal", text: "Signal: instant reply." }
+                { from: "me", text: "haah" },
+                { from: "her", text: "tkfaham eh voice tdi" },
+                { from: "me", text: "patutla macam kenal kat bazaar tadi" },
+                { from: "her", text: "laa tak cam ke" },
+                { from: "me", text: "tak dok" },
+                { from: "her", text: "hmph" },
+                { from: "her", text: "ok bagi order detail" }
             ],
             choices: [
                 {
-                    text: "Haa nak order chocolate moist cake lagi",
-                    hint: "Natural. Keeps the conversation alive.",
-                    choiceType: "good",
-                    tone: "good",
-                    next: "ch2_order_chat",
+                    text: "Reconstruct this chat before ordering",
+                    hint: "The details matter later.",
+                    next: "ch2_first_chat_reconstruction",
                     effects: [
-                        { type: "addSignal", value: "Yannie replied instantly to your first text.", amount: 1 },
-                        { type: "addStat", key: "affection", amount: 1 },
-                        { type: "addStat", key: "trust", amount: 1 }
-                    ]
-                },
-                {
-                    text: "Yes. Price berapa?",
-                    hint: "Business-like. Safe, but less personal.",
-                    choiceType: "weak",
-                    tone: "neutral",
-                    next: "ch2_order_chat",
-                    effects: [
-                        { type: "addSignal", value: "Yannie replied instantly to your first text.", amount: 1 },
-                        { type: "addStat", key: "trust", amount: 1 }
+                        { type: "addStat", key: "comfort", amount: 1 },
+                        { type: "addMemory", value: "First WhatsApp chat — 1 March 2026." }
                     ]
                 }
             ]
@@ -684,47 +660,57 @@ window.MW_STORY = {
         },
 
         ch2_order_chat: {
-            type: "phoneChoice",
+            type: "riskChoice",
             chapterLabel: "Chapter 2",
-            chapterTitle: "Ordering Cake",
+            chapterTitle: "RM6 Decision",
             background: "images/phone.jpg",
-            chatName: "Yannie",
-            chatStatus: "Online",
-            messages: [
-                { from: "her", text: "Okay nanti saya arrange delivery." },
-                { from: "me", text: "Alright thank you." },
-                { from: "system", text: "The order is set. But your birthday is two days away." }
-            ],
+            speaker: "Aniq POV",
+            question: "Two chocolate moist cakes. RM6 total. The order is done — but your birthday is tomorrow. Do you make the joke?",
             choices: [
                 {
-                    text: "is there a birthday discount?",
-                    hint: "Canon route. A joke that accidentally creates a memory.",
-                    choiceType: "canon",
-                    tone: "canon",
+                    text: "takde diskaun bday esok ke HAHAHAHAHA",
+                    hint: "This is the real line. It can sound playful or demanding depending on the vibe you've built.",
+                    baseChance: 58,
+                    boostFrom: { comfort: 3, trust: 2, confidence: 2 },
+                    penaltyFrom: { awkwardness: 4 },
+                    successText: "The joke lands exactly the way it did in the real chat.",
+                    failText: "The joke lands flatter in this timeline. You can still recover.",
                     next: "ch2_birthday_joke_reply",
+                    failNext: "ch2_birthday_joke_recovery",
                     effects: [
                         { type: "setFlag", key: "birthdayDiscountJoke", value: true },
                         { type: "addStat", key: "confidence", amount: 1 },
                         { type: "addStat", key: "comfort", amount: 1 }
+                    ],
+                    failEffects: [
+                        { type: "addStat", key: "awkwardness", amount: 1 }
                     ]
                 },
                 {
-                    text: "Okayy, thank you Yannie",
-                    hint: "Safe. You miss the birthday pudding route.",
-                    choiceType: "weak",
-                    tone: "neutral",
+                    text: "Okay, thank you. Keep it business.",
+                    hint: "Very safe. The pudding route may never open.",
+                    baseChance: 94,
+                    successText: "Perfectly normal customer behaviour.",
                     next: "ch2_normal_delivery",
                     effects: [
                         { type: "setFlag", key: "noBirthdayHint", value: true },
                         { type: "addStat", key: "trust", amount: 1 }
-                    ]
+                    ],
+                    fumbleOnFail: false
                 },
                 {
-                    text: "My birthday soon, free cake can ah?",
-                    hint: "Bad ending. Too demanding, not cute.",
-                    choiceType: "badEnd",
-                    tone: "bad",
-                    next: "ending_free_cake_demand"
+                    text: "My birthday tomorrow. Free cake can?",
+                    hint: "High-pressure version of the same idea.",
+                    baseChance: 18,
+                    boostFrom: { comfort: 1 },
+                    penaltyFrom: { awkwardness: 5 },
+                    successText: "Somehow she laughs it off, but the route gets shaky.",
+                    failText: "Yeah. Too much.",
+                    next: "ch2_birthday_joke_recovery",
+                    failNext: "ending_free_cake_demand",
+                    effects: [
+                        { type: "addStat", key: "awkwardness", amount: 2 }
+                    ]
                 }
             ]
         },
@@ -735,21 +721,25 @@ window.MW_STORY = {
             chapterTitle: "Birthday Discount",
             background: "images/phone.jpg",
             chatName: "Yannie",
-            chatStatus: "Online",
+            chatStatus: "2 March 2026 · 5:16 PM",
             messages: [
-                { from: "me", text: "is there a birthday discount?" },
-                { from: "her", text: "Hahaha birthday bila?" },
-                { from: "me", text: "2 days lagi" },
-                { from: "her", text: "Ohh okayy" },
-                { from: "system", text: "You expected nothing from that joke." }
+                { from: "me", text: "takde diskaun bday esok ke HAHAHAHAHA" },
+                { from: "me", text: "takdela" },
+                { from: "her", text: "esok beday kaa" },
+                { from: "me", text: "iyo" },
+                { from: "her", text: "🤔🤔" },
+                { from: "her", text: "okayla" },
+                { from: "her", text: "belanja puding caramel" },
+                { from: "me", text: "uish sumpah ah HAHAHAHA" },
+                { from: "her", text: "yeyee" },
+                { from: "her", text: "first time bagi cust free sbb beday ni🥰" },
+                { from: "her", text: "isokeyy happy birthday btw" }
             ],
             choices: [
                 {
-                    text: "Sleep thinking it was just a normal joke",
-                    hint: "Continue to tomorrow's delivery.",
-                    choiceType: "canon",
-                    tone: "canon",
-                    next: "ch2_delivery_pudding"
+                    text: "Notice what changed here",
+                    hint: "Don't just look at the free pudding.",
+                    next: "ch2_birthday_signal"
                 }
             ]
         },
@@ -757,58 +747,41 @@ window.MW_STORY = {
         ch2_delivery_pudding: {
             type: "story",
             chapterLabel: "Chapter 2",
-            chapterTitle: "Unexpected Pudding",
-            background: "images/cake.jpg",
+            chapterTitle: "The Pudding Arrives",
+            background: "images/pudding.jpg",
             speaker: "Narrator",
-            text: "The next evening, the delivery arrives. You open the plastic and pause. There is a caramel pudding slice inside. You did not order this.",
-            next: "ch2_pudding_discovery_chat"
+            text: "The order arrives. There is caramel pudding with it, plus a small birthday note. What started as a RM6 cake order now has a detail you definitely did not pay for.",
+            next: "ch2_pudding_discovery_chat",
+            effects: [
+                { type: "addInventory", value: "Birthday Caramel Pudding" },
+                { type: "addAchievement", value: "First Freebie" },
+                { type: "addMemory", value: "Birthday pudding — 2 March 2026." }
+            ]
         },
 
         ch2_pudding_discovery_chat: {
             type: "phoneChoice",
             chapterLabel: "Chapter 2",
-            chapterTitle: "HBD Aniq",
+            chapterTitle: "Pudding Review",
             background: "images/phone.jpg",
             chatName: "Yannie",
-            chatStatus: "Online",
+            chatStatus: "2 March 2026 · 7:28 PM",
             messages: [
-                { from: "me", text: "Yannie I think you accidentally put pudding in my order" },
-                { from: "her", text: "Nope" },
-                { from: "her", text: "For your birthday" },
-                { from: "system", text: "You look again. On the side, she wrote: hbd Aniq." },
-                { from: "signal", text: "Signal: she remembered and added something herself." }
+                { from: "me", text: "pasni review puding" },
+                { from: "her", text: "klau enak bgtau" },
+                { from: "her", text: "klau sejuk ii lgi sedap" },
+                { from: "her", text: "( yakin )" },
+                { from: "me", text: "sedap wey srs ii puding karamel tu" },
+                { from: "me", text: "yang kek moist tu obviously sedap ah sebabtu order banyak kali an 🤷🏻" },
+                { from: "her", text: "paduu doo thanks" },
+                { from: "me", text: "lagi sedap bila org lanje an" },
+                { from: "her", text: "takpe beday boy" }
             ],
             choices: [
                 {
-                    text: "Wait seriously? Thank you, that's so nice of you 😭",
-                    hint: "Good. Honest appreciation without being too much.",
-                    choiceType: "signal",
-                    tone: "signal",
-                    next: "ch2_instagram_story",
-                    effects: [
-                        { type: "addSignal", value: "Yannie gave you birthday pudding with 'hbd Aniq'.", amount: 2 },
-                        { type: "addStat", key: "affection", amount: 2 },
-                        { type: "addStat", key: "comfort", amount: 1 },
-                        { type: "addMemory", value: "Birthday pudding: hbd Aniq." }
-                    ]
-                },
-                {
-                    text: "Ohh haha thanks",
-                    hint: "Weak. You hide too much, so the moment lands softer.",
-                    choiceType: "weak",
-                    tone: "neutral",
-                    next: "ch2_instagram_story",
-                    effects: [
-                        { type: "addSignal", value: "Yannie gave you birthday pudding with 'hbd Aniq'.", amount: 1 },
-                        { type: "addStat", key: "affection", amount: 1 }
-                    ]
-                },
-                {
-                    text: "This means you like me right?",
-                    hint: "Bad ending. You turned a sweet gesture into pressure.",
-                    choiceType: "badEnd",
-                    tone: "bad",
-                    next: "ending_pressured_her"
+                    text: "Continue into the pudding mission",
+                    hint: "Tomorrow, you go back again.",
+                    next: "ch2_effort_signal"
                 }
             ]
         },
@@ -832,7 +805,7 @@ window.MW_STORY = {
             choices: [
                 {
                     text: "Take photos with the cake and post on Instagram Story",
-                    hint: "Canon route. Public but not too direct.",
+                    hint: "Public enough to be playful, indirect enough to recover.",
                     choiceType: "canon",
                     tone: "canon",
                     next: "ch2_story_liked",
@@ -855,7 +828,7 @@ window.MW_STORY = {
                 },
                 {
                     text: "Post five stories tagging her repeatedly",
-                    hint: "Bad ending. Brother, relax.",
+                    hint: "This is a lot of energy for where the timeline is right now.",
                     choiceType: "badEnd",
                     tone: "bad",
                     next: "ending_story_spam"
@@ -948,7 +921,7 @@ window.MW_STORY = {
                 },
                 {
                     text: "Text: I just want to talk to you actually",
-                    hint: "Bad ending. Too early, too intense.",
+                    hint: "High commitment before the comfort is there.",
                     choiceType: "badEnd",
                     tone: "bad",
                     next: "ending_too_much_cake_era"
@@ -1034,7 +1007,7 @@ window.MW_STORY = {
                 },
                 {
                     text: "I can accompany you every day if you want",
-                    hint: "Bad ending. Not yet. Way too forward.",
+                    hint: "You are skipping several steps.",
                     choiceType: "badEnd",
                     tone: "bad",
                     next: "ending_too_forward_daily"
@@ -1059,7 +1032,7 @@ window.MW_STORY = {
             type: "story",
             chapterLabel: "Chapter 3",
             chapterTitle: "Realization",
-            background: "images/night.jpg",
+            background: "images/room.jpg",
             speaker: "Narrator",
             text: "You realize the excuse is not just cake anymore. You are starting to like the notification. The name. The way the conversation continues.",
             next: "ch4_lasagna_start",
@@ -1072,7 +1045,7 @@ window.MW_STORY = {
             type: "story",
             chapterLabel: "Chapter 3",
             chapterTitle: "Realization",
-            background: "images/night.jpg",
+            background: "images/room.jpg",
             speaker: "Narrator",
             text: "You are still mostly a customer, but something small is changing. The conversation is not strong yet, but it has not closed either.",
             next: "ch4_lasagna_start"
@@ -1083,54 +1056,49 @@ window.MW_STORY = {
         ===================================================== */
 
         ch4_lasagna_start: {
-            type: "phoneChoice",
+            type: "riskChoice",
             chapterLabel: "Chapter 4",
             chapterTitle: "Lasagna Arc",
             background: "images/phone.jpg",
-            chatName: "Yannie",
-            chatStatus: "Online",
-            messages: [
-                { from: "her", text: "Wait I wanna look a tutorial on how to make lasagnas" },
-                { from: "system", text: "Aniq POV: Lasagna? Is she selling it? Is this a product announcement?" }
-            ],
+            speaker: "12 March · Chat",
+            question: "Yannie: “jap nak tgk tuto masak lasagna”\n\nWhat do you send?",
             choices: [
                 {
-                    text: "Are you going to sell it? I wanna buy it.",
-                    hint: "Canon route. This accidentally opens the lasagna gift scene.",
-                    choiceType: "canon",
-                    tone: "canon",
+                    text: "nak jual ke / nak beli pls 🙏🏻",
+                    hint: "The real reply. Slightly shameless, somehow effective.",
+                    baseChance: 55,
+                    boostFrom: { comfort: 3, trust: 2, signal: 2 },
+                    penaltyFrom: { awkwardness: 3 },
+                    successText: "She does not shut it down. She actually offers you some.",
+                    failText: "The joke feels too transactional in this run.",
                     next: "ch4_she_offers_lasagna",
+                    failNext: "ch4_dry_recover",
                     effects: [
                         { type: "addStat", key: "confidence", amount: 1 }
+                    ],
+                    failEffects: [
+                        { type: "addStat", key: "awkwardness", amount: 1 }
                     ]
                 },
                 {
-                    text: "Rajinnya you belajar buat lasagna",
-                    hint: "Good. Warm and supportive.",
-                    choiceType: "good",
-                    tone: "good",
+                    text: "Rajinnya. Good luck chef.",
+                    hint: "Safe supportive route.",
+                    baseChance: 90,
                     next: "ch4_she_offers_lasagna_soft",
                     effects: [
-                        { type: "addStat", key: "affection", amount: 1 },
+                        { type: "addStat", key: "trust", amount: 1 },
                         { type: "addStat", key: "comfort", amount: 1 }
-                    ]
+                    ],
+                    fumbleOnFail: false
                 },
                 {
-                    text: "Oh okay",
-                    hint: "Weak. Conversation almost dies.",
-                    choiceType: "weak",
-                    tone: "neutral",
-                    next: "ch4_dry_recover",
-                    effects: [
-                        { type: "addStat", key: "comfort", amount: -1 }
-                    ]
-                },
-                {
-                    text: "Make for me la. Free ah?",
-                    hint: "Bad ending. Asking free food directly ruins the sweetness.",
-                    choiceType: "badEnd",
-                    tone: "bad",
-                    next: "ending_lasagna_fumbled"
+                    text: "Make for me. Free ah?",
+                    hint: "Same idea, zero finesse.",
+                    baseChance: 14,
+                    penaltyFrom: { awkwardness: 5 },
+                    next: "ch4_she_offers_lasagna_soft",
+                    failNext: "ending_lasagna_fumbled",
+                    failText: "The lasagna route has left the building."
                 }
             ]
         },
@@ -1177,49 +1145,26 @@ window.MW_STORY = {
             chapterTitle: "Lasagna Offer",
             background: "images/phone.jpg",
             chatName: "Yannie",
-            chatStatus: "Online",
+            chatStatus: "12 March 2026",
             messages: [
-                { from: "me", text: "Are you going to sell it? I wanna buy it." },
-                { from: "her", text: "Do you want it?" },
-                { from: "her", text: "But I didn't sell it" },
-                { from: "signal", text: "Signal: she's offering you a taste of her own cooking." }
+                { from: "me", text: "nak jual ke" },
+                { from: "me", text: "nak beli pls 🙏🏻" },
+                { from: "her", text: "nak masak" },
+                { from: "her", text: "mau kaa" },
+                { from: "her", text: "tak jual la tapi" },
+                { from: "her", text: "nak buat makan makan sendiri je" },
+                { from: "her", text: "kalau sedap baru bagi" }
             ],
             choices: [
                 {
-                    text: "Wait really? I mean yes, of course I want it 😭",
-                    hint: "Signal route. Excited but still sweet.",
-                    choiceType: "signal",
-                    tone: "signal",
-                    next: "ch4_lasagna_updates",
+                    text: "HAHAHAHAHA okay",
+                    hint: "Take the offer without making it heavier than it is.",
+                    next: "ch4_lasagna_memory_order",
                     effects: [
                         { type: "setFlag", key: "lasagnaGiftUnlocked", value: true },
-                        { type: "addSignal", value: "Yannie offered you homemade lasagna for free.", amount: 2 },
-                        { type: "addStat", key: "affection", amount: 2 },
-                        { type: "addStat", key: "comfort", amount: 1 },
-                        { type: "addMemory", value: "Lasagna gift route unlocked." }
-                    ]
-                },
-                {
-                    text: "If it's not troublesome, yes please.",
-                    hint: "Good. Respectful and safe.",
-                    choiceType: "good",
-                    tone: "good",
-                    next: "ch4_lasagna_updates",
-                    effects: [
-                        { type: "setFlag", key: "lasagnaGiftUnlocked", value: true },
-                        { type: "addSignal", value: "Yannie offered you homemade lasagna for free.", amount: 1 },
-                        { type: "addStat", key: "trust", amount: 1 }
-                    ]
-                },
-                {
-                    text: "Free food? Nice.",
-                    hint: "Weak. You make it sound less special.",
-                    choiceType: "weak",
-                    tone: "neutral",
-                    next: "ch4_lasagna_updates",
-                    effects: [
-                        { type: "setFlag", key: "lasagnaGiftUnlocked", value: true },
-                        { type: "addStat", key: "awkwardness", amount: 1 }
+                        { type: "addSignal", value: "Yannie offered a taste of the lasagna if it turned out well.", amount: 2 },
+                        { type: "addStat", key: "affection", amount: 1 },
+                        { type: "addStat", key: "comfort", amount: 1 }
                     ]
                 }
             ]
@@ -1258,49 +1203,23 @@ window.MW_STORY = {
         ch4_lasagna_updates: {
             type: "phoneChoice",
             chapterLabel: "Chapter 4",
-            chapterTitle: "Live Updates",
+            chapterTitle: "RM70 Lasagna",
             background: "images/phone.jpg",
             chatName: "Yannie",
-            chatStatus: "Typing...",
+            chatStatus: "12 March · live updates",
             messages: [
-                { from: "her", text: "I'm buying the stuff now" },
-                { from: "her", text: "Need sauce, cheese, pasta sheets" },
-                { from: "system", text: "Aniq POV: She is updating me? About the lasagna? About her whereabouts? Be normal." }
+                { from: "her", text: "otw belii" },
+                { from: "her", text: "total hit 70" },
+                { from: "me", text: "peh 70 ringgit lasagna" },
+                { from: "her", text: "ye mat" },
+                { from: "her", text: "doakan la 😔😔" },
+                { from: "me", text: "menjadi do confirm ii" }
             ],
             choices: [
                 {
-                    text: "Careful jalan, bazaar area crowded right now",
-                    hint: "Good. Caring without being controlling.",
-                    choiceType: "good",
-                    tone: "good",
-                    next: "ch4_cooking_update",
-                    effects: [
-                        { type: "addStat", key: "trust", amount: 1 },
-                        { type: "addStat", key: "comfort", amount: 1 },
-                        { type: "addSignal", value: "Yannie updated you while buying lasagna ingredients.", amount: 1 }
-                    ]
-                },
-                {
-                    text: "Chef Yannie arc unlocked",
-                    hint: "Playful. Good if comfort is already decent.",
-                    choiceType: "signal",
-                    tone: "signal",
-                    next: "ch4_cooking_update",
-                    effects: [
-                        { type: "addStat", key: "affection", amount: 1 },
-                        { type: "addStat", key: "comfort", amount: 1 },
-                        { type: "addSignal", value: "Yannie updated you while buying lasagna ingredients.", amount: 1 }
-                    ]
-                },
-                {
-                    text: "Okay",
-                    hint: "Weak. You receive updates but do not build on them.",
-                    choiceType: "weak",
-                    tone: "neutral",
-                    next: "ch4_cooking_update",
-                    effects: [
-                        { type: "addStat", key: "comfort", amount: -1 }
-                    ]
+                    text: "Track the cooking timeline",
+                    hint: "One more memory reconstruction.",
+                    next: "ch4_lasagna_memory_order"
                 }
             ]
         },
@@ -1349,27 +1268,23 @@ window.MW_STORY = {
         ch4_receive_lasagna: {
             type: "choice",
             chapterLabel: "Chapter 4",
-            chapterTitle: "Taste Test",
-            background: "images/cake.jpg",
-            question: "The next day, she really gives you the lasagna. You taste it. Holy damn. It is good.",
+            chapterTitle: "Lasagna Tester",
+            background: "images/phone.jpg",
+            question: "The lasagna actually happens. How do you react?",
             choices: [
                 {
-                    text: "Text her immediately: this is actually so good",
-                    hint: "Canon. Genuine reaction matters.",
-                    choiceType: "canon",
-                    tone: "canon",
+                    text: "Tell her honestly if it is good",
+                    hint: "Food review has basically become a recurring language at this point.",
                     next: "ch5_wakeup_request_setup",
                     effects: [
-                        { type: "addStat", key: "affection", amount: 1 },
-                        { type: "addStat", key: "comfort", amount: 1 },
-                        { type: "addMemory", value: "Aniq tasted Yannie's homemade lasagna." }
+                        { type: "addAchievement", value: "Lasagna Tester" },
+                        { type: "addMemory", value: "The RM70 lasagna experiment." },
+                        { type: "addStat", key: "trust", amount: 1 }
                     ]
                 },
                 {
-                    text: "Wait a few hours so you don't look too excited",
-                    hint: "Weak. Playing it too cool weakens the warmth.",
-                    choiceType: "weak",
-                    tone: "neutral",
+                    text: "Act too cool and barely react",
+                    hint: "Low risk, low reward.",
                     next: "ch5_wakeup_request_setup",
                     effects: [
                         { type: "addStat", key: "comfort", amount: -1 }
@@ -1385,46 +1300,36 @@ window.MW_STORY = {
         ch5_wakeup_request_setup: {
             type: "phoneChoice",
             chapterLabel: "Chapter 5",
-            chapterTitle: "Wake-Up Call",
+            chapterTitle: "The Wake-Up Bet",
             background: "images/phone.jpg",
             chatName: "Yannie",
-            chatStatus: "Late night",
+            chatStatus: "22 March 2026 · 10:07 PM",
             messages: [
-                { from: "system", text: "One night, the texting goes longer than usual." },
-                { from: "her", text: "Can you wake me up tomorrow?" },
-                { from: "system", text: "Aniq POV: OH MY GAAAAAAAAAAAAAAAAAAAAAAAAAAAA" }
+                { from: "me", text: "tolog kejut pls esok pagi kul 6 kena gi breakfast" },
+                { from: "her", text: "HAHAHAHHAHAHAHAHAHAAHHAHA" },
+                { from: "her", text: "susah task tu" },
+                { from: "me", text: "tak memasal yang suh kejut bangun dulu" },
+                { from: "her", text: "yee HAHHAAHHA" },
+                { from: "her", text: "rasenye dia yg kene kejut dulu" },
+                { from: "me", text: "baik cip saya jela kejutkan 🥰" }
             ],
             choices: [
                 {
-                    text: "Call her in the morning",
-                    hint: "Canon route. This can become the 40-minute call.",
-                    choiceType: "canon",
-                    tone: "canon",
-                    next: "ch5_call_start",
+                    text: "Set the phone loud and trust the plan",
+                    hint: "Tomorrow, the call really comes.",
+                    next: "ch5_six_am_call",
                     effects: [
-                        { type: "setFlag", key: "agreedWakeCall", value: true },
-                        { type: "addStat", key: "confidence", amount: 1 },
-                        { type: "addSignal", value: "Yannie asked you to wake her up.", amount: 2 }
+                        { type: "setFlag", key: "askedWakeup", value: true },
+                        { type: "addStat", key: "trust", amount: 1 }
                     ]
                 },
                 {
-                    text: "Text only: wake up wake up",
-                    hint: "Weak. It fulfills the task but misses the intimacy.",
-                    choiceType: "weak",
-                    tone: "neutral",
-                    next: "ch5_text_only_route",
+                    text: "Mute the phone and trust your internal clock",
+                    hint: "Very brave for someone asking to be woken up.",
+                    next: "ch5_six_am_call",
                     effects: [
-                        { type: "setFlag", key: "textedWakeupOnly", value: true },
-                        { type: "addStat", key: "trust", amount: 1 },
-                        { type: "addStat", key: "signal", amount: -1 }
+                        { type: "addStat", key: "awkwardness", amount: 1 }
                     ]
-                },
-                {
-                    text: "Forget to wake her up",
-                    hint: "Bad ending. Trust crash.",
-                    choiceType: "badEnd",
-                    tone: "bad",
-                    next: "ending_forgot_wakeup"
                 }
             ]
         },
@@ -1442,57 +1347,31 @@ window.MW_STORY = {
         ch5_call_start: {
             type: "call",
             chapterLabel: "Chapter 5",
-            chapterTitle: "Wake-Up Call",
+            chapterTitle: "6:30 AM",
             background: "images/phone.jpg",
             chatName: "Yannie",
-            chatStatus: "Voice call • 05:12 AM",
-            callTime: "05:12 AM",
+            chatStatus: "Voice call · 3 hr",
             messages: [
-                { from: "call", text: "CALL STARTED" },
-                { from: "her", text: "Hello...?" },
-                { from: "system", text: "She sounds sleepy. Your job was simple: wake her up. Your heart disagrees." }
+                { from: "her", text: "betul betul jumpa katil ni" },
+                { from: "call", text: "24 March 2026 · 6:30 AM · Voice call · 3 hr" },
+                { from: "system", text: "The wake-up plan becomes a three-hour call." }
             ],
             choices: [
                 {
-                    text: "Morning. You awake?",
-                    hint: "Gentle. Good start.",
-                    choiceType: "good",
-                    tone: "good",
-                    next: "ch5_call_topic_one",
+                    text: "Stay on the call and let the conversation wander",
+                    hint: "The task was wake-up. The result is three hours.",
+                    next: "ch5_forty_min_call",
                     effects: [
-                        { type: "addStat", key: "trust", amount: 1 },
-                        { type: "addStat", key: "comfort", amount: 1 }
+                        { type: "addStat", key: "comfort", amount: 2 },
+                        { type: "addSignal", value: "A wake-up call turned into a three-hour conversation.", amount: 2 }
                     ]
                 },
                 {
-                    text: "Bangun bangun, nanti lambat",
-                    hint: "Practical and caring.",
-                    choiceType: "good",
-                    tone: "good",
-                    next: "ch5_call_topic_one",
+                    text: "Thank her and end quickly",
+                    hint: "You complete the task, but miss the potential.",
+                    next: "ch5_short_call_result",
                     effects: [
                         { type: "addStat", key: "trust", amount: 1 }
-                    ]
-                },
-                {
-                    text: "Wake-up call service ni kena bayar tau",
-                    hint: "Playful. Good if comfort is high, risky if not.",
-                    choiceType: "weak",
-                    tone: "neutral",
-                    next: "ch5_call_topic_one",
-                    effects: [
-                        { type: "addStat", key: "comfort", amount: 1 },
-                        { type: "addStat", key: "awkwardness", amount: 1 }
-                    ]
-                },
-                {
-                    text: "Stay silent because you panic",
-                    hint: "Weak. Awkward silence on a call hits harder.",
-                    choiceType: "weak",
-                    tone: "neutral",
-                    next: "ch5_call_topic_one",
-                    effects: [
-                        { type: "addStat", key: "awkwardness", amount: 2 }
                     ]
                 }
             ]
@@ -1581,7 +1460,7 @@ window.MW_STORY = {
                 },
                 {
                     text: "So you like talking to me lah?",
-                    hint: "Bad ending. Too much pressure in a soft moment.",
+                    hint: "This turns a soft moment into a demand.",
                     choiceType: "badEnd",
                     tone: "bad",
                     next: "ending_call_pressure"
@@ -1609,26 +1488,23 @@ window.MW_STORY = {
         ch5_forty_min_call: {
             type: "call",
             chapterLabel: "Chapter 5",
-            chapterTitle: "40-Minute Call",
+            chapterTitle: "Three Hours",
             background: "images/phone.jpg",
             chatName: "Yannie",
-            chatStatus: "Voice call • 40:00",
+            chatStatus: "Voice call · 3 hr",
             messages: [
-                { from: "call", text: "CALL DURATION: 40:00" },
-                { from: "signal", text: "Signal: the wake-up call became a real conversation." },
-                { from: "system", text: "Aniq POV: Maybe she likes talking to me too." }
+                { from: "call", text: "CALL DURATION: 3 HR" },
+                { from: "signal", text: "The wake-up request was small. The amount of time given to it was not." }
             ],
             choices: [
                 {
-                    text: "Save this as a memory",
-                    hint: "Major memory unlocked.",
-                    choiceType: "signal",
-                    tone: "signal",
+                    text: "Save the 3-hour call",
+                    hint: "Major call-era memory.",
                     next: "ch6_raya_start",
                     effects: [
-                        { type: "addSignal", value: "The wake-up call became a 40-minute conversation.", amount: 2 },
-                        { type: "addMemory", value: "40-minute wake-up call on Raya morning." },
-                        { type: "setFlag", key: "fortyMinuteCall", value: true }
+                        { type: "addAchievement", value: "Actually Woke Up" },
+                        { type: "addMemory", value: "3-hour wake-up call — 24 March 2026." },
+                        { type: "setFlag", key: "threeHourWakeCall", value: true }
                     ]
                 }
             ]
@@ -1665,7 +1541,7 @@ window.MW_STORY = {
             type: "story",
             chapterLabel: "Chapter 6",
             chapterTitle: "Raya",
-            background: "images/raya.jpg",
+            background: "images/openhouse.jpg",
             speaker: "Narrator",
             text: "Eid morning. Raya feels different this year. She wears a matcha-strawberry themed baju kurung. You wear champagne baju Melayu.",
             next: "ch6_story_choice"
@@ -1675,7 +1551,7 @@ window.MW_STORY = {
             type: "choice",
             chapterLabel: "Chapter 6",
             chapterTitle: "Raya Stories",
-            background: "images/raya.jpg",
+            background: "images/openhouse.jpg",
             question: "Do you post your Raya outfit?",
             choices: [
                 {
@@ -1741,7 +1617,7 @@ window.MW_STORY = {
             type: "story",
             chapterLabel: "Chapter 6",
             chapterTitle: "Food Story Only",
-            background: "images/raya.jpg",
+            background: "images/openhouse.jpg",
             speaker: "Narrator",
             text: "You post food only. Safe. Normal. Boring. You miss the outfit-story signal, but Raya still continues.",
             next: "ch7_openhouse_invite_memory"
@@ -1752,38 +1628,58 @@ window.MW_STORY = {
         ===================================================== */
 
         ch7_openhouse_invite_memory: {
-            type: "story",
+            type: "phoneChoice",
             chapterLabel: "Chapter 7",
-            chapterTitle: "Open House",
-            background: "images/openhouse.jpg",
-            speaker: "Narrator",
-            text: "Back during Ramadhan, you once asked if she wanted to come to your open house during Eid. She said yes. Now it is 4 April 2026.",
-            next: "ch7_countdown"
+            chapterTitle: "The Invitation",
+            background: "images/phone.jpg",
+            chatName: "Yannie",
+            chatStatus: "5 March 2026",
+            messages: [
+                { from: "me", text: "oooo baikk cip nanti openhouse nak order" },
+                { from: "her", text: "kalau untuk open house kene invite sekali" },
+                { from: "her", text: "jkjk" },
+                { from: "me", text: "kalau nak datang ah leh jer" },
+                { from: "her", text: "di jemput la ni eh" },
+                { from: "me", text: "dijemput hadir" }
+            ],
+            choices: [
+                {
+                    text: "Fast-forward to 4 April",
+                    hint: "The joke invitation became real.",
+                    next: "ch7_openhouse_navigation",
+                    effects: [
+                        { type: "addSignal", value: "The open-house invite started as banter and became a real plan.", amount: 1 }
+                    ]
+                }
+            ]
         },
 
         ch7_countdown: {
-            type: "choice",
+            type: "timedChoice",
             chapterLabel: "Chapter 7",
-            chapterTitle: "Countdown",
+            chapterTitle: "She's Six Minutes Away",
             background: "images/openhouse.jpg",
-            question: "Open house day. You know she might come. How do you handle the waiting?",
+            speaker: "4 April · 1:52 PM",
+            question: "Yannie: “6 min lagi smpai”\n\nYou are hosting an open house and trying not to malfunction.",
+            timeLimit: 9,
+            timeoutNext: "ch7_she_arrives_route",
+            timeoutEffects: [
+                { type: "addFumble", amount: 1, message: "You stare at the phone instead of doing anything useful." },
+                { type: "addStat", key: "awkwardness", amount: 1 }
+            ],
             choices: [
                 {
-                    text: "Help around the house while checking your phone occasionally",
-                    hint: "Good. Nervous but functional.",
-                    choiceType: "good",
-                    tone: "good",
+                    text: "Help with the event and keep the phone nearby",
+                    hint: "Balanced.",
                     next: "ch7_she_arrives_route",
                     effects: [
-                        { type: "addStat", key: "trust", amount: 1 },
-                        { type: "addStat", key: "confidence", amount: 1 }
+                        { type: "addStat", key: "confidence", amount: 1 },
+                        { type: "addStat", key: "trust", amount: 1 }
                     ]
                 },
                 {
-                    text: "Stand near the entrance pretending not to wait",
-                    hint: "Canon POV. Very obvious internally.",
-                    choiceType: "canon",
-                    tone: "canon",
+                    text: "Hover near the entrance pretending you're not waiting",
+                    hint: "Low efficiency. Very believable.",
                     next: "ch7_she_arrives_route",
                     effects: [
                         { type: "addStat", key: "awkwardness", amount: 1 },
@@ -1791,10 +1687,8 @@ window.MW_STORY = {
                     ]
                 },
                 {
-                    text: "Text her too many times asking where she is",
-                    hint: "Bad ending. Pressure kills the sweetness.",
-                    choiceType: "badEnd",
-                    tone: "bad",
+                    text: "Spam 'where are you' messages",
+                    hint: "Pressure rises fast.",
                     next: "ending_openhouse_pressure"
                 }
             ]
@@ -1814,15 +1708,27 @@ window.MW_STORY = {
         },
 
         ch7_she_arrives: {
-            type: "story",
+            type: "phoneChoice",
             chapterLabel: "Chapter 7",
-            chapterTitle: "She Arrives",
+            chapterTitle: "She Made It",
             background: "images/openhouse.jpg",
-            speaker: "Narrator",
-            text: "Then she arrives. And your brain stops for half a second. She is wearing almost the same colour as you.",
-            next: "ch7_greeting_choice",
-            effects: [
-                { type: "addSignal", value: "Yannie came to your open house wearing almost the same colour as you.", amount: 2 }
+            chatName: "Yannie",
+            chatStatus: "4 April · 2:26 PM",
+            messages: [
+                { from: "her", text: "aniq" },
+                { from: "her", text: "awkward ah" },
+                { from: "me", text: "HAHHAHAHAHA" },
+                { from: "her", text: "tk expect setable ini" },
+                { from: "me", text: "nak table mana lagi" },
+                { from: "her", text: "takdela ok je" },
+                { from: "her", text: "malu je" }
+            ],
+            choices: [
+                {
+                    text: "Go greet her without making the awkwardness bigger",
+                    hint: "The real challenge is making the room feel normal.",
+                    next: "ch7_greeting_choice"
+                }
             ]
         },
 
@@ -1837,75 +1743,79 @@ window.MW_STORY = {
         },
 
         ch7_greeting_choice: {
-            type: "choice",
+            type: "riskChoice",
             chapterLabel: "Chapter 7",
-            chapterTitle: "Almost Matching",
+            chapterTitle: "Open House Social Check",
             background: "images/openhouse.jpg",
-            question: "She is here. Almost matching colours. Do not malfunction.",
+            speaker: "Aniq POV",
+            question: "She already said she's shy and awkward. How much do you push the interaction?",
             choices: [
                 {
-                    text: "Smile and greet her calmly",
-                    hint: "Good. Stable, warm, normal.",
-                    choiceType: "good",
-                    tone: "good",
+                    text: "Smile, greet normally, give her space to settle in",
+                    hint: "Not flashy. Very strong for trust.",
+                    baseChance: 90,
+                    boostFrom: { trust: 1, comfort: 1 },
                     next: "ch7_photo_scene",
                     effects: [
-                        { type: "addStat", key: "trust", amount: 1 },
+                        { type: "addStat", key: "trust", amount: 2 },
                         { type: "addStat", key: "comfort", amount: 1 }
-                    ]
+                    ],
+                    fumbleOnFail: false
                 },
                 {
-                    text: "Tease lightly: eh matching colour pulak",
-                    hint: "Signal route. Works best if comfort is high.",
-                    choiceType: "signal",
-                    tone: "signal",
+                    text: "Tease lightly about the maroon / burgundy situation",
+                    hint: "Could loosen the mood if comfort is already high.",
+                    baseChance: 48,
+                    boostFrom: { comfort: 4, signal: 2, confidence: 2 },
+                    penaltyFrom: { awkwardness: 4 },
                     next: "ch7_photo_scene",
+                    failNext: "ch7_photo_scene",
                     effects: [
                         { type: "addStat", key: "affection", amount: 1 },
-                        { type: "addStat", key: "comfort", amount: 1 },
-                        { type: "addSignal", value: "You noticed the almost-matching open house colours together.", amount: 1 }
+                        { type: "addStat", key: "comfort", amount: 1 }
+                    ],
+                    failEffects: [
+                        { type: "addStat", key: "awkwardness", amount: 1 }
                     ]
                 },
                 {
-                    text: "Avoid mentioning it and act too formal",
-                    hint: "Weak. You stay safe but lose warmth.",
-                    choiceType: "weak",
-                    tone: "neutral",
+                    text: "Make the whole thing sound like a date",
+                    hint: "Wrong room, wrong timing.",
+                    baseChance: 10,
+                    penaltyFrom: { awkwardness: 5 },
                     next: "ch7_photo_scene",
-                    effects: [
-                        { type: "addStat", key: "comfort", amount: -1 }
-                    ]
-                },
-                {
-                    text: "Say: we look like a couple already",
-                    hint: "Bad ending. Too much, wrong timing.",
-                    choiceType: "badEnd",
-                    tone: "bad",
-                    next: "ending_openhouse_too_much"
+                    failNext: "ending_openhouse_too_much",
+                    failText: "The room gets approximately 400% more awkward."
                 }
             ]
         },
 
         ch7_photo_scene: {
-            type: "choice",
+            type: "signalCheck",
             chapterLabel: "Chapter 7",
-            chapterTitle: "First Photo Together",
+            chapterTitle: "The Boundary Check",
             background: "images/photo_together.jpg",
-            question: "Her girl friend takes photos of both of you standing together. Camera flash. A real memory forms.",
-            choices: [
-                {
-                    text: "Save the photo memory",
-                    hint: "Major memory unlocked.",
-                    choiceType: "signal",
-                    tone: "signal",
-                    next: "ch7_photo_memory_saved",
-                    effects: [
-                        { type: "addMemory", value: "First Photo Together — 4 April 2026." },
-                        { type: "addSignal", value: "Yannie took a photo together with you at your open house.", amount: 2 },
-                        { type: "setFlag", key: "firstPhotoTogether", value: true }
-                    ]
-                }
-            ]
+            kicker: "TRUST CHECK",
+            title: "What is the important part of this message?",
+            prompt: "After the open house, Yannie explains why part of the photo moment felt awkward.",
+            meta: "This is not a romance-signal test. It is a boundary test.",
+            options: [
+                { speaker: "Yannie", text: "awkward sikit je time dorg snap gamba diamdiam tadi", correct: false },
+                { speaker: "Yannie", text: "tk suka sikit org amik gamba wthout permission", correct: true },
+                { speaker: "Yannie", text: "tuan rumah and all of the fam members baikk jee", correct: false }
+            ],
+            signal: "Yannie directly said she dislikes photos being taken without permission.",
+            signalAmount: 2,
+            correctText: "Exactly. The important information is permission, not whether the photo looked cute.",
+            wrongText: "You focused on the surface detail and missed the boundary.",
+            correctEffects: [
+                { type: "addStat", key: "trust", amount: 2 }
+            ],
+            wrongEffects: [
+                { type: "addStat", key: "trust", amount: -2 },
+                { type: "addStat", key: "awkwardness", amount: 1 }
+            ],
+            next: "ch7_privacy_response"
         },
 
         /* =====================================================
@@ -1913,77 +1823,439 @@ window.MW_STORY = {
         ===================================================== */
 
         ch7_photo_memory_saved: {
-            type: "story",
-            chapterLabel: "Finale",
-            chapterTitle: "First Photo Together",
-            background: "images/photo_together.jpg",
-            speaker: "Narrator",
-            text: "The camera flash fades, but the feeling does not. For a second, everything becomes too loud and too quiet at the same time. You are standing beside her, almost matching, trying to act normal while your heart is doing absolute nonsense.",
-            next: "ch7_after_photo_choice",
-            effects: [
-                { type: "addMemory", value: "The camera flash that started everything after the open house." }
+            type: "phoneChoice",
+            chapterLabel: "Chapter 7",
+            chapterTitle: "After The Open House",
+            background: "images/phone.jpg",
+            chatName: "Yannie",
+            chatStatus: "4 April · 5:40 PM",
+            messages: [
+                { from: "me", text: "btw tadi cantik do frfr" },
+                { from: "her", text: "sumpala HAHAHA" },
+                { from: "system", text: "Later that evening: more calls, more photos, more random stories." }
+            ],
+            choices: [
+                {
+                    text: "Keep the night going normally",
+                    hint: "No grand speech. Just the next conversation.",
+                    next: "ch7_after_photo_choice",
+                    effects: [
+                        { type: "addMemory", value: "Open-house day — 4 April 2026." }
+                    ]
+                }
             ]
         },
 
         ch7_after_photo_choice: {
-            type: "choice",
-            chapterLabel: "Finale",
-            chapterTitle: "Hold The Moment",
-            background: "images/photo_together.jpg",
-            question: "You look at the photo again. This does not feel like a normal picture. It feels like proof that all the tiny choices somehow became something real.",
+            type: "signalCheck",
+            chapterLabel: "Chapter 7",
+            chapterTitle: "Late-Night Signal",
+            background: "images/phone.jpg",
+            kicker: "SIGNAL CHECK",
+            title: "A tiny line, big meaning",
+            prompt: "Later that night there is no line. Then she says:",
+            meta: "Pick the line that shows she actively reaches for you when she needs something.",
+            options: [
+                { speaker: "Yannie", text: "sini tkde line", correct: false },
+                { speaker: "Yannie", text: "tiba tiba need aniqq", correct: true },
+                { speaker: "Yannie", text: "hospot", correct: false }
+            ],
+            signal: "“tiba tiba need aniqq” — she reached out to you directly.",
+            signalAmount: 2,
+            correctText: "Yep. The hotspot was the reason. Reaching for you was the signal.",
+            wrongText: "The practical problem is obvious. The relationship detail is who she chose to ask.",
+            correctEffects: [
+                { type: "addStat", key: "comfort", amount: 2 }
+            ],
+            wrongEffects: [
+                { type: "addStat", key: "awkwardness", amount: 1 }
+            ],
+            next: "ch7_dates_montage"
+        },
+
+        ch7_dates_montage: {
+            type: "route",
+            chapterLabel: "Potential Route",
+            chapterTitle: "What Happens Next?",
+            background: "images/phone.jpg",
+            routes: [
+                {
+                    require: { statAtLeast: { trust: 7, comfort: 6, signal: 6 }, fumblesAtMost: 2 },
+                    next: "ch8_nine_hour_unlock"
+                },
+                {
+                    require: { fumblesAtLeast: 3 },
+                    next: "ending_unstable_timeline"
+                },
+                {
+                    next: "ending_potential_locked"
+                }
+            ]
+        },
+
+
+        ch2_first_chat_reconstruction: {
+            type: "sequence",
+            chapterLabel: "Chapter 2",
+            chapterTitle: "Chat Reconstruction",
+            background: "images/phone.jpg",
+            kicker: "REAL CHAT PUZZLE",
+            title: "Put the opening back in order",
+            prompt: "Tap the four lines in the exact order they happened on 1 March.",
+            items: [
+                { text: "hola yannie ke ni" },
+                { text: "yep nak order kan" },
+                { text: "patutla macam kenal kat bazaar tadi" },
+                { text: "laa tak cam ke" }
+            ],
+            failText: "Nope. The first chat glitches and resets.",
+            effects: [
+                { type: "addStat", key: "signal", amount: 1 },
+                { type: "addAchievement", value: "First Hola" }
+            ],
+            next: "ch2_order_chat"
+        },
+
+        ch2_birthday_joke_recovery: {
+            type: "phoneChoice",
+            chapterLabel: "Chapter 2",
+            chapterTitle: "Recover The Joke",
+            background: "images/phone.jpg",
+            chatName: "Yannie",
+            chatStatus: "Online",
+            messages: [
+                { from: "system", text: "The birthday joke lands a little weird in this branch." }
+            ],
             choices: [
                 {
-                    text: "Let yourself be ridiculously happy",
-                    hint: "Final route. No more pretending you are calm.",
-                    choiceType: "signal",
-                    tone: "signal",
-                    next: "ch7_dates_montage",
+                    text: "HAHAHA gurau je senanya 😭",
+                    hint: "Drop the pressure immediately.",
+                    next: "ch2_birthday_joke_reply",
                     effects: [
-                        { type: "addStat", key: "affection", amount: 2 },
-                        { type: "addStat", key: "comfort", amount: 2 },
-                        { type: "addSignal", value: "The first photo together felt like the beginning of something bigger.", amount: 2 }
+                        { type: "addStat", key: "trust", amount: 1 },
+                        { type: "addStat", key: "awkwardness", amount: -1 }
                     ]
                 },
                 {
-                    text: "Save the feeling quietly",
-                    hint: "Sweet route. Same ending, softer energy.",
-                    choiceType: "good",
-                    tone: "good",
-                    next: "ch7_dates_montage",
+                    text: "Double down and ask again",
+                    hint: "The recovery window closes.",
+                    next: "ending_free_cake_demand"
+                }
+            ]
+        },
+
+        ch2_birthday_signal: {
+            type: "signalCheck",
+            chapterLabel: "Chapter 2",
+            chapterTitle: "Read The Moment",
+            background: "images/phone.jpg",
+            kicker: "SIGNAL CHECK",
+            title: "What mattered most?",
+            prompt: "The pudding is obvious. Which line tells you the gesture was unusual for her?",
+            options: [
+                { speaker: "Yannie", text: "belanja puding caramel", correct: false },
+                { speaker: "Yannie", text: "first time bagi cust free sbb beday ni🥰", correct: true },
+                { speaker: "Yannie", text: "isokeyy happy birthday btw", correct: false }
+            ],
+            signal: "You were the first customer she gave a free birthday item to.",
+            signalAmount: 2,
+            correctText: "Exactly. The special part is that she said she had not done this for a customer before.",
+            wrongText: "Cute line, but you missed the unusual detail.",
+            correctEffects: [
+                { type: "addStat", key: "affection", amount: 1 },
+                { type: "addAchievement", value: "Signal Reader I" }
+            ],
+            wrongEffects: [
+                { type: "addStat", key: "awkwardness", amount: 1 }
+            ],
+            next: "ch2_delivery_pudding"
+        },
+
+        ch2_effort_signal: {
+            type: "signalCheck",
+            chapterLabel: "Chapter 2",
+            chapterTitle: "The Pudding Mission",
+            background: "images/phone.jpg",
+            kicker: "SIGNAL CHECK",
+            title: "She noticed the effort",
+            prompt: "On 3 March, you went back to the bazaar basically just for pudding. Which line shows she noticed?",
+            options: [
+                { speaker: "Aniq", text: "datang semata beli puding karamel", correct: false },
+                { speaker: "Yannie", text: "effort doo", correct: true },
+                { speaker: "Yannie", text: "dala satu je", correct: false }
+            ],
+            signal: "Yannie explicitly called the pudding trip an effort.",
+            signalAmount: 1,
+            correctText: "Yep. Not a confession. Just a tiny recognition that you showed up.",
+            wrongText: "That line describes what happened, not what she noticed about it.",
+            correctEffects: [
+                { type: "addAchievement", value: "Pudding Mission" },
+                { type: "addStat", key: "comfort", amount: 1 }
+            ],
+            wrongEffects: [
+                { type: "addStat", key: "awkwardness", amount: 1 }
+            ],
+            next: "ch2_instagram_story"
+        },
+
+        ch4_lasagna_memory_order: {
+            type: "sequence",
+            chapterLabel: "Chapter 4",
+            chapterTitle: "Lasagna Timeline",
+            background: "images/phone.jpg",
+            kicker: "MEMORY RECONSTRUCTION",
+            title: "The RM70 lasagna chain",
+            prompt: "Put these real updates in chronological order.",
+            items: [
+                { text: "otw belii" },
+                { text: "total hit 70" },
+                { text: "doakan la 😔😔" },
+                { text: "esok buat i think if balik awal" }
+            ],
+            failText: "The lasagna timeline collapsed. Try again.",
+            effects: [
+                { type: "addMemory", value: "RM70 lasagna timeline reconstructed." },
+                { type: "addStat", key: "trust", amount: 1 }
+            ],
+            achievement: "RM70 Lasagna Lore",
+            next: "ch4_cooking_update"
+        },
+
+        ch5_six_am_call: {
+            type: "timedChoice",
+            chapterLabel: "Chapter 5",
+            chapterTitle: "6:00 AM",
+            background: "images/phone.jpg",
+            speaker: "INCOMING CALL",
+            question: "24 March · 6:00 AM\nYannie is actually calling to wake you. Answer before sleepy Aniq wins.",
+            timeLimit: 8,
+            timeoutNext: "ch5_missed_call_recovery",
+            timeoutEffects: [
+                { type: "addFumble", amount: 1, message: "You slept through the first call." },
+                { type: "addStat", key: "awkwardness", amount: 1 }
+            ],
+            choices: [
+                {
+                    text: "ANSWER",
+                    hint: "Wake-up mission successful.",
+                    next: "ch5_call_start",
                     effects: [
-                        { type: "addStat", key: "trust", amount: 1 },
-                        { type: "addStat", key: "comfort", amount: 1 }
+                        { type: "addStat", key: "trust", amount: 2 },
+                        { type: "setFlag", key: "answeredWakeCall", value: true }
+                    ]
+                },
+                {
+                    text: "Snooze for 'one minute'",
+                    hint: "Dangerous words.",
+                    next: "ch5_missed_call_recovery",
+                    effects: [
+                        { type: "addFumble", amount: 1, message: "Sleepy decision." }
                     ]
                 }
             ]
         },
 
-        ch7_dates_montage: {
+        ch5_missed_call_recovery: {
             type: "phoneChoice",
-            chapterLabel: "Finale",
-            chapterTitle: "The Rest Is History",
-            background: "images/photo_together.jpg",
-            chatName: "Memory World",
-            chatStatus: "Final memory unlocked",
+            chapterLabel: "Chapter 5",
+            chapterTitle: "Missed Call",
+            background: "images/phone.jpg",
+            chatName: "Yannie",
+            chatStatus: "6:01 AM",
             messages: [
-                { from: "system", text: "After that photo, the story did not stop." },
-                { from: "signal", text: "One cake became one number." },
-                { from: "signal", text: "One number became daily texts." },
-                { from: "signal", text: "Daily texts became calls, inside jokes, food hunting, soft updates, nervous smiles, and a long list of dates." },
-                { from: "system", text: "There are too many memories after this. Enough to fill a whole year of chapters." }
+                { from: "system", text: "Missed voice call" },
+                { from: "her", text: "betul betul jumpa katil ni" }
             ],
             choices: [
                 {
-                    text: "Continue to the final memory",
-                    hint: "End the current game sweetly.",
-                    choiceType: "canon",
-                    tone: "canon",
-                    next: "ending_the_rest_is_history",
+                    text: "Call back immediately",
+                    hint: "Recovery route. The real timeline still has a 3-hour call waiting.",
+                    next: "ch5_call_start",
                     effects: [
-                        { type: "addMemory", value: "A long list of dates that would take a year of chapters." },
-                        { type: "addSignal", value: "The rest is history between Aniq and Yannie.", amount: 3 }
+                        { type: "addStat", key: "trust", amount: 1 }
+                    ]
+                },
+                {
+                    text: "Go back to sleep",
+                    hint: "You asked for the wake-up and then vanished.",
+                    next: "ending_forgot_wakeup"
+                }
+            ]
+        },
+
+        ch7_openhouse_navigation: {
+            type: "sequence",
+            chapterLabel: "Chapter 7",
+            chapterTitle: "Open House Navigation",
+            background: "images/phone.jpg",
+            kicker: "NAVIGATION PUZZLE",
+            title: "Get Yannie through the entrance",
+            prompt: "Rebuild the directions without exposing the private address.",
+            items: [
+                { text: "Search the venue / complex name" },
+                { text: "Enter through the guard area" },
+                { text: "Scan the visitor QR" },
+                { text: "Take the second exit at the roundabout" }
+            ],
+            failText: "Wrong turn. She is absolutely going to message 'ANIQQ'.",
+            effects: [
+                { type: "addStat", key: "trust", amount: 1 },
+                { type: "addMemory", value: "Open-house directions survived the roundabout." }
+            ],
+            achievement: "Roundabout Navigator",
+            next: "ch7_countdown"
+        },
+
+        ch7_privacy_response: {
+            type: "riskChoice",
+            chapterLabel: "Chapter 7",
+            chapterTitle: "Respond To The Boundary",
+            background: "images/phone.jpg",
+            speaker: "Aniq POV",
+            question: "Now that she has told you the photos without permission made her uncomfortable, what do you do?",
+            choices: [
+                {
+                    text: "sokay da suh dorang delete",
+                    hint: "The real response. Solve the problem, don't debate the boundary.",
+                    baseChance: 95,
+                    boostFrom: { trust: 1 },
+                    successText: "Simple, immediate, correct.",
+                    next: "ch7_photo_memory_saved",
+                    effects: [
+                        { type: "addStat", key: "trust", amount: 3 },
+                        { type: "addAchievement", value: "Privacy Respected" },
+                        { type: "setFlag", key: "privacyRespected", value: true }
+                    ],
+                    fumbleOnFail: false
+                },
+                {
+                    text: "Tell her the photos were harmless",
+                    hint: "You are arguing with information she just gave you.",
+                    baseChance: 12,
+                    penaltyFrom: { awkwardness: 4 },
+                    next: "ch7_photo_memory_saved",
+                    failNext: "ch7_boundary_recovery",
+                    failText: "Trust drops. You made the issue about whether you agreed instead of whether she was comfortable.",
+                    failEffects: [
+                        { type: "addStat", key: "trust", amount: -3 },
+                        { type: "addStat", key: "awkwardness", amount: 2 }
+                    ]
+                },
+                {
+                    text: "Ask her to send the photo first anyway",
+                    hint: "Maximum fumble potential.",
+                    baseChance: 6,
+                    next: "ch7_boundary_recovery",
+                    failNext: "ending_openhouse_photo_boundary",
+                    failText: "Yeah, absolutely not the move."
+                }
+            ]
+        },
+
+        ch7_boundary_recovery: {
+            type: "phoneChoice",
+            chapterLabel: "Chapter 7",
+            chapterTitle: "Repair",
+            background: "images/phone.jpg",
+            chatName: "Yannie",
+            chatStatus: "Open-house aftermath",
+            messages: [
+                { from: "her", text: "tk suka sikit org amik gamba wthout permission" }
+            ],
+            choices: [
+                {
+                    text: "You're right. Sorry. I'll make sure they're deleted.",
+                    hint: "You can recover if you stop defending the mistake.",
+                    next: "ch7_photo_memory_saved",
+                    effects: [
+                        { type: "addStat", key: "trust", amount: 2 },
+                        { type: "setFlag", key: "privacyRespected", value: true }
+                    ]
+                },
+                {
+                    text: "Keep arguing",
+                    hint: "No recovery if you refuse the lesson.",
+                    next: "ending_openhouse_photo_boundary"
+                }
+            ]
+        },
+
+        ch8_nine_hour_unlock: {
+            type: "phoneChoice",
+            chapterLabel: "Secret Epilogue",
+            chapterTitle: "Four Days Later",
+            background: "images/phone.jpg",
+            chatName: "Yannie",
+            chatStatus: "8 April 2026 · 2:31 PM",
+            messages: [
+                { from: "her", text: "aniq" },
+                { from: "her", text: "call me" },
+                { from: "her", text: "im bored" },
+                { from: "me", text: "Voice call · 4 min" },
+                { from: "call", text: "Video call · 9 hr" }
+            ],
+            choices: [
+                {
+                    text: "Unlock the nine-hour route",
+                    hint: "This is the game's proof that the open-house chapter was not an ending.",
+                    next: "ending_nine_hour_route",
+                    effects: [
+                        { type: "addAchievement", value: "Nine Hour Route" },
+                        { type: "addMemory", value: "8 April 2026 — “call me / im bored” → 9-hour video call." },
+                        { type: "addSignal", value: "Yannie directly asked you to call because she was bored.", amount: 3 }
                     ]
                 }
+            ]
+        },
+
+        ending_nine_hour_route: {
+            type: "ending",
+            chapterLabel: "Potential Ending",
+            chapterTitle: "The World Gets Bigger",
+            background: "images/photo_together.jpg",
+            speaker: "Narrator",
+            text: "You reached the route with enough trust, comfort, signal-reading, and not too many fumbles. Four days after the open house, a simple “aniq / call me / im bored” turns into a nine-hour video call.\n\nMemory World does not end at the first photo anymore. It opens into the call era.",
+            effects: [
+                { type: "addAchievement", value: "Timeline Stable" }
+            ],
+            choices: [
+                { text: "Restart and find another route", next: "SYSTEM_RESTART" }
+            ]
+        },
+
+        ending_potential_locked: {
+            type: "ending",
+            chapterLabel: "Potential Ending",
+            chapterTitle: "More Was Possible",
+            background: "images/phone.jpg",
+            speaker: "Narrator",
+            text: "You reached the open-house ending, but not with enough trust, comfort, or signal-reading to unlock the hidden continuation. The timeline still survives — but the nine-hour call route stays hidden.\n\nReplay and pay attention to the small lines, not only the obvious romantic choices.",
+            choices: [
+                { text: "Replay Memory World", next: "SYSTEM_RESTART" }
+            ]
+        },
+
+        ending_unstable_timeline: {
+            type: "ending",
+            chapterLabel: "Chaos Ending",
+            chapterTitle: "Timeline Held Together With Tape",
+            background: "images/phone.jpg",
+            speaker: "Narrator",
+            text: "Three fumbles. You still made it to the open house, which is honestly impressive, but the timeline is too unstable to unlock the secret epilogue.\n\nThe good news: mistakes are not instant death anymore. The bad news: they actually matter.",
+            choices: [
+                { text: "Try a cleaner run", next: "SYSTEM_RESTART" }
+            ]
+        },
+
+        ending_openhouse_photo_boundary: {
+            type: "ending",
+            chapterLabel: "Bad Ending",
+            chapterTitle: "Missed The Boundary",
+            background: "images/phone.jpg",
+            speaker: "Narrator",
+            text: "The problem was never whether the photo looked good. She said she was uncomfortable with photos being taken without permission, and you failed to respect that. Trust drops hard here.",
+            choices: [
+                { text: "Restart and listen better", next: "SYSTEM_RESTART" }
             ]
         },
 
@@ -2030,7 +2302,7 @@ window.MW_STORY = {
             type: "ending",
             chapterLabel: "Bad Ending",
             chapterTitle: "Left Too Early",
-            background: "images/night.jpg",
+            background: "images/room.jpg",
             speaker: "Narrator",
             text: "You left the bazaar early. Somewhere behind you, Dee's Desserts continued selling cake. You never knew what you missed.",
             choices: [
@@ -2054,7 +2326,7 @@ window.MW_STORY = {
             type: "ending",
             chapterLabel: "Bad Ending",
             chapterTitle: "Panic Walk",
-            background: "images/night.jpg",
+            background: "images/room.jpg",
             speaker: "Narrator",
             text: "You panicked and walked away. You remember the girl with glasses, but the route ends before it begins.",
             choices: [
@@ -2066,7 +2338,7 @@ window.MW_STORY = {
             type: "ending",
             chapterLabel: "Bad Ending",
             chapterTitle: "No Number",
-            background: "images/night.jpg",
+            background: "images/room.jpg",
             speaker: "Narrator",
             text: "You enjoyed the cake and did nothing. A delicious dessert. A dead route. Balanced, as all things should be.",
             choices: [
