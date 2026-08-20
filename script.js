@@ -69,10 +69,10 @@ function checkPassword(){
         document.getElementById("lockScreen").style.display = "none";
         document.getElementById("website").style.display = "block";
         showSection("home");
-        showNotification("Welcome back to Yannie World 💗");
+        showNotification("Archive unlocked. Welcome back.");
     }
     else{
-        alert("Sorry my babyy, wrong passwordd 😔 Hint: princess birthday.");
+        alert("Wrong password. Hint: it is a date you know.");
     }
 }
 
@@ -80,45 +80,32 @@ function showSection(id){
     document.querySelectorAll("section").forEach(section => section.classList.remove("active"));
     const target = document.getElementById(id);
     if(target) target.classList.add("active");
+    document.querySelectorAll("nav [data-section]").forEach(btn => btn.classList.toggle("active", btn.dataset.section === id));
     renderAchievements();
     renderVault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
 function countdown(){
-    const birthday = new Date("2026-08-02T00:00:00");
+    const startDate = new Date("2026-03-01T21:55:00+08:00");
     function update(){
-        const now = new Date();
-        const diff = birthday - now;
-        const el = document.getElementById("countdown");
+        const el = document.getElementById("sinceStartDays");
         if(!el) return;
-        if(diff <= 0){
-            el.innerHTML = "🎉 Happy 17th Birthday Yannie!";
-            return;
-        }
-        const days = Math.floor(diff / 86400000);
-        const hours = Math.floor((diff % 86400000) / 3600000);
-        const minutes = Math.floor((diff % 3600000) / 60000);
-        const seconds = Math.floor((diff % 60000) / 1000);
-        el.innerHTML = `
-            <div class="countdown-number">${days}</div>
-            <div class="countdown-label">Countdown Until Your 17th Birthday! 🎂</div>
-            <div class="countdown-time">
-                <div class="time-box">${String(hours).padStart(2,"0")}</div><span>:</span>
-                <div class="time-box">${String(minutes).padStart(2,"0")}</div><span>:</span>
-                <div class="time-box">${String(seconds).padStart(2,"0")}</div>
-            </div>`;
+        const now = new Date();
+        const days = Math.max(0, Math.floor((now - startDate) / 86400000));
+        el.textContent = days;
     }
     update();
-    setInterval(update,1000);
+    setInterval(update, 3600000);
 }
 
 const messages = [
-    "I love you so so much sayanggg 💗",
-    "I REALLY REALLY MISS YOUU MY BABYY 🌸",
-    "I made this website just for youu, lovee! ❤️",
-    "Thank you for becoming a part of my life, yannieee 🥰",
-    "Random reminder: you are my favourite person alwaysss ✨",
-    "Come hereee, I have unlimited hugs reserved for youu 🧸"
+    "Reminder: eat properly before pretending you are not hungry.",
+    "The RM6 cake order really got out of hand, huh?",
+    "Good luck with whatever you are studying today. One chapter at a time.",
+    "If texting feels boring, we already know the solution: call later.",
+    "Current status: still collecting random stories to tell each other.",
+    "Burger-with-spoon evidence remains in the archive."
 ];
 
 function setDailyMessage(){
@@ -127,24 +114,24 @@ function setDailyMessage(){
 }
 
 const missions = [
-    "Tap the Love Machine and collect one love result.",
-    "Open one memory and remember how cute we are.",
-    "Search for a secret word in Yannie Search.",
-    "Open one Open When letter.",
-    "Check your mood and let me comfort you.",
-    "Play the cookie simulator until the cookie suffers.",
-    "Open Memory World and replay how it all started."
+    "Open one memory you have not looked at in a while.",
+    "Use Yannie Search and try one of the inside-joke keywords.",
+    "Open one Open When envelope only if the label actually fits today.",
+    "Pick your mood honestly. No overthinking the button choice.",
+    "Open the scrapbook and swipe through one chapter.",
+    "Open the museum and replace one placeholder photo when you have time.",
+    "Take a break from the site and do one useful thing first."
 ];
 
 const dailyMemories = [
-    "The first chocolate moist cake from Dee's Desserts.",
-    "The birthday pudding with HBD Aniq written on it.",
-    "The night you liked my Instagram story.",
-    "The lasagna arc that made me blush so hard.",
-    "The wake-up call that somehow became a long call.",
-    "Raya morning, matcha strawberry and champagne colours.",
-    "Open house day, almost matching colours, first photo together.",
-    "Our first date at the stadium, including burger with spoon lore."
+    "1 March: chocolate moist cake x2. Total RM6.",
+    "The birthday caramel pudding that became permanent lore.",
+    "Coming to the bazaar mostly for pudding and pretending that was completely normal.",
+    "The wake-up call that refused to stay a normal wake-up call.",
+    "Raya colours: matcha strawberry and champagne.",
+    "The stadium date and the burger-with-spoon investigation.",
+    "Those absurdly long calls that made normal texting feel insufficient.",
+    "SPM on one side, UTeM on the other, phone line somewhere in the middle."
 ];
 
 function renderDaily(){
@@ -159,14 +146,14 @@ function renderDaily(){
     const btn = document.getElementById("completeMissionBtn");
     const status = document.getElementById("missionStatus");
     if(doneToday){
-        btn.innerText = "Completed Today 💗";
+        btn.innerText = "Completed today";
         btn.classList.add("done");
-        status.innerText = "Come back tomorrow for a new little mission.";
+        status.innerText = "A new one appears tomorrow.";
     }
     else{
         btn.innerText = "Complete Today's Mission";
         btn.classList.remove("done");
-        status.innerText = "Do the mission, then tap this button.";
+        status.innerText = "Do it first, then mark it complete.";
     }
     document.getElementById("streakNumber").innerText = calculateStreak();
 }
@@ -178,7 +165,7 @@ function completeDailyMission(){
         saveState();
     }
     renderDaily();
-    showNotification("Daily love collected. Come back tomorrow, babyy 🌞💗");
+    showNotification("Daily drop marked complete. Come back tomorrow.");
 }
 
 function calculateStreak(){
@@ -197,12 +184,12 @@ function calculateStreak(){
 }
 
 const moodMessages = {
-    happy: "I love seeing you happyyy. Please keep that smile, babyy. It is literally one of my favourite things in this world 🌸",
-    miss: "I miss you moreee. Like actually more. Come find me, text me, call me, disturb me, anything. I am yours anyway 🥺💗",
-    sad: "Come here, sayang. You do not have to be okay all the time. I am proud of you for surviving today, and I will stay with you through the heavy parts too.",
-    mad: "Okay okay, I will not fight you. I will sit quietly, love you gently, and wait until my princess cools down 😭❤️",
-    tired: "Rest, babyy. Drink water, lie down, and stop forcing yourself to carry everything. You deserve soft treatment today.",
-    stress: "Breathe first. One thing at a time. You are not alone in this, okay? Tell me everything, and we solve it slowly together 📚💗"
+    happy: "Good. Keep the good mood. Go enjoy it instead of analysing why you feel good.",
+    miss: "Noted. Save the stories for later, then call when both of you are free.",
+    sad: "You do not need a motivational speech right now. Eat, drink something, rest a bit, and talk when you feel ready.",
+    mad: "Do not force a conversation while annoyed. Cool down first, then explain the actual problem without turning it into ten other problems.",
+    tired: "This one is easy: rest. Revision and everything else works better when you are actually awake.",
+    stress: "Pick the smallest next task and do only that. One paper, one question, one thing at a time."
 };
 
 function chooseMood(mood){
@@ -211,12 +198,12 @@ function chooseMood(mood){
 }
 
 const careMessages = {
-    period: "Period Mode: do not fight Yannie, do not repeat annoying questions, give sweets if needed, make her laugh, and remind her she is loved.",
-    silent: "When You Go Quiet: I should not panic or force you. I should ask gently, give space, and invite a slowtalk when you are ready.",
-    sad: "When You Feel Sad: I stay soft, listen properly, and remind you that you are not hard to love.",
-    stress: "When You’re Stressed: drink water, take a break, tell me the problem, then we handle it one by one.",
-    jealous: "When You’re Jealous: the answer is reassurance, not defensiveness. You are the only one I want, always.",
-    miss: "When You Miss Me: call me, text me, spam me, find me. I will always be happy to be found by you."
+    period: "Period mode: less arguing, more patience. Food, water, rest, and do not keep asking the same question five times.",
+    silent: "If one of us goes quiet: ask once, do not chase every minute, and leave space for a proper conversation later.",
+    sad: "Listen before trying to fix it. Sometimes the useful answer is just 'yeah, that sucks'.",
+    stress: "Help reduce the problem, not add another one. Break it into smaller tasks and let the tired person rest.",
+    jealous: "Be clear, answer the actual concern, then move on. Reassurance works better than getting defensive.",
+    miss: "If both are free: call. If not: leave updates for later. We have survived this exact problem many times."
 };
 
 function showCare(type){
@@ -224,20 +211,21 @@ function showCare(type){
 }
 
 const secretSearches = {
-    lasagna: "🍝 Secret Memory: The lasagna arc was dangerous because you were not even selling it, but you still gave it to me. For free. How was I supposed to not fall harder?",
-    cake: "🍰 Secret Memory: It started with chocolate moist cake, but somehow became the start of everything.",
-    "miss you": "🥺 Search Result: I miss you more. This is not negotiable.",
-    queque: "❤️ Search Result: Your queque is currently loving you at maximum capacity.",
-    raya: "🌙 Secret Memory: Matcha strawberry and champagne. Raya felt different because you were in it.",
-    "open house": "🏠 Secret Memory: You came wearing almost the same colour. I was not normal about it.",
-    kiss: "💋 System Error: Yannie still owes 100 kisses.",
-    spm: "📚 Future Result: I will wait, support you, and take you seriously after SPM, always.",
-    "02082009": "🎂 Birthday Girl unlocked. The world became better on 2 August 2009."
+    lasagna: "🍝 Archive result: the lasagna arc. Somehow free food kept becoming plot development.",
+    cake: "🍰 1 March 2026: chocolate moist cake x2. RM6. Origin event detected.",
+    "miss you": "📞 Suggested action: save the update and call when both of you are free.",
+    queque: "🗂️ Search result: recurring character. Appears in an unreasonable number of messages.",
+    raya: "🌙 Archive result: matcha strawberry + champagne colours.",
+    "open house": "🏠 Archive result: almost matching colours and the first-photo-together era.",
+    pudding: "🍮 Birthday caramel pudding. Extremely important historical object for no good reason.",
+    spm: "📚 Current chapter: revision, trials, tired mornings, and a lot of encouragement.",
+    utem: "🎓 Current chapter: campus life, roommates, quieter calls, and constant updates.",
+    "02082009": "🎂 Correct. You clearly know the password."
 };
 
 function searchYannie(){
     const query = document.getElementById("searchInput").value.toLowerCase().trim();
-    let result = "🔍 Did you mean: Yannie?";
+    let result = "No exact archive result. Try another inside joke.";
     let foundKey = null;
 
     Object.keys(secretSearches).forEach(key => {
@@ -248,10 +236,10 @@ function searchYannie(){
     });
 
     if(!foundKey){
-        if(query.includes("love")) result = "❤️ Search Result: Yannie";
-        else if(query.includes("cute")) result = "🥺 Search Result: Yannie";
-        else if(query.includes("beautiful")) result = "🌸 Search Result: Yannie";
-        else if(query.includes("wife")) result = "💍 Future Result: Yannie";
+        if(query.includes("call")) result = "📞 Search result: probably longer than intended.";
+        else if(query.includes("burger")) result = "🍔 Search result: burger + spoon. Case remains unsolved.";
+        else if(query.includes("study")) result = "📚 Search result: do the next question first, then complain.";
+        else if(query.includes("cat")) result = "🐱 Search result: apparently less scary now.";
     }
     else{
         if(!state.foundSecrets.includes(foundKey)){
@@ -267,12 +255,36 @@ function searchYannie(){
 }
 
 const openWhenLetters = [
-`Haii my babyy Yannieee 💗\n\nIf you're reading this because you miss me... I'm missing you sososososo much moreeeee!\n\nJust text me or even better, call me anytime. I love you sosososo much okiee sayangg?\n\nLove,\nqueque ❤️`,
-`Dear sayanggg,\n\nBad days happen. Don't be sad for longg, okayy?\n\nPlease remember I will always be here waiting for youu to hear your problems and we can solve it together. Don't keep it all to yourself okayy, princess?\n\nLove youu,\nqueque ❤️`,
-`Dear Hasrieyanniee,\n\nI know you are stressed right noww, but it's finee. Take a break, drink water, and cool off slowly.\n\nYou can even let out your stress on me, prettyyy. You've got this my lovee. I believe in youu ❤️`,
-`Dear princess,\n\nDon't overthink too much okayy, sweetheart? I will always find youu and only youu babyyy.\n\nI promise sayanggg, I will love youu and only youu 🌸`,
-`Happy Birthday, my lovee 🎂\n\nYou deserve the softest day, the sweetest cake, and the biggest reminder that you are loved beyond words. I am so thankful you exist.`,
-`After SPM, babyy 📚\n\nI hope you know I meant it. I will wait, support you, and take you seriously. I am proud of you already, and I cannot wait to see the life you build.`
+`If you miss me:
+
+Save the random stories. Send the updates if you want. If we are both free, just call — we already know texting alone sometimes feels weirdly insufficient.
+
+— Aniq`,
+`If today is bad:
+
+You do not need to fix the entire day. Eat something, drink water, get through the next hour, then tell me what happened when you feel like talking.
+
+— Aniq`,
+`If you are stressed:
+
+Stop looking at the whole pile at once. Pick one chapter, one exercise, or one problem. Finish that first. Then decide what is next.
+
+— Aniq`,
+`If you are overthinking:
+
+Ask the actual question instead of building ten imaginary answers in your head. I would rather explain something properly than have you guess.
+
+— Aniq`,
+`Birthday note:
+
+I hope the day feels like yours — good food, people you like, and enough quiet time to actually enjoy it. Also: the original birthday pudding is still an important historical event.
+
+— Aniq`,
+`After SPM:
+
+Whatever happens next, I hope you get to choose something you genuinely want. Finish this chapter properly first. Future-you can handle the next one after that.
+
+— Aniq`
 ];
 
 function openLetter(index){
@@ -292,7 +304,7 @@ function finishMainLetter(){
     state.mainLetterRead = true;
     saveState();
     unlockAchievement("heart_reader");
-    showNotification("Main letter completed. A surprise is calling soon... 💌");
+    showNotification("Letter finished. One old surprise is about to replay.");
     setTimeout(triggerFacetime, 2500);
     renderVault();
 }
@@ -310,7 +322,22 @@ function openPhoto(img,memory){
 }
 function closePhoto(){ document.getElementById("photoModal").style.display = "none"; }
 
-function playMusic(){ document.getElementById("music").play(); }
+function playMusic(){ return document.getElementById("music").play(); }
+function toggleMusic(){
+    const audio = document.getElementById("music");
+    const player = document.getElementById("miniPlayer");
+    const icon = document.getElementById("musicIcon");
+    if(audio.paused){
+        const promise = audio.play();
+        if(promise && promise.catch) promise.catch(()=>{});
+        player?.classList.add("playing");
+        if(icon) icon.textContent = "Ⅱ";
+    } else {
+        audio.pause();
+        player?.classList.remove("playing");
+        if(icon) icon.textContent = "▶";
+    }
+}
 
 function unlockAchievement(id){
     if(!achievementData[id] || state.achievements.includes(id)) return;
@@ -323,7 +350,7 @@ function unlockAchievement(id){
 
 function showAchievementToast(data){
     const toast = document.getElementById("achievementToast");
-    toast.innerHTML = `<b>Achievement Unlocked</b><br>${data.icon} ${data.title}`;
+    toast.innerHTML = `<b>Achievement unlocked</b><br>${data.icon} ${data.title}`;
     toast.classList.add("show");
     setTimeout(()=>toast.classList.remove("show"),3200);
 }
@@ -355,7 +382,7 @@ function checkVaultUnlock(){
     const ready = vaultRequirements().every(req => req.done);
     if(ready && !state.achievements.includes("vault_unlocked")){
         unlockAchievement("vault_unlocked");
-        showNotification("Secret Vault unlocked 🎁");
+        showNotification("Vault unlocked.");
     }
 }
 
@@ -365,14 +392,13 @@ function renderVault(){
     const reqs = vaultRequirements();
     const ready = reqs.every(req => req.done);
     if(!ready){
-        el.innerHTML = `<h3>Vault Locked 🔒</h3><p>Complete these little love tasks to unlock the final secret.</p><div class="vault-progress">${reqs.map(req => `<div class="vault-check">${req.done ? "✅" : "⬜"} ${req.label}</div>`).join("")}</div>`;
+        el.innerHTML = `<h3>Vault locked</h3><p>The site keeps track of what you have explored. Finish these first.</p><div class="vault-progress">${reqs.map(req => `<div class="vault-check">${req.done ? "✓" : "○"} ${req.label}</div>`).join("")}</div>`;
         return;
     }
-    el.innerHTML = `<h3>Vault Unlocked 🎁</h3>
-        <p class="vault-final">You found the whole Yannie World.</p>
-        <p>Thank you for being my favourite person, my safest place, my prettiest girl, and the reason this whole thing exists.</p>
-        <p><b>I love youu, Hasrieyannie Iman Delaila. Always.</b></p>
-        <button onclick="triggerFacetime()">Replay Surprise Call ❤️</button>`;
+    el.innerHTML = `<h3>Vault unlocked</h3>
+        <p class="vault-final">Okay, you actually explored everything.</p>
+        <p>This site started small and kept growing because the archive kept growing too. That is basically the point.</p>
+        <button onclick="triggerFacetime()">Replay the surprise call</button>`;
 }
 
 function openYannieTube(){
@@ -382,84 +408,33 @@ function openYannieTube(){
 
 function setupLoveMachine(){
     const loveResults = [
-        "💗 Love Level: 9999999%",
-        "🌸 Yannie Happiness: MAXIMUM",
-        "🥺 Missing Level: CRITICAL",
-        "💌 Hug Requirement: IMMEDIATELY",
-        "❤️ Soulmate Status: CONFIRMED",
-        "🐱 Mofusand Approval: YES",
-        "✨ Cuteness Level: DANGEROUS"
+        "Call later: probably yes.",
+        "Pudding rating: still suspiciously important.",
+        "Burger + spoon: case unresolved.",
+        "Current mood: save this story for the next call.",
+        "Mofusand approval: acceptable.",
+        "Study first. Complain after.",
+        "RM6 investment return: statistically ridiculous."
     ];
     document.getElementById("loveButton").addEventListener("click",()=>{
         const result = loveResults[Math.floor(Math.random()*loveResults.length)];
-        document.getElementById("loveResult").innerHTML = result;
+        document.getElementById("loveResult").textContent = result;
     });
 }
 
-function createFlower(x,y){
-    const stickers = ["🌼","🌸","💗","✨","🤎"];
-    const flower = document.createElement("div");
-    flower.className = "cursorFlower";
-    flower.innerHTML = stickers[Math.floor(Math.random()*stickers.length)];
-    flower.style.left = x + "px";
-    flower.style.top = y + "px";
-    document.body.appendChild(flower);
-    setTimeout(()=>flower.remove(),1000);
-}
-
-document.addEventListener("pointerdown", e => createFlower(e.pageX,e.pageY));
-
-document.addEventListener("pointermove", e => {
-    const now = Date.now();
-    if(now - lastFlowerTime > 180){
-        lastFlowerTime = now;
-        createFlower(e.pageX,e.pageY);
-    }
-});
+function createFlower(){ /* intentionally quiet in the makeover */ }
 
 function startDecorations(){
-    const decor = ["🌼","💗","✨","🌸"];
-    setInterval(()=>{
-        const item = document.createElement("div");
-        item.className = "decor";
-        item.innerHTML = decor[Math.floor(Math.random()*decor.length)];
-        item.style.left = Math.random()*100 + "vw";
-        item.style.fontSize = (18+Math.random()*22) + "px";
-        item.style.animationDuration = (13+Math.random()*12) + "s";
-        document.getElementById("backgroundDecor").appendChild(item);
-        setTimeout(()=>item.remove(),26000);
-    },1800);
-
-    const cats = ["images/cat1.png","images/cat2.png","images/cat3.png"];
-    setInterval(()=>{
-        const cat = document.createElement("img");
-        cat.src = cats[Math.floor(Math.random()*cats.length)];
-        cat.className = "floatingCat";
-        cat.style.left = Math.random()*100 + "vw";
-        document.body.appendChild(cat);
-        setTimeout(()=>cat.remove(),25000);
-    },10000);
-
-    const loveMessages = ["I love you ❤️","Miss you 🥺","Mwah 😚","Thinking about Yannie 💗","Pretty girl 🌸","Come hereee ❤️","Need hugs 🥺","My princess 👑"];
-    setInterval(()=>{
-        const msg = document.createElement("div");
-        msg.className = "loveFly";
-        msg.innerHTML = loveMessages[Math.floor(Math.random()*loveMessages.length)];
-        msg.style.left = Math.random()*82 + "vw";
-        msg.style.top = Math.random()*76 + "vh";
-        msg.style.fontSize = (0.9 + Math.random()*0.45) + "rem";
-        document.body.appendChild(msg);
-        setTimeout(()=>msg.remove(),8000);
-    },6500);
+    // The old floating hearts/cats were fun, but the makeover keeps the background calm.
 }
 
 const sweetNotifications = [
-    "i miss youuu so much yannieee 🥺💗",
-    "i lovee youuu babyyy ❤️",
-    "wachu doinggg rn sayangg? 🌸",
-    "pleaseeee find me everytimeee princess 💌",
-    "mwahhh mwahhh sending youu virtual kissess 💋💋",
-    "random reminder that you have all my time and attentionn sayangkuuu ❤️"
+    "remember to eat before saying you are not hungry",
+    "save the story, tell me on call later",
+    "good luck with revision today",
+    "random archive reminder: RM6 cake order",
+    "drink water. yes, this is the notification",
+    "if you are tired, go sleep. revolutionary advice"
 ];
 
 function showNotification(customMessage){
@@ -468,17 +443,110 @@ function showNotification(customMessage){
     const now = new Date();
     const time = now.toLocaleTimeString([],{hour:"numeric",minute:"2-digit"});
     const message = customMessage || sweetNotifications[Math.floor(Math.random()*sweetNotifications.length)];
-    notification.innerHTML = `<div class="notification-top"><div class="notification-app">💬 Messages</div><div>${time}</div></div><div class="notification-name">Queque ❤️</div><div class="notification-text">${message}</div>`;
+    notification.innerHTML = `<div class="notification-top"><div class="notification-app">Messages</div><div>${time}</div></div><div class="notification-name">Aniq</div><div class="notification-text">${message}</div>`;
     document.body.appendChild(notification);
     setTimeout(()=>notification.remove(),8000);
 }
 
 function scheduleNotification(){
-    const randomTime = 240000 + Math.random()*180000;
+    const randomTime = 480000 + Math.random()*420000;
     setTimeout(()=>{
         showNotification();
         scheduleNotification();
     },randomTime);
+}
+
+const makeoverMemories = [
+    { title:"The pudding incident", text:"A birthday joke turned into free caramel pudding, and somehow that became part of the origin story." },
+    { title:"Back to the bazaar", text:"Coming back for pudding was apparently enough reason to keep the conversation going. Convenient." },
+    { title:"The wake-up call", text:"A practical request somehow turned into a long call. This would become a recurring problem." },
+    { title:"Raya colour theory", text:"Matcha strawberry, champagne, almost-matching outfits — the archive has evidence." },
+    { title:"Burger with spoon", text:"First date at the stadium. One burger. One spoon. Questions remain." },
+    { title:"Calls got ridiculous", text:"One hour became three, five, nine, eleven, twelve. At some point texting started feeling like the backup option." },
+    { title:"Two schedules", text:"SPM and trial season on one side; UTeM classes and roommates on the other. Updates kept crossing between both." },
+    { title:"Current chapter", text:"Mostly ordinary things now: class updates, results, food, tiredness, calls, random photos. That is what makes it feel real." }
+];
+
+const makeoverCallStats = [
+    ["1 hr","a normal one"],
+    ["3 hr","still reasonable-ish"],
+    ["5 hr","okay, this is becoming a habit"],
+    ["9 hr","basically background ambience"],
+    ["11 hr","yes, really"],
+    ["12 hr","texting never stood a chance"]
+];
+
+const chapterNotes = {
+    "01":"1 March 2026 — a normal dessert order that absolutely did not stay normal.",
+    "02":"The stage where ordering food became random daily conversation for no obvious reason.",
+    "03":"Calls got longer until texting alone started to feel like the backup plan.",
+    "04":"SPM and UTeM: different schedules, same habit of sending every unnecessary update.",
+    "05":"The current chapter is mostly ordinary life — which is kind of the whole point."
+};
+
+let makeoverMemoryIndex = 0;
+let makeoverCallIndex = makeoverCallStats.length - 1;
+
+function renderMakeoverMemory(index){
+    const card = document.getElementById("memoryShuffler");
+    const item = makeoverMemories[index];
+    if(!item) return;
+    card?.classList.remove("swap");
+    void card?.offsetWidth;
+    card?.classList.add("swap");
+    const title = document.getElementById("homeMemoryTitle");
+    const copy = document.getElementById("homeMemoryText");
+    const count = document.getElementById("memoryIndex");
+    if(title) title.textContent = item.title;
+    if(copy) copy.textContent = item.text;
+    if(count) count.textContent = `${String(index+1).padStart(2,"0")} / ${String(makeoverMemories.length).padStart(2,"0")}`;
+}
+
+function shuffleHomeMemory(){
+    let next = makeoverMemoryIndex;
+    while(next === makeoverMemoryIndex && makeoverMemories.length > 1) next = Math.floor(Math.random()*makeoverMemories.length);
+    makeoverMemoryIndex = next;
+    renderMakeoverMemory(makeoverMemoryIndex);
+}
+
+function openOriginReceipt(){
+    const modal = document.getElementById("originReceiptModal");
+    modal?.classList.add("open");
+    modal?.setAttribute("aria-hidden","false");
+}
+
+function closeOriginReceipt(){
+    const modal = document.getElementById("originReceiptModal");
+    modal?.classList.remove("open");
+    modal?.setAttribute("aria-hidden","true");
+}
+
+function setupMakeoverInteractions(){
+    renderMakeoverMemory(0);
+    document.getElementById("shuffleMemory")?.addEventListener("click",shuffleHomeMemory);
+    document.getElementById("heroShuffleBtn")?.addEventListener("click",shuffleHomeMemory);
+
+    document.getElementById("nextCallStat")?.addEventListener("click",()=>{
+        makeoverCallIndex = (makeoverCallIndex + 1) % makeoverCallStats.length;
+        const [value,caption] = makeoverCallStats[makeoverCallIndex];
+        document.getElementById("callStat").textContent = value;
+        document.getElementById("callStatCaption").textContent = caption;
+    });
+
+    document.querySelectorAll(".chapter-chip").forEach(btn=>btn.addEventListener("click",()=>{
+        document.querySelectorAll(".chapter-chip").forEach(item=>item.classList.remove("active"));
+        btn.classList.add("active");
+        const note = document.getElementById("chapterNote");
+        if(note) note.textContent = chapterNotes[btn.dataset.chapter] || "";
+    }));
+
+    document.getElementById("receiptStamp")?.addEventListener("click",e=>{
+        e.currentTarget.classList.toggle("stamped");
+        e.currentTarget.textContent = e.currentTarget.classList.contains("stamped") ? "ARCHIVED · 01.03.26" : "tap to stamp";
+    });
+
+    document.addEventListener("keydown",e=>{ if(e.key === "Escape") closeOriginReceipt(); });
+    document.querySelector('nav [data-section="home"]')?.classList.add("active");
 }
 
 function setupCookieShop(){
@@ -524,13 +592,13 @@ function setupCookieShop(){
     function openShop(){
         shop.style.display = "flex";
         updateCartUI();
-        showNotification("YannieTok Shop is live. Dubai Cookie drop is waiting 🍪");
+        showNotification("YannieTok Shop is open. The cookie simulator is still ridiculous.");
     }
 
     function addToCart(){
         cartItems = qty;
         updateCartUI();
-        showNotification("Dubai Cookie added to cart 🛒");
+        showNotification("Cookie added to cart.");
     }
 
     function setStep(index, message){
@@ -558,7 +626,7 @@ function setupCookieShop(){
             checkoutRunning = false;
             shop.style.display = "none";
             orderComplete.style.display = "flex";
-            showNotification("Order delivered! Cookie simulator unlocked 🍪");
+            showNotification("Order delivered. Cookie simulator unlocked.");
         },3400);
     }
 
@@ -587,7 +655,7 @@ function setupCookieShop(){
 
     document.getElementById("qtyPlus").addEventListener("click",()=>{
         qty = 1;
-        showNotification("Only one left, babyyy. This drop is exclusive 😭");
+        showNotification("Maximum quantity: one. Apparently this is an exclusive drop.");
         updateCartUI();
     });
 
@@ -690,6 +758,7 @@ window.addEventListener("DOMContentLoaded",()=>{
     setupLoveMachine();
     setupCookieShop();
     setupFacetime();
+    setupMakeoverInteractions();
     startDecorations();
     scheduleNotification();
 });

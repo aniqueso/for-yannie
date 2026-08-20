@@ -1,0 +1,23 @@
+YANNIE WORLD — MAKEOVER BUILD
+
+Main changes:
+- New mobile-first editorial / paper aesthetic with muted cream, brown, dusty rose and gold.
+- Cleaner lock screen and browser chrome.
+- New homepage built around the actual relationship timeline rather than generic couple cards.
+- Interactive RM6 Dee's Dessert receipt with stamp interaction.
+- Interactive timeline chips: Bazaar / Kept talking / Calls / SPM x UTeM / Now.
+- Live counter for days since the first WhatsApp message on 1 March 2026.
+- Call-lore card cycling through 1h, 3h, 5h, 9h, 11h and 12h calls.
+- Split SPM / UTeM current-chapter cards.
+- Random memory shuffler using inside jokes and real milestones.
+- Search results updated with cake, pudding, burger, calls, SPM, UTeM, Raya and other lore.
+- Mood / care copy rewritten to be more useful and less cheesy.
+- Open When letters rewritten in a more grounded tone.
+- Random-note generator rewritten as inside-joke / practical notes.
+- Floating hearts, cats and cursor emoji spam disabled.
+- New compact music mini-player.
+- New Museum + Scrapbook launchers on the main home screen.
+- Latest yannie-museum and yannie-scrapbook folders included in this package.
+- Removed .git-backup from this distribution to keep the project cleaner.
+
+Run with VS Code Live Server from this folder's index.html.

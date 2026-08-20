@@ -3,28 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>For Hasrieyannie Iman Delaila!</title>
+<title>Yannie World — Private Archive</title>
+<meta name="theme-color" content="#f4efe7">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="backgroundDecor" aria-hidden="true"></div>
-<img class="squiggle" src="images/squiggle1.svg" style="top:10%;left:5%;width:120px;" alt="">
-<img class="squiggle" src="images/squiggle2.svg" style="bottom:15%;right:5%;width:150px;" alt="">
 
 <!-- LOCK SCREEN -->
 <div id="lockScreen">
     <div class="lock-card">
-        <h1>💗</h1>
-        <h2>Welcome my lovee, Yanniee!</h2>
-        <p>Please enter the passwordd, or guess it huehue.</p>
+        <div class="lock-mark">YW</div>
+        <h2>Yannie World</h2>
+        <p>Private archive. You already know the password.</p>
         <input type="password" id="passwordInput" placeholder="Password" autocomplete="off">
         <button onclick="checkPassword()">Enter</button>
-        <small class="tiny-hint">Hint: the day a princess was born.</small>
+        <small class="tiny-hint">Hint: a date you definitely know.</small>
     </div>
 </div>
 
@@ -37,85 +36,147 @@
             <span class="yellow"></span>
             <span class="green"></span>
         </div>
-        <div class="address-bar">🔒 https://yannie-world.com</div>
+        <div class="address-bar"><span class="site-dot"></span> yannie.world / private</div>
     </div>
 </header>
 
 <nav aria-label="Yannie World navigation">
-    <button onclick="showSection('home')"><span>🏠</span><small>Home</small></button>
-    <button onclick="showSection('daily')"><span>🌞</span><small>Daily</small></button>
-    <button onclick="showSection('mood')"><span>🧸</span><small>Mood</small></button>
-    <button onclick="showSection('about')"><span>💕</span><small>Care</small></button>
-    <button onclick="showSection('memories')"><span>📸</span><small>Memories</small></button>
-    <button onclick="showSection('gallery')"><span>🖼️</span><small>Gallery</small></button>
-    <button onclick="showSection('letter')"><span>💌</span><small>Letter</small></button>
-    <button onclick="showSection('envelopes')"><span>✉️</span><small>Open</small></button>
-    <button onclick="showSection('achievements')"><span>🏆</span><small>Badges</small></button>
-    <button onclick="showSection('vault')"><span>🎁</span><small>Vault</small></button>
+    <button data-section="home" onclick="showSection('home')"><span>⌂</span><small>Home</small></button>
+    <button data-section="daily" onclick="showSection('daily')"><span>☀</span><small>Daily</small></button>
+    <button data-section="mood" onclick="showSection('mood')"><span>◌</span><small>Mood</small></button>
+    <button data-section="about" onclick="showSection('about')"><span>＋</span><small>Care</small></button>
+    <button data-section="memories" onclick="showSection('memories')"><span>▣</span><small>Archive</small></button>
+    <button data-section="gallery" onclick="showSection('gallery')"><span>□</span><small>Photos</small></button>
+    <button data-section="letter" onclick="showSection('letter')"><span>✎</span><small>Letter</small></button>
+    <button data-section="envelopes" onclick="showSection('envelopes')"><span>◇</span><small>Open</small></button>
+    <button data-section="achievements" onclick="showSection('achievements')"><span>☆</span><small>Badges</small></button>
+    <button data-section="vault" onclick="showSection('vault')"><span>⌁</span><small>Vault</small></button>
 </nav>
 
 <!-- HOME -->
 <section id="home" class="active">
-    <p class="subtitle">Welcome to a world all about youu, Hasrieyannie Iman Delaila! 🌸</p>
-    <h1>For Yannie 💗</h1>
-
-    <div class="countdown-card">
-        <h3>🎂 Birthday Countdown</h3>
-        <div id="countdown">Loading...</div>
+    <div class="home-hero">
+        <div class="hero-copy">
+            <p class="eyebrow">YANNIE WORLD · PRIVATE ARCHIVE</p>
+            <h1>For Yannie.</h1>
+            <p class="hero-lede">Started with RM6 worth of chocolate moist cake. Somehow became a whole website.</p>
+            <div class="hero-actions">
+                <button class="primary-action" onclick="openOriginReceipt()">Open the RM6 receipt</button>
+                <button class="quiet-action" id="heroShuffleBtn" type="button">Shuffle a memory</button>
+            </div>
+        </div>
+        <button class="hero-photo" type="button" onclick="openPhoto('images/us5.jpg','One of the photos that belongs in the current chapter.')" aria-label="Open featured photo">
+            <img src="images/us5.jpg" alt="Featured memory">
+            <span>current chapter ↗</span>
+        </button>
     </div>
 
-    <div class="daily-preview card soft-glow">
-        <h3>🌞 Today's Little Love</h3>
+    <div class="chapter-strip" aria-label="Our timeline">
+        <button class="chapter-chip active" data-chapter="01"><span>01</span> Bazaar</button>
+        <button class="chapter-chip" data-chapter="02"><span>02</span> Kept talking</button>
+        <button class="chapter-chip" data-chapter="03"><span>03</span> Calls</button>
+        <button class="chapter-chip" data-chapter="04"><span>04</span> SPM × UTeM</button>
+        <button class="chapter-chip" data-chapter="05"><span>05</span> Now</button>
+    </div>
+    <p id="chapterNote" class="chapter-note">1 March 2026 — a normal dessert order that absolutely did not stay normal.</p>
+
+    <div class="home-stat-grid">
+        <article class="stat-card card">
+            <p class="eyebrow">SINCE THE FIRST “HOLA”</p>
+            <strong id="sinceStartDays">—</strong>
+            <span>days of increasingly unnecessary updates</span>
+        </article>
+        <article class="stat-card card call-stat-card">
+            <p class="eyebrow">CALL LORE</p>
+            <strong id="callStat">12 hr</strong>
+            <span id="callStatCaption">yes, this actually happened</span>
+            <button id="nextCallStat" class="mini-link" type="button">another one ↻</button>
+        </article>
+    </div>
+
+    <div class="life-split">
+        <article class="life-card card">
+            <div class="life-card-top"><span>Y</span><small>YANNIE</small></div>
+            <h3>SPM / trial season</h3>
+            <p>Classes, revision, random cravings, tired mornings, and somehow still finding time to call.</p>
+            <div class="tag-row"><span>math</span><span>sejarah</span><span>sleepy</span></div>
+        </article>
+        <article class="life-card card">
+            <div class="life-card-top"><span>A</span><small>ANIQ</small></div>
+            <h3>UTeM life</h3>
+            <p>Classes, roommates, campus food, trying not to be loud on calls, and sending updates anyway.</p>
+            <div class="tag-row"><span>campus</span><span>calls</span><span>nasi goyeng</span></div>
+        </article>
+    </div>
+
+    <article class="memory-shuffler card" id="memoryShuffler">
+        <div class="memory-shuffler-head">
+            <p class="eyebrow">FROM THE ARCHIVE</p>
+            <span id="memoryIndex">01 / 08</span>
+        </div>
+        <h3 id="homeMemoryTitle">The pudding incident</h3>
+        <p id="homeMemoryText">A birthday joke turned into free caramel pudding, and somehow that became part of the origin story.</p>
+        <button id="shuffleMemory" class="quiet-action" type="button">Shuffle memory</button>
+    </article>
+
+    <div class="daily-preview card">
+        <div>
+            <p class="eyebrow">TODAY'S DROP</p>
+            <h3>One small thing for today</h3>
+        </div>
         <p id="homeDailyPreview">Loading today's surprise...</p>
-        <button onclick="showSection('daily')">Open Daily Love</button>
+        <button onclick="showSection('daily')" class="mini-link">open daily →</button>
     </div>
 
     <div class="yannie-search card">
-        <h3>🔍 Yannie Search</h3>
-        <p class="muted">Try words like <b>lasagna</b>, <b>cake</b>, <b>miss you</b>, <b>pretty</b>, or <b>queque</b>.</p>
+        <p class="eyebrow">SEARCH THE LORE</p>
+        <h3>Yannie Search</h3>
+        <p class="muted">Try: <b>cake</b>, <b>lasagna</b>, <b>raya</b>, <b>spm</b>, or <b>queque</b>.</p>
         <div class="search-row">
-            <input type="text" id="searchInput" placeholder="Search anything...">
-            <button onclick="searchYannie()">🔍</button>
+            <input type="text" id="searchInput" placeholder="Search an inside joke...">
+            <button onclick="searchYannie()">Search</button>
         </div>
         <div id="searchResult"></div>
     </div>
 
     <div class="message-card">
-        <h3>💭 Today's Message</h3>
+        <p class="eyebrow">RANDOM NOTE</p>
         <p id="dailyMessage"></p>
     </div>
 
     <div class="love-machine">
-        <h2>💕 Love Machine</h2>
-        <button id="loveButton">Generate Love</button>
-        <div id="loveResult">Click the button ❤️</div>
+        <p class="eyebrow">NO CONTEXT BUTTON</p>
+        <h3>Generate a random note</h3>
+        <button id="loveButton">Roll one</button>
+        <div id="loveResult">Press it. That's the whole feature.</div>
     </div>
 
     <button id="openCookieShop" class="shop-launch-btn">
-        🛒 Open YannieTok Shop
-        <small>Dubai Cookie Drop • Live now</small>
+        <span>YannieTok Shop</span>
+        <small>Dubai cookie simulator · because apparently this is part of the lore now</small>
     </button>
 
-    <div class="app-grid">
-        <div class="app-icon" onclick="location.href='yanniefy.html'">🎵<span>YannieFy</span></div>
-        <div class="app-icon" onclick="openYannieTube()">
-            <img class="yannietube-icon" src="images/yannietube-icon.png" alt="YannieTube">
-            <span>YannieTube</span>
+    <div class="section-heading compact-heading">
+        <div>
+            <p class="eyebrow">EXPLORE</p>
+            <h2>Yannie World</h2>
         </div>
-        <div class="app-icon" onclick="location.href='yanniegram.html'">📷<span>YannieGram</span></div>
-        <a class="app-icon app-link" id="memoryWorldLink" href="MemoryWorld_V2/index.html" onclick="unlockAchievement('pov_player')">🌸<span>Memory World</span></a>
+        <p>Different ways to revisit the same story.</p>
     </div>
 
-    <a class="app-icon app-link" href="yannie-scrapbook/index.html">
-    📖<span>Our Scrapbook</span>
-</a>
-
-   
+    <div class="app-grid makeover-app-grid">
+        <a class="app-icon app-link" href="yanniefy.html"><b>♫</b><span>YannieFy</span><small>our playlists</small></a>
+        <button class="app-icon" onclick="openYannieTube()"><img class="yannietube-icon" src="images/yannietube-icon.png" alt="YannieTube"><span>YannieTube</span><small>video archive</small></button>
+        <a class="app-icon app-link" href="yanniegram.html"><b>◎</b><span>YannieGram</span><small>posts & reels</small></a>
+        <a class="app-icon app-link" id="memoryWorldLink" href="MemoryWorld_V2/index.html" onclick="unlockAchievement('pov_player')"><b>✦</b><span>Memory World</span><small>play the beginning</small></a>
+        <a class="app-icon app-link" href="yannie-scrapbook/index.html"><b>▤</b><span>Scrapbook</span><small>the story in pages</small></a>
+        <a class="app-icon app-link" href="yannie-museum/index.html"><b>⌂</b><span>Museum</span><small>walk through it</small></a>
+    </div>
 </section>
 
 <!-- DAILY LOVE -->
 <section id="daily">
-    <h2>🌞 Daily Love</h2>
+    <div class="section-heading"><div><p class="eyebrow">DAILY</p><h2>Today’s drop</h2></div><p>Small, random, no pressure.</p></div>
     <div class="card daily-card">
         <h3>Today's Mission</h3>
         <p id="dailyMission">Loading...</p>
@@ -137,9 +198,9 @@
 
 <!-- MOOD CHECK-IN -->
 <section id="mood">
-    <h2>🧸 Mood Check-In</h2>
+    <div class="section-heading"><div><p class="eyebrow">CHECK-IN</p><h2>How are you today?</h2></div><p>No dramatic diagnosis. Just pick a mood.</p></div>
     <div class="card">
-        <p>How are you feeling today, sayangg?</p>
+        <p>Pick whatever is closest. The answer changes depending on the mood.</p>
         <div class="mood-grid">
             <button onclick="chooseMood('happy')">🥰 Happy</button>
             <button onclick="chooseMood('miss')">🥺 Miss You</button>
@@ -148,15 +209,15 @@
             <button onclick="chooseMood('tired')">😴 Tired</button>
             <button onclick="chooseMood('stress')">🤯 Stressed</button>
         </div>
-        <div id="moodResult" class="mood-result">Pick one and I’ll say something for youu.</div>
+        <div id="moodResult" class="mood-result">Pick one. I’ll keep it useful.</div>
     </div>
 </section>
 
 <!-- CARE GUIDE -->
 <section id="about">
-    <h2>💕 Yannie Care Guide</h2>
+    <div class="section-heading"><div><p class="eyebrow">CARE GUIDE</p><h2>Useful notes</h2></div><p>The stuff worth remembering when one of us is tired, stressed, or annoying.</p></div>
     <div class="card">
-        <h3>Things I Remember About You</h3>
+        <h3>Things I actually remember</h3>
         <ul class="about-list">
             <li>Birthday: 2nd August 2009.</li>
             <li>Born on Sunday, at 8:41 AM.</li>
@@ -176,34 +237,32 @@
         <button onclick="showCare('miss')">💌 When You Miss Me</button>
     </div>
 
-    <div id="careResult" class="card care-result">
-        Tap a care button, babyy.
-    </div>
+    <div id="careResult" class="card care-result">Pick a situation.</div>
 </section>
 
 <!-- MEMORIES -->
 <section id="memories">
-    <h2>📸 Our Memories</h2>
+    <div class="section-heading"><div><p class="eyebrow">ARCHIVE</p><h2>Three moments that changed the plot</h2></div><p>Not every memory needs a dramatic title.</p></div>
 
     <div class="memory" onclick="unlockAchievement('memory_reader')">
-        <h3>💗 First Time I Fell For You</h3>
+        <h3>The dessert-order era</h3>
         <p>I still remember clearly the first day that I fell in love with you. I was ordering desserts from you when I noticed, the longer we texted each other, the more I knew that we had a lot in common. Your updates and your kindness made me fall deeply for you.</p>
     </div>
 
     <div class="memory" onclick="unlockAchievement('memory_reader')">
-        <h3>🌸 First Date</h3>
+        <h3>First date</h3>
         <p>I still remember our first real date, at the stadium. Back then, I had no knowledge about fashion haha. We ate a burger and I could not help but notice you ate a burger with a spoon! I will not judge you for that.</p>
     </div>
 
     <div class="memory" onclick="unlockAchievement('memory_reader')">
-        <h3>🥰 Favourite Memory</h3>
+        <h3>The wake-up call that got out of hand</h3>
         <p>My favourite memory would surely be when we had our first call, where you asked me to wake you up but instead we talked for so long. Oh how I love you for that.</p>
     </div>
 </section>
 
 <!-- GALLERY -->
 <section id="gallery">
-    <h2>🖼️ Gallery</h2>
+    <div class="section-heading"><div><p class="eyebrow">PHOTOS</p><h2>Camera roll, but curated</h2></div><p>Tap any frame to open it properly.</p></div>
     <div class="gallery">
         <div class="polaroid" onclick="openPhoto('images/us5.jpg','One of my favourite memories ❤️')">
             <img src="images/us5.jpg" alt="Memory photo 1">
@@ -226,19 +285,19 @@
 
 <!-- LETTER -->
 <section id="letter">
-    <h2>💌 My Letter To You</h2>
+    <div class="section-heading"><div><p class="eyebrow">LETTER</p><h2>One actual letter</h2></div><p>No generated quote wall. Just this.</p></div>
     <div class="card letter-card-main">
-        <p>Dear Hasrieyannie Iman Delaila,</p>
-        <p>Please remember that I will always wait for you, even after we become anything, insha-Allah. I will always wait for youu, my love. Anytime, anywhere, I will be here for you okayyyy, sayangg?</p>
-        <p>I made this little world so you can visit it anytime you miss me, feel sad, feel bored, or just want to be reminded that you are loved.</p>
-        <p>Love,<br>queque ❤️</p>
-        <button onclick="finishMainLetter()">I finished reading 💗</button>
+        <p>Yannie,</p>
+        <p>This started as a random project and somehow kept getting bigger because there kept being more things worth saving — jokes, calls, photos, stupid little stories, and the normal days too.</p>
+        <p>I don’t want this site to pretend everything is perfect. I just want it to keep a record of what mattered to us while it was happening.</p>
+        <p>— Aniq</p>
+        <button onclick="finishMainLetter()">Done reading</button>
     </div>
 </section>
 
 <!-- ENVELOPES -->
 <section id="envelopes">
-    <h2>💌 Open When Letters</h2>
+    <div class="section-heading"><div><p class="eyebrow">OPEN WHEN</p><h2>Emergency envelopes</h2></div><p>For specific moods, not random spam.</p></div>
     <div class="letters-grid">
         <div class="envelope" onclick="openLetter(0)">✉️<span>Miss Me</span></div>
         <div class="envelope" onclick="openLetter(1)">✉️<span>Sad</span></div>
@@ -258,7 +317,7 @@
 
 <!-- ACHIEVEMENTS -->
 <section id="achievements">
-    <h2>🏆 Achievement Badges</h2>
+    <div class="section-heading"><div><p class="eyebrow">BADGES</p><h2>Things you accidentally unlocked</h2></div><p>Mostly by being nosy around the site.</p></div>
     <div class="card">
         <p>Unlock cute badges by exploring Yannie World.</p>
         <div id="achievementList" class="achievement-list"></div>
@@ -267,21 +326,39 @@
 
 <!-- SECRET VAULT -->
 <section id="vault">
-    <h2>🎁 Secret Vault</h2>
+    <div class="section-heading"><div><p class="eyebrow">VAULT</p><h2>Still locked?</h2></div><p>Explore first. Then come back.</p></div>
     <div id="vaultContent" class="card vault-card">
         Loading vault...
     </div>
 </section>
 
 <!-- MUSIC -->
-<div class="music-player">
-    <button onclick="playMusic()">🎵 Play Our Song</button>
+<div class="music-player" id="miniPlayer">
+    <button id="musicToggle" type="button" onclick="toggleMusic()"><span id="musicIcon">▶</span></button>
+    <div><small>NOW PLAYING</small><strong>Firasat</strong></div>
+    <div class="player-bars" aria-hidden="true"><i></i><i></i><i></i></div>
     <audio id="music" loop>
         <source src="music/Firasat.mp3" type="audio/mpeg">
     </audio>
 </div>
 
 </div><!-- end website -->
+
+<!-- ORIGIN RECEIPT -->
+<div id="originReceiptModal" class="origin-modal" aria-hidden="true">
+    <button class="origin-backdrop" onclick="closeOriginReceipt()" aria-label="Close receipt"></button>
+    <div class="origin-receipt">
+        <button class="receipt-close" onclick="closeOriginReceipt()" aria-label="Close">×</button>
+        <p class="receipt-brand">DEE'S DESSERT</p>
+        <p class="receipt-meta">01 MAR 2026 · LIMA KEDAI</p>
+        <div class="receipt-line"></div>
+        <div class="receipt-row"><span>Chocolate moist cake</span><b>x2</b></div>
+        <div class="receipt-row"><span>Total</span><b>RM6.00</b></div>
+        <div class="receipt-line"></div>
+        <p class="receipt-note">Nobody involved knew this would become lore.</p>
+        <button class="receipt-stamp" id="receiptStamp" type="button">tap to stamp</button>
+    </div>
+</div>
 
 <!-- PHOTO MODAL -->
 <div id="photoModal" class="photo-modal">
@@ -532,8 +609,8 @@
     <div class="facetime-screen">
         <img src="images/yannie-profile.jpg" class="caller-photo" alt="Caller photo">
         <div class="incomingText">Incoming Call</div>
-        <h2>queque bambam ❤️</h2>
-        <p>📹 FaceTime Video</p>
+        <h2>Anique</h2>
+        <p>Archived video call</p>
         <button id="acceptCall">Accept</button>
         <button class="decline-call" onclick="closeFacetimePopup()">Later</button>
     </div>
@@ -547,7 +624,7 @@
 
 <div id="callEndedScreen">
     <h1>Call Ended</h1>
-    <p>Welcome home from the campp, babyy! ❤️</p>
+    <p>Call ended · archive replay complete.</p>
 </div>
 
 <div id="achievementToast" class="achievement-toast"></div>
