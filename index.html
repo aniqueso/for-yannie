@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Yannie World — Private Archive</title>
-<meta name="theme-color" content="#f4efe7">
+<title>Yannie World</title>
+<meta name="theme-color" content="#ff6f9f">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,7 +20,7 @@
     <div class="lock-card">
         <div class="lock-mark">YW</div>
         <h2>Yannie World</h2>
-        <p>Private archive. You already know the password.</p>
+        <p>Your little corner. You already know the password.</p>
         <input type="password" id="passwordInput" placeholder="Password" autocomplete="off">
         <button onclick="checkPassword()">Enter</button>
         <small class="tiny-hint">Hint: a date you definitely know.</small>
@@ -36,16 +36,17 @@
             <span class="yellow"></span>
             <span class="green"></span>
         </div>
-        <div class="address-bar"><span class="site-dot"></span> yannie.world / private</div>
+        <div class="address-bar"><span class="site-dot"></span> yannie.world / home</div>
     </div>
 </header>
 
 <nav aria-label="Yannie World navigation">
     <button data-section="home" onclick="showSection('home')"><span>⌂</span><small>Home</small></button>
+    <button data-section="birthday" onclick="showSection('birthday')"><span class="birthday-nav-mark">02</span><small>Birthday</small></button>
     <button data-section="daily" onclick="showSection('daily')"><span>☀</span><small>Daily</small></button>
     <button data-section="mood" onclick="showSection('mood')"><span>◌</span><small>Mood</small></button>
     <button data-section="about" onclick="showSection('about')"><span>＋</span><small>Care</small></button>
-    <button data-section="memories" onclick="showSection('memories')"><span>▣</span><small>Archive</small></button>
+    <button data-section="memories" onclick="showSection('memories')"><span>▣</span><small>Memories</small></button>
     <button data-section="gallery" onclick="showSection('gallery')"><span>□</span><small>Photos</small></button>
     <button data-section="letter" onclick="showSection('letter')"><span>✎</span><small>Letter</small></button>
     <button data-section="envelopes" onclick="showSection('envelopes')"><span>◇</span><small>Open</small></button>
@@ -57,7 +58,7 @@
 <section id="home" class="active">
     <div class="home-hero">
         <div class="hero-copy">
-            <p class="eyebrow">YANNIE WORLD · PRIVATE ARCHIVE</p>
+            <p class="eyebrow">YANNIE WORLD · JUST OUR STUFF</p>
             <h1>For Yannie.</h1>
             <p class="hero-lede">Started with RM6 worth of chocolate moist cake. Somehow became a whole website.</p>
             <div class="hero-actions">
@@ -111,7 +112,7 @@
 
     <article class="memory-shuffler card" id="memoryShuffler">
         <div class="memory-shuffler-head">
-            <p class="eyebrow">FROM THE ARCHIVE</p>
+            <p class="eyebrow">MEMORY SHUFFLE</p>
             <span id="memoryIndex">01 / 08</span>
         </div>
         <h3 id="homeMemoryTitle">The pudding incident</h3>
@@ -166,13 +167,309 @@
 
     <div class="app-grid makeover-app-grid">
         <a class="app-icon app-link" href="yanniefy.html"><b>♫</b><span>YannieFy</span><small>our playlists</small></a>
-        <button class="app-icon" onclick="openYannieTube()"><img class="yannietube-icon" src="images/yannietube-icon.png" alt="YannieTube"><span>YannieTube</span><small>video archive</small></button>
+        <button class="app-icon" onclick="openYannieTube()"><img class="yannietube-icon" src="images/yannietube-icon.png" alt="YannieTube"><span>YannieTube</span><small>videos</small></button>
         <a class="app-icon app-link" href="yanniegram.html"><b>◎</b><span>YannieGram</span><small>posts & reels</small></a>
         <a class="app-icon app-link" id="memoryWorldLink" href="MemoryWorld_V2/index.html" onclick="unlockAchievement('pov_player')"><b>✦</b><span>Memory World</span><small>play the beginning</small></a>
         <a class="app-icon app-link" href="yannie-scrapbook/index.html"><b>▤</b><span>Scrapbook</span><small>the story in pages</small></a>
         <a class="app-icon app-link" href="yannie-museum/index.html"><b>⌂</b><span>Museum</span><small>walk through it</small></a>
+        <button class="app-icon birthday-app" type="button" onclick="showSection('birthday')"><b>02</b><span>Yannie Day</span><small>02.08 · play the weekend</small></button>
     </div>
 </section>
+
+
+<!-- YANNIE DAY -->
+<section id="birthday" class="birthday-section birthday-v2">
+    <div class="bday-progress" aria-label="Birthday story progress">
+        <button type="button" data-bday-jump="bdayStart" class="active"><i></i><span>Start</span></button>
+        <button type="button" data-bday-jump="bdayAug1"><i></i><span>1 Aug</span></button>
+        <button type="button" data-bday-jump="bdayMidnight"><i></i><span>12:00</span></button>
+        <button type="button" data-bday-jump="bdayAug2"><i></i><span>2 Aug</span></button>
+        <button type="button" data-bday-jump="bdayCake"><i></i><span>Cake</span></button>
+        <button type="button" data-bday-jump="bdayAug3"><i></i><span>3 Aug</span></button>
+    </div>
+
+    <div id="bdayStart" class="bday-scene bday-start-scene">
+        <div class="bday-sparkles" aria-hidden="true"><i>✦</i><i>♡</i><i>✦</i><i>♡</i><i>✦</i></div>
+        <p class="bday-kicker">02 · 08 · YANNIE DAY</p>
+        <h2>This one is special. Too special.</h2>
+        <p class="bday-short-copy">Explore this entire section, dedicated for your birthdayy, Hasrieyannieee!
+
+        <div class="bday-present" id="bdayPresent" aria-hidden="true">
+            <div class="bday-present-lid"><span></span></div>
+            <div class="bday-present-box"><span class="ribbon-v"></span><span class="ribbon-h"></span><b>02</b></div>
+        </div>
+
+        <label class="bday-slide-control">
+            <span id="bdayUnwrapLabel">slide the ribbon to unwrap</span>
+            <div class="bday-slide-track"><i id="bdayUnwrapThumb">🎀</i></div>
+            <input id="bdayUnwrapSlider" type="range" min="0" max="100" value="0" aria-label="Slide to unwrap birthday present">
+        </label>
+        <div id="bdayStartReveal" class="bday-start-reveal" aria-live="polite">
+            <strong>LET'S START YOUR BIRTHDAY JOURNEYY, SAYANGG!.</strong>
+            <span>scroll ↓</span>
+        </div>
+    </div>
+
+    <div class="bday-scene bday-prelude-scene">
+        <div class="bday-scene-title">
+            <p>BEFORE AUGUST</p>
+            <h3>Three little clues.</h3>
+            <span>These are build-up, not the main timeline.</span>
+        </div>
+        <div class="bday-pinboard">
+            <button class="bday-pin-note" type="button" data-note="29may">
+                <i>29 MAY</i><b>save first</b><span>tap to flip</span>
+                <em>“save money for ur birthday gift pulakk”</em>
+            </button>
+            <button class="bday-pin-note" type="button" data-note="18jul">
+                <i>18 JUL</i><b>JB excuse</b><span>tap to flip</span>
+                <em>“celebrate birthday korang”<br>“…including yannie btw”</em>
+            </button>
+            <button class="bday-pin-note" type="button" data-note="20jul">
+                <i>20 JUL</i><b>do not shake</b><span>tap to flip</span>
+                <em>birthday things bought.<br>do not open. do not goncang.</em>
+            </button>
+        </div>
+    </div>
+
+    <div id="bdayAug1" class="bday-scene bday-aug1-scene">
+        <div class="bday-scene-title light">
+            <p>01 AUGUST · AFTERNOON</p>
+            <h3>Get to Tasek Sentral with Yannie!</h3>
+            <span>Drag the little car. Yes, the wedding-hall detour is included.</span>
+        </div>
+
+        <div class="bday-route" id="bdayRoute">
+            <div class="bday-route-line"><i></i></div>
+            <span class="bday-route-stop stop-a">wedding hall<br><small>SEND HELP.</small></span>
+            <span class="bday-route-stop stop-b">live location<br><small>finally</small></span>
+            <span class="bday-route-stop stop-c">ONTHEWAYYY<br><small>3:30-ish</small></span>
+            <div class="bday-route-car" id="bdayRouteCar">🚗</div>
+            <input id="bdayPickupSlider" type="range" min="0" max="100" value="0" aria-label="Drag car to the stadium">
+        </div>
+        <div class="bday-route-status" id="bdayPickupStatus">
+            <b>mission status:</b> trapped in family errands
+        </div>
+
+        <div id="bdayOfflineReveal" class="bday-offline-reveal">
+            <div class="bday-chat-last">
+                <span>3:36 PM · Yannie</span>
+                <p>“panas la kat bawah ni u”</p>
+                <span>3:36 PM · Aniq</span>
+                <p>“JAP DAHNAK SAMPAAIIII”</p>
+            </div>
+            <div class="bday-chat-gap">
+                <strong>then the chat goes quiet.</strong>
+                <span>3:37 PM → 7:56 PM</span>
+                <small>kitaa terlalu busyy spend timee samasamaaa kat Tasekk!</small>
+            </div>
+            <div class="bday-photo-table" aria-label="Draggable photo strip">
+                <figure class="bday-draggable-photo"><img src="images/us10.jpg" alt="Memory photo"><figcaption>01 AUG</figcaption></figure>
+                <figure class="bday-draggable-photo"><img src="images/us11.jpg" alt="Memory photo"><figcaption>DAY BEFORE</figcaption></figure>
+                <figure class="bday-draggable-photo"><img src="images/us12.jpg" alt="Memory photo"><figcaption>YANNIE DAY EVE</figcaption></figure>
+                <span>drag the photos around</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="bday-scene bday-night-before-scene">
+        <div class="bday-scene-title">
+            <p>01 AUGUST · NIGHT</p>
+            <h3>The camera roll !</h3>
+            <span>Tap the film button to develop each strip.</span>
+        </div>
+        <div class="bday-film-machine" id="bdayFilmMachine">
+            <div class="bday-film-window">
+                <div class="bday-film-strip" id="bdayFilmStrip">
+                    <figure><img src="images/us6.jpg" alt="Photo strip image"><span>9:30 PM</span></figure>
+                    <figure><img src="images/us7.jpg" alt="Photo strip image"><span>11:11 PM</span></figure>
+                    <figure><img src="images/us8.jpg" alt="Photo strip image"><span>11:16 PM</span></figure>
+                    <figure><img src="images/us9.jpg" alt="Photo strip image"><span>11:59 PM</span></figure>
+                </div>
+            </div>
+            <button id="bdayDevelopFilm" type="button" class="bday-film-shutter" aria-label="Develop next birthday photo">●</button>
+            <div class="bday-film-counter"><span id="bdayFilmCount">0</span> / 4 developed</div>
+        </div>
+        <div class="bday-family-strip" id="bdayFamilyStrip">
+            <span>9:32 PM</span>
+            <p>Mama arranged the gifts and made a video for the family group.</p>
+            <i>family group has entered the chat ↗</i>
+        </div>
+    </div>
+
+    <div id="bdayMidnight" class="bday-scene bday-midnight-scene">
+        <div class="bday-midnight-bg" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        <p class="bday-kicker">THE DATE CHANGES HERE</p>
+        <div class="bday-clock" id="bdayClock">
+            <small id="bdayClockDate">SAT · 01 AUG</small>
+            <strong id="bdayClockTime">11:59</strong>
+            <span>PM</span>
+        </div>
+        <label class="bday-slide-control dark">
+            <span id="bdayMidnightLabel">slide into 02 August</span>
+            <div class="bday-slide-track"><i id="bdayMidnightThumb">→</i></div>
+            <input id="bdayMidnightSlider" type="range" min="0" max="100" value="0" aria-label="Slide into midnight">
+        </label>
+        <div id="bdayMidnightReveal" class="bday-midnight-reveal">
+            <b>02 AUGUST</b>
+            <span>12:01 AM · photos</span>
+            <span>12:05 AM · videos</span>
+            <span>12:06 AM · first logged birthday call · 4 min</span>
+        </div>
+    </div>
+
+    <div id="bdayAug2" class="bday-scene bday-morning-scene">
+        <div class="bday-scene-title light">
+            <p>02 AUGUST · MORNING</p>
+            <h3>The phone rings endlessly.</h3>
+            <span>Slide to answer.</span>
+        </div>
+        <div class="bday-phone-wrap">
+            <div class="bday-phone-v2" id="bdayPhone">
+                <div class="bday-phone-notch"></div>
+                <div class="bday-phone-status"><span>7:49</span><span>100%</span></div>
+                <div class="bday-call-avatar">Y</div>
+                <small>YANNIE DAY</small>
+                <h4 id="bdayPhoneHeadline">GOOD MORNINGGGG<br>BIRTHDAYYY GIRLLL</h4>
+                <p id="bdayPhoneSub">incoming birthday call...</p>
+                <div class="bday-answer-track">
+                    <i id="bdayAnswerThumb">☎</i>
+                    <span>slide to answer</span>
+                    <input id="bdayAnswerSlider" type="range" min="0" max="100" value="0" aria-label="Slide to answer birthday call">
+                </div>
+                <div class="bday-call-clouds" id="bdayCallClouds">
+                    <span>3 min</span><span>29 min</span><span>23 min</span><span>17 min</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bday-dudin-call" id="bdayDudinCall" role="button" tabindex="0" aria-label="Open Dudin birthday call moment">
+            <div class="bday-wave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div><small>10:48 AM</small><b>Dudin called.</b><span>tap the waveform</span></div>
+            <div class="bday-dudin-reveal">
+                <p>birthday song</p><p>then his mum joined</p><p>then she wished too</p><p>and another gift showed up later</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bday-scene bday-gifts-scene">
+        <div class="bday-scene-title">
+            <p>02 AUGUST · DAY → NIGHT</p>
+            <h3>Open the room.</h3>
+            <span>Tap all the presents!</span>
+        </div>
+        <div class="bday-gift-room">
+            <button class="bday-object giftbox-big" type="button" data-bday-object="package">
+                <span class="box-lid"></span><span class="box-body">🎀</span>
+                <em><b>surprise package</b><small>the one yangg Aniq suruhh jangan pegangg</small></em>
+            </button>
+            <button class="bday-object ringbox" type="button" data-bday-object="ring">
+                <span class="ring-lid"></span><span class="ring-base">💍</span>
+                <em><b>the ring! </b><small>sungguh mengappreciate sampai flexing</small></em>
+            </button>
+            <button class="bday-object giftbag" type="button" data-bday-object="dudinGift">
+                <span>🎁</span>
+                <em><b>Mak dudin</b><small>pun bagi hadiahh · 5:50 PM</small></em>
+            </button>
+            <button class="bday-object cakebox" type="button" data-bday-object="cake">
+                <span>🍰</span>
+                <em><b>cake acquired</b><small>candles 67: unfortunately not acquired</small></em>
+            </button>
+        </div>
+        <div class="bday-class-wish">
+            <span>6:14 PM</span>
+            <b>walk into class → birthday wishes immediately</b>
+            <i>nice. normal. definitely no birthday DLC yet.</i>
+        </div>
+    </div>
+
+    <div id="bdayCake" class="bday-scene bday-cake-workshop">
+        <div class="bday-scene-title light">
+            <p>02 AUGUST · 8:01 PM</p>
+            <h3>“kita kene diy”</h3>
+            <span>The real cake had no candles. Fix that problem here.</span>
+        </div>
+        <div class="bday-candle-workbench" id="bdayCandleWorkbench">
+            <div class="bday-candle-tray" id="bdayCandleTray">
+                <span>drag these ↓</span>
+                <i class="bday-drag-candle" data-candle="1"></i>
+                <i class="bday-drag-candle" data-candle="2"></i>
+                <i class="bday-drag-candle" data-candle="3"></i>
+                <i class="bday-drag-candle" data-candle="4"></i>
+                <i class="bday-drag-candle" data-candle="5"></i>
+            </div>
+            <div class="bday-cake-v2">
+                <div class="bday-cake-slots">
+                    <span data-candle-slot="1"></span><span data-candle-slot="2"></span><span data-candle-slot="3"></span><span data-candle-slot="4"></span><span data-candle-slot="5"></span>
+                </div>
+                <div class="bday-cake-icing"></div>
+                <div class="bday-cake-body">1 6-7</div>
+                <div class="bday-cake-plate"></div>
+            </div>
+        </div>
+        <p id="bdayCandleStatus" class="bday-candle-status">0 / 5 candles fixed</p>
+        <div id="bdayBlowZone" class="bday-blow-zone" role="button" tabindex="0" aria-label="Press and hold to blow out the candles">
+            <div class="bday-blow-ring"><i></i></div>
+            <b>press + hold</b><span>to blow them out</span>
+        </div>
+        <div id="bdayCakeDone" class="bday-cake-done">wish sent ✦ DIY problem solved.</div>
+    </div>
+
+    <div id="bdayAug3" class="bday-scene bday-school-scene">
+        <div class="bday-scene-title">
+            <p>03 AUGUST · SCHOOL ENCORE</p>
+            <h3>Match the gifts.</h3>
+            <span>Drag each gift to the right person.</span>
+        </div>
+        <div class="bday-match-game" id="bdayMatchGame">
+            <div class="bday-match-tokens">
+                <div class="bday-match-token" data-match="sha" role="button" tabindex="0"><span>🍰</span><small>Hokkaido cheese cake</small></div>
+                <div class="bday-match-token" data-match="aishah" role="button" tabindex="0"><span>🍫💌</span><small>Kinder Bueno + letter</small></div>
+                <div class="bday-match-token" data-match="kimi" role="button" tabindex="0"><span>🍪🍪💌</span><small>2 Dubai chewy cookies + letter</small></div>
+            </div>
+            <div class="bday-match-zones">
+                <div class="bday-match-zone" data-zone="sha"><b>SHA</b><span>drop here</span></div>
+                <div class="bday-match-zone" data-zone="aishah"><b>AISHAH</b><span>drop here</span></div>
+                <div class="bday-match-zone" data-zone="kimi"><b>KIMI</b><span>drop here</span></div>
+            </div>
+        </div>
+        <div id="bdaySchoolWin" class="bday-school-win">
+            <b>recess unlocked ✦</b>
+            <span>your fwends nyanyii happy birthdayy just forr youu babyyy!.</span>
+        </div>
+
+        <div class="bday-nonchalant-game">
+            <div class="bday-neutral-face">😐</div>
+            <div class="bday-excitement-bg" id="bdayExcitementBg"></div>
+            <p><b>visible reaction</b><span>actual excitement</span></p>
+            <input id="bdayExcitementSlider" type="range" min="0" max="100" value="0" aria-label="Reveal actual birthday excitement">
+            <div id="bdayNonchalantReveal">born to be excited · forced to be nonchalant</div>
+        </div>
+    </div>
+
+    <div class="bday-scene bday-finale-scene">
+        <div class="bday-scene-title light">
+            <p>END OF BIRTHDAY MODE</p>
+            <h3>Pop everything.</h3>
+            <span>There are six. No reason. Just pop them.</span>
+        </div>
+        <div class="bday-balloons" id="bdayBalloons">
+            <button type="button" data-pop-note="saved for it months early"><i></i><span></span></button>
+            <button type="button" data-pop-note="the pickup was nearly defeated by wedding halls"><i></i><span></span></button>
+            <button type="button" data-pop-note="the camera roll went feral"><i></i><span></span></button>
+            <button type="button" data-pop-note="the ring got flexed to the family"><i></i><span></span></button>
+            <button type="button" data-pop-note="the cake required DIY candles"><i></i><span></span></button>
+            <button type="button" data-pop-note="school gave the birthday an encore"><i></i><span></span></button>
+        </div>
+        <div id="bdayPopNote" class="bday-pop-note">pop a balloon ↑</div>
+        <div id="bdayFinalMessage" class="bday-final-message">
+            <span>02.08.2026</span>
+            <b>that was Yannie Day.</b>
+            <small><strong id="birthdayDays">—</strong> days until the next one.</small>
+        </div>
+    </div>
+</section>
+
 
 <!-- DAILY LOVE -->
 <section id="daily">
@@ -242,7 +539,7 @@
 
 <!-- MEMORIES -->
 <section id="memories">
-    <div class="section-heading"><div><p class="eyebrow">ARCHIVE</p><h2>Three moments that changed the plot</h2></div><p>Not every memory needs a dramatic title.</p></div>
+    <div class="section-heading"><div><p class="eyebrow">MEMORIES</p><h2>Three moments that changed the plot</h2></div><p>Not every memory needs a dramatic title.</p></div>
 
     <div class="memory" onclick="unlockAchievement('memory_reader')">
         <h3>The dessert-order era</h3>
@@ -289,7 +586,7 @@
     <div class="card letter-card-main">
         <p>Yannie,</p>
         <p>This started as a random project and somehow kept getting bigger because there kept being more things worth saving — jokes, calls, photos, stupid little stories, and the normal days too.</p>
-        <p>I don’t want this site to pretend everything is perfect. I just want it to keep a record of what mattered to us while it was happening.</p>
+        <p>I don’t want this site to pretend everything is perfect. I just want it to hold onto the things that mattered to us while they were happening.</p>
         <p>— Aniq</p>
         <button onclick="finishMainLetter()">Done reading</button>
     </div>
@@ -610,7 +907,7 @@
         <img src="images/yannie-profile.jpg" class="caller-photo" alt="Caller photo">
         <div class="incomingText">Incoming Call</div>
         <h2>Anique</h2>
-        <p>Archived video call</p>
+        <p>Saved video call</p>
         <button id="acceptCall">Accept</button>
         <button class="decline-call" onclick="closeFacetimePopup()">Later</button>
     </div>
@@ -624,7 +921,7 @@
 
 <div id="callEndedScreen">
     <h1>Call Ended</h1>
-    <p>Call ended · archive replay complete.</p>
+    <p>Call ended · replay complete.</p>
 </div>
 
 <div id="achievementToast" class="achievement-toast"></div>
