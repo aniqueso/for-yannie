@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=personal-3">
 </head>
 <body>
 
@@ -46,6 +46,7 @@
     <button data-section="daily" onclick="showSection('daily')"><span>☀</span><small>Daily</small></button>
     <button data-section="mood" onclick="showSection('mood')"><span>◌</span><small>Mood</small></button>
     <button data-section="about" onclick="showSection('about')"><span>＋</span><small>Care</small></button>
+    <button data-section="smallthings" onclick="showSection('smallthings')"><span>⌁</span><small>Lore</small></button>
     <button data-section="memories" onclick="showSection('memories')"><span>▣</span><small>Memories</small></button>
     <button data-section="gallery" onclick="showSection('gallery')"><span>□</span><small>Photos</small></button>
     <button data-section="letter" onclick="showSection('letter')"><span>✎</span><small>Letter</small></button>
@@ -54,128 +55,155 @@
     <button data-section="vault" onclick="showSection('vault')"><span>⌁</span><small>Vault</small></button>
 </nav>
 
-<!-- HOME -->
-<section id="home" class="active">
-    <div class="home-hero">
-        <div class="hero-copy">
-            <p class="eyebrow">YANNIE WORLD · JUST OUR STUFF</p>
-            <h1>For Yannie.</h1>
-            <p class="hero-lede">Started with RM6 worth of chocolate moist cake. Somehow became a whole website.</p>
-            <div class="hero-actions">
-                <button class="primary-action" onclick="openOriginReceipt()">Open the RM6 receipt</button>
-                <button class="quiet-action" id="heroShuffleBtn" type="button">Shuffle a memory</button>
-            </div>
+<!-- CLEAN HOME -->
+<section id="home" class="active clean-home-section">
+    <div class="landing-cover" id="landingCover">
+        <figure class="landing-portrait">
+            <img src="images/us10.jpg" alt="Hasrieyannie Iman Delaila">
+        </figure>
+        <div class="landing-copy">
+            <p class="landing-kicker">YANNIE WORLD</p>
+            <h1>Hasrieyannie<br>Iman Delaila</h1>
+            <p class="landing-welcome">Welcome to your very own website, my dearest cintaa hati!</p>
         </div>
-        <button class="hero-photo" type="button" onclick="openPhoto('images/us11.jpg','One of the photos that belongs in the current chapter.')" aria-label="Open featured photo">
-            <img src="images/us11.jpg" alt="Featured memory">
-            <span>current chapter ↗</span>
+    </div>
+
+
+
+    <!-- YANNIEVERSE FULL-SCREEN GATE — added without replacing the custom home content -->
+    <div class="yverse-gate" id="yverseGate">
+        <div class="yverse-gate-copy">
+            <p class="eyebrow">A BIGGER WORLD IS HIDING UNDER THIS ONE</p>
+            <h2>Ready to enter the Yannieverse?</h2>
+            <p>One tap takes over the whole screen. The apps become planets, the smaller sections become moons, and the normal website stays right here when you come back.</p>
+        </div>
+        <button id="openYannieverseBtn" class="yverse-gate-button" type="button">
+            <span>ENTER THE YANNIEVERSE</span>
+            <i>✦</i>
         </button>
     </div>
 
-    <div class="chapter-strip" aria-label="Our timeline">
-        <button class="chapter-chip active" data-chapter="01"><span>01</span> Bazaar</button>
-        <button class="chapter-chip" data-chapter="02"><span>02</span> Kept talking</button>
-        <button class="chapter-chip" data-chapter="03"><span>03</span> Calls</button>
-        <button class="chapter-chip" data-chapter="04"><span>04</span> SPM × UTeM</button>
-        <button class="chapter-chip" data-chapter="05"><span>05</span> Now</button>
-    </div>
-    <p id="chapterNote" class="chapter-note">1 March 2026 — a normal dessert order that absolutely did not stay normal.</p>
-
-    <div class="home-stat-grid">
-        <article class="stat-card card">
-            <p class="eyebrow">SINCE THE FIRST “HOLA”</p>
-            <strong id="sinceStartDays">—</strong>
-            <span>days of increasingly unnecessary updates</span>
-        </article>
-        <article class="stat-card card call-stat-card">
-            <p class="eyebrow">CALL LORE</p>
-            <strong id="callStat">12 hr</strong>
-            <span id="callStatCaption">yes, this actually happened</span>
-            <button id="nextCallStat" class="mini-link" type="button">another one ↻</button>
-        </article>
-    </div>
-
-    <div class="life-split">
-        <article class="life-card card">
-            <div class="life-card-top"><span>Y</span><small>YANNIE</small></div>
-            <h3>SPM / trial season</h3>
-            <p>Classes, revision, random cravings, tired mornings, and somehow still finding time to call.</p>
-            <div class="tag-row"><span>math</span><span>sejarah</span><span>sleepy</span></div>
-        </article>
-        <article class="life-card card">
-            <div class="life-card-top"><span>A</span><small>ANIQ</small></div>
-            <h3>UTeM life</h3>
-            <p>Classes, roommates, campus food, trying not to be loud on calls, and sending updates anyway.</p>
-            <div class="tag-row"><span>campus</span><span>calls</span><span>nasi goyeng</span></div>
-        </article>
-    </div>
-
-    <article class="memory-shuffler card" id="memoryShuffler">
-        <div class="memory-shuffler-head">
-            <p class="eyebrow">MEMORY SHUFFLE</p>
-            <span id="memoryIndex">01 / 08</span>
+    <div class="room-directory" id="roomDirectory">
+        <div class="room-directory-heading">
+            <div>
+                <p class="eyebrow">CHOOSE A ROOM</p>
+                <h2>Where do you wanna go, babyyy?</h2>
+            </div>
+            <p>Each part of the website gets its own little space. Pick a door!</p>
         </div>
-        <h3 id="homeMemoryTitle">The pudding incident</h3>
-        <p id="homeMemoryText">A birthday joke turned into free caramel pudding, and somehow that became part of the origin story.</p>
-        <button id="shuffleMemory" class="quiet-action" type="button">Shuffle memory</button>
-    </article>
 
-    <div class="daily-preview card">
-        <div>
-            <p class="eyebrow">TODAY'S DROP</p>
-            <h3>One small thing for today</h3>
+        <div class="portal-room-grid">
+            <button class="portal-room portal-music" type="button" data-home-action="fy" aria-label="Enter YannieFy">
+                <span class="portal-scene" aria-hidden="true">
+                    <i class="vinyl-shelf"></i><i class="vinyl-player"></i><i class="vinyl-disc"></i><i class="vinyl-arm"></i><i class="music-lamp"></i>
+                </span>
+                <span class="portal-meta"><small>ROOM 01 · LISTEN</small><strong>YannieFy</strong><em>record lounge</em></span>
+            </button>
+
+            <button class="portal-room portal-video" type="button" data-home-action="tube" aria-label="Enter YannieTube">
+                <span class="portal-scene" aria-hidden="true">
+                    <i class="cinema-screen"><b>▶</b></i><i class="cinema-seat s1"></i><i class="cinema-seat s2"></i><i class="cinema-seat s3"></i><i class="cinema-light l1"></i><i class="cinema-light l2"></i>
+                </span>
+                <span class="portal-meta"><small>ROOM 02 · WATCH</small><strong>YannieTube</strong><em>mini cinema</em></span>
+            </button>
+
+            <button class="portal-room portal-gram" type="button" data-home-action="gram" aria-label="Enter YannieGram">
+                <span class="portal-scene" aria-hidden="true">
+                    <i class="studio-backdrop"></i><i class="studio-polaroid p1"></i><i class="studio-polaroid p2"></i><i class="studio-polaroid p3"></i><i class="studio-camera"></i>
+                </span>
+                <span class="portal-meta"><small>ROOM 03 · POSTS</small><strong>YannieGram</strong><em>photo studio</em></span>
+            </button>
+
+            <button class="portal-room portal-game" type="button" data-home-action="memoryworld" aria-label="Enter Memory World">
+                <span class="portal-scene" aria-hidden="true">
+                    <i class="arcade-machine"><b>MW</b><em></em></i><i class="arcade-floor"></i><i class="pixel-star x1"></i><i class="pixel-star x2"></i><i class="pixel-star x3"></i>
+                </span>
+                <span class="portal-meta"><small>ROOM 04 · PLAY</small><strong>Memory World</strong><em>story arcade</em></span>
+            </button>
+
+            <button class="portal-room portal-museum" type="button" data-home-action="museum" aria-label="Enter Yannie Museum">
+                <span class="portal-scene" aria-hidden="true">
+                    <i class="gallery-frame gf1"><img src="images/us2.jpg" alt=""></i><i class="gallery-frame gf2"><img src="images/us1.jpg" alt=""></i><i class="gallery-bench"></i><i class="gallery-light gl1"></i><i class="gallery-light gl2"></i>
+                </span>
+                <span class="portal-meta"><small>ROOM 05 · WALK</small><strong>Museum</strong><em>gallery hall</em></span>
+            </button>
+
+            <button class="portal-room portal-scrapbook" type="button" data-home-action="scrapbook" aria-label="Enter interactive scrapbook">
+                <span class="portal-scene" aria-hidden="true">
+                    <i class="craft-desk"></i><i class="scrapbook-book"><b>OUR<br>PAGES</b></i><i class="paper-bit pb1"></i><i class="paper-bit pb2"></i><i class="tape-bit"></i><i class="pen-bit"></i>
+                </span>
+                <span class="portal-meta"><small>ROOM 06 · FLIP</small><strong>Scrapbook</strong><em>craft desk</em></span>
+            </button>
+
+            <button class="portal-room portal-birthday" type="button" data-home-action="birthday" aria-label="Enter Yannie Day">
+                <span class="portal-scene" aria-hidden="true">
+                    <i class="party-balloon b1"></i><i class="party-balloon b2"></i><i class="party-balloon b3"></i><i class="party-cake"><b>02</b></i><i class="party-confetti"></i>
+                </span>
+                <span class="portal-meta"><small>ROOM 07 · 02.08</small><strong>Yannie Day</strong><em>birthday room</em></span>
+            </button>
+
+            <button class="portal-room portal-cookie" type="button" id="openCookieShop" aria-label="Open YannieTok cookie shop">
+                <span class="portal-scene" aria-hidden="true">
+                    <i class="cafe-counter"></i><i class="cookie-jar"><b>🍪</b></i><i class="cafe-menu">DCC</i><i class="cafe-stool st1"></i><i class="cafe-stool st2"></i>
+                </span>
+                <span class="portal-meta"><small>ROOM 08 · SNACK</small><strong>YannieTok</strong><em>cookie counter</em></span>
+            </button>
         </div>
-        <p id="homeDailyPreview">Loading today's surprise...</p>
-        <button onclick="showSection('daily')" class="mini-link">open daily →</button>
-    </div>
 
-    <div class="yannie-search card">
-        <p class="eyebrow">SEARCH THE LORE</p>
-        <h3>Yannie Search</h3>
-        <p class="muted">Try: <b>cake</b>, <b>lasagna</b>, <b>raya</b>, <b>spm</b>, or <b>queque</b>.</p>
-        <div class="search-row">
-            <input type="text" id="searchInput" placeholder="Search an inside joke...">
-            <button onclick="searchYannie()">Search</button>
+        <div class="home-sidequests">
+            <div class="room-directory-heading sidequest-heading">
+                <div>
+                    <p class="eyebrow">EXPLORE THIS WEBSITE TO IT'S FULLEST, SAYANGG!</p>
+                    <h2>Hope you like this websitee :></h2>
+                </div>
+                <p>I love youu so much my babyy</p>
+            </div>
+
+            <div class="sidequest-grid">
+                <button class="sidequest-card sq-daily" type="button" data-home-action="daily">
+                    <span class="sq-art"><i class="sq-calendar">21</i><i class="sq-note">today</i></span>
+                    <span class="sq-copy"><small>PULL A CARD</small><strong>Today with Yannie</strong><em>one tiny plan + one real memory</em></span>
+                </button>
+                <button class="sidequest-card sq-mood" type="button" onclick="showSection('mood')">
+                    <span class="sq-art"><i>😴</i><i>📞</i><i>😐</i></span>
+                    <span class="sq-copy"><small>CHECK THE VIBE</small><strong>Yannie Mood</strong><em>rindu, penat, clingy, nonchalant mode</em></span>
+                </button>
+                <button class="sidequest-card sq-care" type="button" onclick="showSection('about')">
+                    <span class="sq-art"><i class="sq-phone">call me</i><i class="sq-heart">♡</i></span>
+                    <span class="sq-copy"><small>UNOFFICIAL MANUAL</small><strong>Things I’ve Learned</strong><em>what usually helps, based on us</em></span>
+                </button>
+                <button class="sidequest-card sq-smallthings" type="button" onclick="showSection('smallthings')">
+                    <span class="sq-art"><i class="sq-bubble b1">RM6</i><i class="sq-bubble b2">rindu</i><i class="sq-bubble b3">update me</i></span>
+                    <span class="sq-copy"><small>CHAT LORE</small><strong>Things That Became Normal</strong><em>tiny messages that somehow became recurring lore</em></span>
+                </button>
+                <button class="sidequest-card sq-memory" type="button" data-home-action="memories">
+                    <span class="sq-art"><i class="sq-ticket">01·03</i><i class="sq-receipt">RM6<br>2× cake</i></span>
+                    <span class="sq-copy"><small>REAL MOMENTS</small><strong>Memories</strong><em>the actual plot, without rewriting history</em></span>
+                </button>
+                <button class="sidequest-card sq-photo" type="button" data-home-action="gallery">
+                    <span class="sq-art"><i class="sq-film"></i><i class="sq-photo-mini"></i></span>
+                    <span class="sq-copy"><small>CAMERA ROLL</small><strong>Photos</strong><em>the ones worth opening properly</em></span>
+                </button>
+                <button class="sidequest-card sq-letter" type="button" data-home-action="letter">
+                    <span class="sq-art"><i class="sq-paper">Y.</i><i class="sq-pen">／</i></span>
+                    <span class="sq-copy"><small>READ SLOWLY</small><strong>Letter</strong><em>one note, no quote-wall nonsense</em></span>
+                </button>
+                <button class="sidequest-card sq-envelope" type="button" onclick="showSection('envelopes')">
+                    <span class="sq-art"><i class="sq-mail m1"></i><i class="sq-mail m2"></i><i class="sq-mail m3"></i></span>
+                    <span class="sq-copy"><small>OPEN WHEN...</small><strong>Six Envelopes</strong><em>rindu, tired, stressed, overthinking + more</em></span>
+                </button>
+                <button class="sidequest-card sq-badges" type="button" onclick="showSection('achievements')">
+                    <span class="sq-art"><i class="sq-badge bd1">RM6</i><i class="sq-badge bd2">📞</i><i class="sq-badge bd3">🍮</i></span>
+                    <span class="sq-copy"><small>ACCIDENTAL TROPHIES</small><strong>Badges</strong><em>little things you unlock by being nosy</em></span>
+                </button>
+                <button class="sidequest-card sq-vault" type="button" data-home-action="vault">
+                    <span class="sq-art"><i class="sq-safe"><b>02</b></i></span>
+                    <span class="sq-copy"><small>LOCKED FOR A REASON</small><strong>Vault</strong><em>something at the end of the exploring</em></span>
+                </button>
+            </div>
         </div>
-        <div id="searchResult"></div>
-    </div>
-
-    <div class="message-card">
-        <p class="eyebrow">RANDOM NOTE</p>
-        <p id="dailyMessage"></p>
-    </div>
-
-    <div class="love-machine">
-        <p class="eyebrow">NO CONTEXT BUTTON</p>
-        <h3>Generate a random note</h3>
-        <button id="loveButton">Roll one</button>
-        <div id="loveResult">Press it. That's the whole feature.</div>
-    </div>
-
-    <button id="openCookieShop" class="shop-launch-btn">
-        <span>YannieTok Shop</span>
-        <small>Dubai cookie simulator · because apparently this is part of the lore now</small>
-    </button>
-
-    <div class="section-heading compact-heading">
-        <div>
-            <p class="eyebrow">EXPLORE</p>
-            <h2>Yannie World</h2>
-        </div>
-        <p>Different ways to revisit the same story.</p>
-    </div>
-
-    <div class="app-grid makeover-app-grid">
-        <a class="app-icon app-link" href="yanniefy.html"><b>♫</b><span>YannieFy</span><small>our playlists</small></a>
-        <button class="app-icon" onclick="openYannieTube()"><img class="yannietube-icon" src="images/yannietube-icon.png" alt="YannieTube"><span>YannieTube</span><small>videos</small></button>
-        <a class="app-icon app-link" href="yanniegram.html"><b>◎</b><span>YannieGram</span><small>posts & reels</small></a>
-        <a class="app-icon app-link" id="memoryWorldLink" href="MemoryWorld_V2/index.html" onclick="unlockAchievement('pov_player')"><b>✦</b><span>Memory World</span><small>play the beginning</small></a>
-        <a class="app-icon app-link" href="yannie-scrapbook/index.html"><b>▤</b><span>Scrapbook</span><small>the story in pages</small></a>
-        <a class="app-icon app-link" href="yannie-museum/index.html"><b>⌂</b><span>Museum</span><small>walk through it</small></a>
-        <button class="app-icon birthday-app" type="button" onclick="showSection('birthday')"><b>02</b><span>Yannie Day</span><small>02.08 · play the weekend</small></button>
     </div>
 </section>
-
 
 <!-- YANNIE DAY -->
 <section id="birthday" class="birthday-section birthday-v2">
@@ -191,8 +219,8 @@
     <div id="bdayStart" class="bday-scene bday-start-scene">
         <div class="bday-sparkles" aria-hidden="true"><i>✦</i><i>♡</i><i>✦</i><i>♡</i><i>✦</i></div>
         <p class="bday-kicker">02 · 08 · YANNIE DAY</p>
-        <h2>This one is special. Too special.</h2>
-        <p class="bday-short-copy">Explore this entire section, dedicated for your birthdayy, Hasrieyannieee!
+        <h2>This one is meant to be played.</h2>
+        <p class="bday-short-copy">No wall of birthday text. Unwrap it and go through the weekend in the order it actually happened.</p>
 
         <div class="bday-present" id="bdayPresent" aria-hidden="true">
             <div class="bday-present-lid"><span></span></div>
@@ -205,7 +233,7 @@
             <input id="bdayUnwrapSlider" type="range" min="0" max="100" value="0" aria-label="Slide to unwrap birthday present">
         </label>
         <div id="bdayStartReveal" class="bday-start-reveal" aria-live="polite">
-            <strong>LET'S START YOUR BIRTHDAY JOURNEYY, SAYANGG!.</strong>
+            <strong>LET'S START YOUR BIRTHDAY JOURNEY, YANNIEE!</strong>
             <span>scroll ↓</span>
         </div>
     </div>
@@ -218,16 +246,16 @@
         </div>
         <div class="bday-pinboard">
             <button class="bday-pin-note" type="button" data-note="29may">
-                <i>29 MAY</i><b>save first</b><span>tap to flip</span>
-                <em>“save money for ur birthday gift pulakk”</em>
+                <i>29 MAY</i><b>first planning</b><span>tap to flip</span>
+                <em>“nak beli apa ehh untuk bday yanniee?”</em>
             </button>
             <button class="bday-pin-note" type="button" data-note="18jul">
-                <i>18 JUL</i><b>JB excuse</b><span>tap to flip</span>
-                <em>“celebrate birthday korang”<br>“…including yannie btw”</em>
+                <i>18 JUL</i><b>nak balik JB bersebabb</b><span>tap to flip</span>
+                <em>“nak celebrate bday korang laa...”<br>“…including yannie btw”</em>
             </button>
             <button class="bday-pin-note" type="button" data-note="20jul">
-                <i>20 JUL</i><b>do not shake</b><span>tap to flip</span>
-                <em>birthday things bought.<br>do not open. do not goncang.</em>
+                <i>20 JUL</i><b>JANGANN PEGANGG GONCANGG SENTUHH!</b><span>tap to flip</span>
+                <em>barang bdayy da sampaii.<br>kata nak surrprisee!</em>
             </button>
         </div>
     </div>
@@ -235,20 +263,20 @@
     <div id="bdayAug1" class="bday-scene bday-aug1-scene">
         <div class="bday-scene-title light">
             <p>01 AUGUST · AFTERNOON</p>
-            <h3>Get to Tasek Sentral with Yannie!</h3>
-            <span>Drag the little car. Yes, the wedding-hall detour is included.</span>
+            <h3>jumpa Yannie SEKARANG and go to Tasek Sentral</h3>
+            <span>Drag the little car. Baik cepatt, Yannie dah panas da tuuu!</span>
         </div>
 
         <div class="bday-route" id="bdayRoute">
             <div class="bday-route-line"><i></i></div>
-            <span class="bday-route-stop stop-a">wedding hall<br><small>SEND HELP.</small></span>
-            <span class="bday-route-stop stop-b">live location<br><small>finally</small></span>
-            <span class="bday-route-stop stop-c">ONTHEWAYYY<br><small>3:30-ish</small></span>
+            <span class="bday-route-stop stop-a">wedding hall<br><small>LAMANYA</small></span>
+            <span class="bday-route-stop stop-b">live location<br><small>finally, CEPAT SIKITTT</small></span>
+            <span class="bday-route-stop stop-c">BARRU SAMPAI STADIUM JAPPP<br><small>3:30-ish</small></span>
             <div class="bday-route-car" id="bdayRouteCar">🚗</div>
             <input id="bdayPickupSlider" type="range" min="0" max="100" value="0" aria-label="Drag car to the stadium">
         </div>
         <div class="bday-route-status" id="bdayPickupStatus">
-            <b>mission status:</b> trapped in family errands
+            <b>mission status:</b> pls send help.
         </div>
 
         <div id="bdayOfflineReveal" class="bday-offline-reveal">
@@ -261,7 +289,7 @@
             <div class="bday-chat-gap">
                 <strong>then the chat goes quiet.</strong>
                 <span>3:37 PM → 7:56 PM</span>
-                <small>kitaa terlalu busyy spend timee samasamaaa kat Tasekk!</small>
+                <small>kita terlalu busyy celebrating you in real life babyyy!</small>
             </div>
             <div class="bday-photo-table" aria-label="Draggable photo strip">
                 <figure class="bday-draggable-photo"><img src="images/us10.jpg" alt="Memory photo"><figcaption>01 AUG</figcaption></figure>
@@ -275,7 +303,7 @@
     <div class="bday-scene bday-night-before-scene">
         <div class="bday-scene-title">
             <p>01 AUGUST · NIGHT</p>
-            <h3>The camera roll !</h3>
+            <h3>Jomm amik gambaaa sayangg!</h3>
             <span>Tap the film button to develop each strip.</span>
         </div>
         <div class="bday-film-machine" id="bdayFilmMachine">
@@ -292,8 +320,8 @@
         </div>
         <div class="bday-family-strip" id="bdayFamilyStrip">
             <span>9:32 PM</span>
-            <p>Mama arranged the gifts and made a video for the family group.</p>
-            <i>family group has entered the chat ↗</i>
+            <p>Mama letak gambar awak yang SAYA AMIK dalam groupp</p>
+            <i>SERAM EHH TIME NI ↗</i>
         </div>
     </div>
 
@@ -321,7 +349,7 @@
     <div id="bdayAug2" class="bday-scene bday-morning-scene">
         <div class="bday-scene-title light">
             <p>02 AUGUST · MORNING</p>
-            <h3>The phone rings endlessly.</h3>
+            <h3>The phone keeps ringinggg, wishing you a happy birthday!</h3>
             <span>Slide to answer.</span>
         </div>
         <div class="bday-phone-wrap">
@@ -331,7 +359,7 @@
                 <div class="bday-call-avatar">Y</div>
                 <small>YANNIE DAY</small>
                 <h4 id="bdayPhoneHeadline">GOOD MORNINGGGG<br>BIRTHDAYYY GIRLLL</h4>
-                <p id="bdayPhoneSub">incoming birthday call...</p>
+                <p id="bdayPhoneSub">incoming birthday chaos...</p>
                 <div class="bday-answer-track">
                     <i id="bdayAnswerThumb">☎</i>
                     <span>slide to answer</span>
@@ -345,9 +373,9 @@
 
         <div class="bday-dudin-call" id="bdayDudinCall" role="button" tabindex="0" aria-label="Open Dudin birthday call moment">
             <div class="bday-wave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-            <div><small>10:48 AM</small><b>Dudin called.</b><span>tap the waveform</span></div>
+            <div><small>10:48 AM</small><b>Dudin call.</b><span>tap the waveform</span></div>
             <div class="bday-dudin-reveal">
-                <p>birthday song</p><p>then his mum joined</p><p>then she wished too</p><p>and another gift showed up later</p>
+                <p>dia nyanyii birthday song</p><p>then mak diaa joinn</p><p>then she wished too</p><p>and mak diaa nak bagi hadiah too!</p>
             </div>
         </div>
     </div>
@@ -356,24 +384,24 @@
         <div class="bday-scene-title">
             <p>02 AUGUST · DAY → NIGHT</p>
             <h3>Open the room.</h3>
-            <span>Tap all the presents!</span>
+            <span>Tap the presentss!</span>
         </div>
         <div class="bday-gift-room">
             <button class="bday-object giftbox-big" type="button" data-bday-object="package">
                 <span class="box-lid"></span><span class="box-body">🎀</span>
-                <em><b>surprise package</b><small>the one yangg Aniq suruhh jangan pegangg</small></em>
+                <em><b>surprise package</b><small>adaa kasut, cheese, andd bungaaa!</small></em>
             </button>
             <button class="bday-object ringbox" type="button" data-bday-object="ring">
                 <span class="ring-lid"></span><span class="ring-base">💍</span>
-                <em><b>the ring! </b><small>sungguh mengappreciate sampai flexing</small></em>
+                <em><b>the promise ring!</b><small>terlalu cantik sapai flex kat semua orangg</small></em>
             </button>
             <button class="bday-object giftbag" type="button" data-bday-object="dudinGift">
                 <span>🎁</span>
-                <em><b>Mak dudin</b><small>pun bagi hadiahh · 5:50 PM</small></em>
+                <em><b>mak dudinn</b><small>tak ingat hadiah apaa · 5:50 PM</small></em>
             </button>
             <button class="bday-object cakebox" type="button" data-bday-object="cake">
                 <span>🍰</span>
-                <em><b>cake acquired</b><small>candles 67: unfortunately not acquired</small></em>
+                <em><b>cake acquired</b><small>candles number 6&7: unfortunately tajupaa</small></em>
             </button>
         </div>
         <div class="bday-class-wish">
@@ -403,7 +431,7 @@
                     <span data-candle-slot="1"></span><span data-candle-slot="2"></span><span data-candle-slot="3"></span><span data-candle-slot="4"></span><span data-candle-slot="5"></span>
                 </div>
                 <div class="bday-cake-icing"></div>
-                <div class="bday-cake-body">1 6-7</div>
+                <div class="bday-cake-body">02</div>
                 <div class="bday-cake-plate"></div>
             </div>
         </div>
@@ -435,7 +463,7 @@
         </div>
         <div id="bdaySchoolWin" class="bday-school-win">
             <b>recess unlocked ✦</b>
-            <span>your fwends nyanyii happy birthdayy just forr youu babyyy!.</span>
+            <span>they sing for youu a happy birthdayy song!.</span>
         </div>
 
         <div class="bday-nonchalant-game">
@@ -472,160 +500,169 @@
 
 
 <!-- DAILY LOVE -->
-<section id="daily">
-    <div class="section-heading"><div><p class="eyebrow">DAILY</p><h2>Today’s drop</h2></div><p>Small, random, no pressure.</p></div>
-    <div class="card daily-card">
-        <h3>Today's Mission</h3>
-        <p id="dailyMission">Loading...</p>
-        <button id="completeMissionBtn" onclick="completeDailyMission()">Complete Today's Mission</button>
-        <p id="missionStatus" class="muted"></p>
-    </div>
+<section id="daily" class="personal-section daily-v3">
+    <div class="section-heading"><div><p class="eyebrow">TODAY WITH YANNIE</p><h2>Pull today’s card.</h2></div><p>One tiny thing to do. One real thing to remember.</p></div>
 
-    <div class="card">
-        <h3>Today's Memory</h3>
-        <p id="dailyMemory">Loading...</p>
-    </div>
+    <button class="daily-deck" id="dailyDeckButton" type="button" onclick="pullDailyCard()" aria-label="Pull today's card">
+        <span class="daily-deck-stack" aria-hidden="true"></span>
+        <span class="daily-card-face daily-card-front">
+            <small>21 · YANNIE WORLD</small>
+            <strong>tap to pull</strong>
+            <em>today’s tiny plan</em>
+        </span>
+        <span class="daily-card-face daily-card-back">
+            <small>TODAY’S MOVE</small>
+            <strong id="dailyMission">Loading...</strong>
+            <span class="daily-memory-line">remember this → <b id="dailyMemory">Loading...</b></span>
+        </span>
+    </button>
 
-    <div class="card streak-card">
-        <h3>Visit Streak</h3>
-        <div id="streakNumber">0</div>
-        <p class="muted">Come back anytime. This little world will remember you.</p>
+    <div class="daily-actions-v3">
+        <button id="completeMissionBtn" class="stamp-button" type="button" onclick="completeDailyMission()">Stamp it done</button>
+        <button class="ghost-big-button" type="button" onclick="pullDailyCard(true)">Flip it again</button>
     </div>
+    <p id="missionStatus" class="daily-status-v3"></p>
+    <div class="daily-footnote"><span>visit streak</span><strong id="streakNumber">0</strong><small>not a competition. just a tiny record.</small></div>
 </section>
 
 <!-- MOOD CHECK-IN -->
-<section id="mood">
-    <div class="section-heading"><div><p class="eyebrow">CHECK-IN</p><h2>How are you today?</h2></div><p>No dramatic diagnosis. Just pick a mood.</p></div>
-    <div class="card">
-        <p>Pick whatever is closest. The answer changes depending on the mood.</p>
-        <div class="mood-grid">
-            <button onclick="chooseMood('happy')">🥰 Happy</button>
-            <button onclick="chooseMood('miss')">🥺 Miss You</button>
-            <button onclick="chooseMood('sad')">😔 Sad</button>
-            <button onclick="chooseMood('mad')">😡 Mad</button>
-            <button onclick="chooseMood('tired')">😴 Tired</button>
-            <button onclick="chooseMood('stress')">🤯 Stressed</button>
-        </div>
-        <div id="moodResult" class="mood-result">Pick one. I’ll keep it useful.</div>
+<section id="mood" class="personal-section mood-v3">
+    <div class="section-heading"><div><p class="eyebrow">YANNIE MOOD</p><h2>What kind of day is it?</h2></div><p>Pick the one that sounds closest to something you’d actually say.</p></div>
+    <div class="mood-vibe-grid">
+        <button class="mood-vibe mv-good" type="button" onclick="chooseMood('happy', this)"><span>✨</span><strong>good good</strong><small>actually okay today</small></button>
+        <button class="mood-vibe mv-rindu" type="button" onclick="chooseMood('miss', this)"><span>📞</span><strong>rindu</strong><small>need aniq / need a call</small></button>
+        <button class="mood-vibe mv-tired" type="button" onclick="chooseMood('tired', this)"><span>😴</span><strong>penat gila</strong><small>energy genuinely gone</small></button>
+        <button class="mood-vibe mv-study" type="button" onclick="chooseMood('stress', this)"><span>📚</span><strong>study mode</strong><small>too many things at once</small></button>
+        <button class="mood-vibe mv-quiet" type="button" onclick="chooseMood('quiet', this)"><span>😐</span><strong>nonchalant mode</strong><small>feeling it, not showing it</small></button>
+        <button class="mood-vibe mv-overthink" type="button" onclick="chooseMood('overthink', this)"><span>🌀</span><strong>overthinking</strong><small>brain writing its own story</small></button>
+    </div>
+    <div id="moodResult" class="mood-console-v3" aria-live="polite">
+        <span class="mood-console-icon">◌</span>
+        <div><small>NO MOOD SELECTED</small><h3>Tap whichever one is closest.</h3><p>This part is based on patterns that actually show up in our chats.</p></div>
     </div>
 </section>
 
 <!-- CARE GUIDE -->
-<section id="about">
-    <div class="section-heading"><div><p class="eyebrow">CARE GUIDE</p><h2>Useful notes</h2></div><p>The stuff worth remembering when one of us is tired, stressed, or annoying.</p></div>
-    <div class="card">
-        <h3>Things I actually remember</h3>
-        <ul class="about-list">
-            <li>Birthday: 2nd August 2009.</li>
-            <li>Born on Sunday, at 8:41 AM.</li>
-            <li>Favourite colours: soft pink and brown.</li>
-            <li>Surprisingly spicy eater.</li>
-            <li>Loves cute and soft-style outfits.</li>
-            <li>Loves daisies, lilies, and roses.</li>
-        </ul>
+<section id="about" class="personal-section care-v3">
+    <div class="section-heading"><div><p class="eyebrow">UNOFFICIAL YANNIE MANUAL</p><h2>Things I’ve learned.</h2></div><p>Not rules. Just patterns I should probably remember.</p></div>
+    <div class="care-case-grid">
+        <button class="care-case" type="button" onclick="showCare('bored', this)"><span class="care-trigger">“call me / im bored”</span><strong>When the day is boring</strong><em class="care-case-answer"></em></button>
+        <button class="care-case" type="button" onclick="showCare('noline', this)"><span class="care-trigger">“nak chat dan call tk lepas”</span><strong>When there’s no line</strong><em class="care-case-answer"></em></button>
+        <button class="care-case" type="button" onclick="showCare('tired', this)"><span class="care-trigger">“saya penat sgt lately”</span><strong>When the battery is 0%</strong><em class="care-case-answer"></em></button>
+        <button class="care-case" type="button" onclick="showCare('quiet', this)"><span class="care-trigger">“saya tk pandai react weh”</span><strong>When the reaction looks 😐</strong><em class="care-case-answer"></em></button>
+        <button class="care-case" type="button" onclick="showCare('update', this)"><span class="care-trigger">“update mee okay”</span><strong>When we’re doing separate things</strong><em class="care-case-answer"></em></button>
+        <button class="care-case" type="button" onclick="showCare('school', this)"><span class="care-trigger">trial · math · SPM</span><strong>When school is too loud</strong><em class="care-case-answer"></em></button>
     </div>
+    <p class="care-note-v3">Tap a situation. It opens in place — no random popup lecture.</p>
+</section>
 
-    <div class="care-grid">
-        <button onclick="showCare('period')">🌙 Period Mode</button>
-        <button onclick="showCare('silent')">🤍 When You Go Quiet</button>
-        <button onclick="showCare('sad')">🥺 When You Feel Sad</button>
-        <button onclick="showCare('stress')">📚 When You’re Stressed</button>
-        <button onclick="showCare('jealous')">🫣 When You’re Jealous</button>
-        <button onclick="showCare('miss')">💌 When You Miss Me</button>
+<!-- SMALL THINGS -->
+<section id="smallthings" class="personal-section smallthings-v3">
+    <div class="section-heading"><div><p class="eyebrow">CHAT LORE</p><h2>Things that became normal.</h2></div><p>None of these sounded important when they first happened. That’s the point.</p></div>
+    <div class="smallthings-stage">
+        <div class="smallthings-phone">
+            <div class="smallthings-phone-top"><i></i><span>yanniess</span><b>•••</b></div>
+            <div id="smallThingDisplay" class="smallthings-screen">
+                <small>tap a message →</small>
+                <h3>Choose one from the chat pile.</h3>
+                <p>I’ll tell you why it ended up becoming lore.</p>
+            </div>
+        </div>
+        <div class="smallthings-chatpile">
+            <button type="button" onclick="showSmallThing('rm6', this)"><span>01 MAR</span>hola yannie ke ni?</button>
+            <button type="button" onclick="showSmallThing('pudding', this)"><span>03 MAR</span>datang semata beli puding karamel</button>
+            <button type="button" onclick="showSmallThing('call', this)"><span>08 APR</span>call me / im bored</button>
+            <button type="button" onclick="showSmallThing('update', this)"><span>20 JUL</span>update mee okay</button>
+            <button type="button" onclick="showSmallThing('nonchalant', this)"><span>03 AUG</span>saya sumpa tk pandai react weh</button>
+            <button type="button" onclick="showSmallThing('ai', this)"><span>20 JUL</span>YANNIE LOVE AI</button>
+        </div>
     </div>
-
-    <div id="careResult" class="card care-result">Pick a situation.</div>
 </section>
 
 <!-- MEMORIES -->
-<section id="memories">
-    <div class="section-heading"><div><p class="eyebrow">MEMORIES</p><h2>Three moments that changed the plot</h2></div><p>Not every memory needs a dramatic title.</p></div>
-
-    <div class="memory" onclick="unlockAchievement('memory_reader')">
-        <h3>The dessert-order era</h3>
-        <p>I still remember clearly the first day that I fell in love with you. I was ordering desserts from you when I noticed, the longer we texted each other, the more I knew that we had a lot in common. Your updates and your kindness made me fall deeply for you.</p>
-    </div>
-
-    <div class="memory" onclick="unlockAchievement('memory_reader')">
-        <h3>First date</h3>
-        <p>I still remember our first real date, at the stadium. Back then, I had no knowledge about fashion haha. We ate a burger and I could not help but notice you ate a burger with a spoon! I will not judge you for that.</p>
-    </div>
-
-    <div class="memory" onclick="unlockAchievement('memory_reader')">
-        <h3>The wake-up call that got out of hand</h3>
-        <p>My favourite memory would surely be when we had our first call, where you asked me to wake you up but instead we talked for so long. Oh how I love you for that.</p>
+<section id="memories" class="personal-section memories-v3">
+    <div class="section-heading"><div><p class="eyebrow">REAL MOMENTS</p><h2>The plot, as it actually happened.</h2></div><p>Short version. The scrapbook can handle the dramatic director’s cut.</p></div>
+    <div class="memory-story-list">
+        <details class="memory-story" ontoggle="if(this.open) unlockAchievement('memory_reader')">
+            <summary><span>01 · 01 MAR</span><strong>Me ordering from you was the opening scene.</strong><em>two chocolate moist cakes →</em></summary>
+            <div><p><b>“hola yannie ke ni”</b> was followed by <b>“yep nak order kan”</b>. A few messages later: two cake moist, total RM6, Dee’s Dessert.</p><small>Extremely normal beginning for a website this unnecessarily large.</small></div>
+        </details>
+        <details class="memory-story" ontoggle="if(this.open) unlockAchievement('memory_reader')">
+            <summary><span>02 · 02–03 MAR</span><strong>The pudding became lore immediately.</strong><em>first free birthday customer →</em></summary>
+            <div><p>You gave the first free birthday pudding to a customer. The next day I came back to the bazaar basically just for caramel pudding and you called it effort.</p><small>This is why there is now pudding hidden everywhere on the site.</small></div>
+        </details>
+        <details class="memory-story" ontoggle="if(this.open) unlockAchievement('memory_reader')">
+            <summary><span>03 · 12–14 MAR</span><strong>The RM70 lasagna side quest.</strong><em>tutorial → ingredients → blind cooking</em></summary>
+            <div><p>You watched a lasagna tutorial, bought roughly RM70 of ingredients, worried about whether it would work, then the food actually got approved.</p><small>One of many times food somehow became a whole subplot.</small></div>
+        </details>
+        <details class="memory-story" ontoggle="if(this.open) unlockAchievement('memory_reader')">
+            <summary><span>04 · 04 APR</span><strong>The open-house day was awkward in a very real way.</strong><em>directions, calls, photos, then talking it out</em></summary>
+            <div><p>There were directions, wrong turns, nervousness and the photo-without-permission thing. What I like about this memory is that we actually talked about what felt uncomfortable afterwards.</p><small>Not every good memory has to pretend every second was perfect.</small></div>
+        </details>
+        <details class="memory-story" ontoggle="if(this.open) unlockAchievement('memory_reader')">
+            <summary><span>05 · 08 APR+</span><strong>Calls quietly became the default.</strong><em>“call me / im bored” → 9 hours</em></summary>
+            <div><p>A four-minute voice call turned into a nine-hour video call that day. Months later, even you pointed out that normal texting did not really feel enough anymore because calls had become normal.</p><small>Absolutely reasonable phone usage.</small></div>
+        </details>
+        <details class="memory-story" ontoggle="if(this.open) unlockAchievement('memory_reader')">
+            <summary><span>06 · JUL–AUG</span><strong>SPM on one side, UTeM on the other.</strong><em>update me okay →</em></summary>
+            <div><p>Trials made you tired while university gave me a completely new routine. The relationship became updates, weird schedules, sleep calls, school stories and figuring out when both of us were free.</p><small>Less cinematic. Probably more important.</small></div>
+        </details>
     </div>
 </section>
 
 <!-- GALLERY -->
-<section id="gallery">
-    <div class="section-heading"><div><p class="eyebrow">PHOTOS</p><h2>Camera roll, but curated</h2></div><p>Tap any frame to open it properly.</p></div>
+<section id="gallery" class="personal-section gallery-v3">
+    <div class="section-heading"><div><p class="eyebrow">CAMERA ROLL</p><h2>The four on display.</h2></div><p>Tap a print. It opens like a photo, not a menu option.</p></div>
     <div class="gallery">
-        <div class="polaroid" onclick="openPhoto('images/us5.jpg','One of my favourite memories ❤️')">
-            <img src="images/us5.jpg" alt="Memory photo 1">
-            <p>Yannie ❤️</p>
-        </div>
-        <div class="polaroid" onclick="openPhoto('images/us2.jpg','You looked so cute here 🌸')">
-            <img src="images/us2.jpg" alt="Memory photo 2">
-            <p>Cutie Yannie 🌸</p>
-        </div>
-        <div class="polaroid" onclick="openPhoto('images/us3.jpg','One of the happiest days ever 💗')">
-            <img src="images/us3.jpg" alt="Memory photo 3">
-            <p>My Favourite Person 💗</p>
-        </div>
-        <div class="polaroid" onclick="openPhoto('images/us4.jpg','I wish we could relive this day ❤️')">
-            <img src="images/us4.jpg" alt="Memory photo 4">
-            <p>Forever Us ❤️</p>
-        </div>
+        <div class="polaroid" onclick="openPhoto('images/us5.jpg','One of the photos that earned a permanent spot here.')"><img src="images/us5.jpg" alt="Memory photo 1"><p>01 · us</p></div>
+        <div class="polaroid" onclick="openPhoto('images/us2.jpg','This one still belongs in the main camera roll.')"><img src="images/us2.jpg" alt="Memory photo 2"><p>02 · yannie</p></div>
+        <div class="polaroid" onclick="openPhoto('images/us3.jpg','Kept because normal photos become important later.')"><img src="images/us3.jpg" alt="Memory photo 3"><p>03 · kept</p></div>
+        <div class="polaroid" onclick="openPhoto('images/us4.jpg','No huge caption needed. I just like this one.')"><img src="images/us4.jpg" alt="Memory photo 4"><p>04 · favourite</p></div>
     </div>
 </section>
 
 <!-- LETTER -->
-<section id="letter">
-    <div class="section-heading"><div><p class="eyebrow">LETTER</p><h2>One actual letter</h2></div><p>No generated quote wall. Just this.</p></div>
-    <div class="card letter-card-main">
-        <p>Yannie,</p>
-        <p>This started as a random project and somehow kept getting bigger because there kept being more things worth saving — jokes, calls, photos, stupid little stories, and the normal days too.</p>
-        <p>I don’t want this site to pretend everything is perfect. I just want it to hold onto the things that mattered to us while they were happening.</p>
-        <p>— Aniq</p>
-        <button onclick="finishMainLetter()">Done reading</button>
+<section id="letter" class="personal-section letter-v3">
+    <div class="section-heading"><div><p class="eyebrow">ONE LETTER</p><h2>Not everything needs a feature.</h2></div><p>This one just needs paper.</p></div>
+    <div class="letter-desk-v3">
+        <div class="letter-paper-v3">
+            <p>My dearest Hasrieyanniee,</p>
+            <p>The reason I made this website is not to brag that I can code, but I wanted to create a place, a space where you are the star, where it's all about youu, babyy!</p>
+            <p>Every single detail, every single moment, and every single memory matters to me, no matter if it's important to us or not, and what better way to express it than making a whole website about youu, sayangg? I know I can sometimes be a little too much, but let this be one of many ways of me saying 'I Love You' to youu!</p>
+            <p>This website isn't perfect and it will never be, but it's all about youu and that's all I really need. I love you from the deepest part of my heart, my dearest cintaa hatii!</p>
+            <p>— Anique</p>
+            <button class="letter-sign-button" type="button" onclick="finishMainLetter()">fold the letter ✓</button>
+        </div>
+        <div class="letter-desk-items" aria-hidden="true"><i class="desk-photo"></i><i class="desk-clip"></i><i class="desk-pencil"></i></div>
     </div>
 </section>
 
 <!-- ENVELOPES -->
-<section id="envelopes">
-    <div class="section-heading"><div><p class="eyebrow">OPEN WHEN</p><h2>Emergency envelopes</h2></div><p>For specific moods, not random spam.</p></div>
-    <div class="letters-grid">
-        <div class="envelope" onclick="openLetter(0)">✉️<span>Miss Me</span></div>
-        <div class="envelope" onclick="openLetter(1)">✉️<span>Sad</span></div>
-        <div class="envelope" onclick="openLetter(2)">✉️<span>Stressed</span></div>
-        <div class="envelope" onclick="openLetter(3)">✉️<span>Overthinking</span></div>
-        <div class="envelope" onclick="openLetter(4)">✉️<span>Birthday</span></div>
-        <div class="envelope" onclick="openLetter(5)">✉️<span>After SPM</span></div>
+<section id="envelopes" class="personal-section envelopes-v3">
+    <div class="section-heading"><div><p class="eyebrow">OPEN WHEN</p><h2>Pick the envelope that actually fits.</h2></div><p>No need to open all six in one sitting. They are better when the label is true.</p></div>
+    <div class="letters-grid letters-grid-v3">
+        <button class="envelope envelope-v3 e-rindu" type="button" onclick="openLetter(0)"><small>OPEN WHEN</small><span>you say “rindu”</span><i>01</i></button>
+        <button class="envelope envelope-v3 e-tired" type="button" onclick="openLetter(1)"><small>OPEN WHEN</small><span>you’re properly tired</span><i>02</i></button>
+        <button class="envelope envelope-v3 e-stress" type="button" onclick="openLetter(2)"><small>OPEN WHEN</small><span>trial brain wins</span><i>03</i></button>
+        <button class="envelope envelope-v3 e-think" type="button" onclick="openLetter(3)"><small>OPEN WHEN</small><span>you overthink us</span><i>04</i></button>
+        <button class="envelope envelope-v3 e-bday" type="button" onclick="openLetter(4)"><small>OPEN WHEN</small><span>it’s 02.08 again</span><i>05</i></button>
+        <button class="envelope envelope-v3 e-spm" type="button" onclick="openLetter(5)"><small>OPEN WHEN</small><span>SPM is finally over</span><i>06</i></button>
     </div>
-
-    <div id="letterModal" class="modal">
-        <div class="letter-paper">
-            <span class="close" onclick="closeLetter()">✕</span>
-            <div id="letterText"></div>
-        </div>
-    </div>
+    <div id="letterModal" class="modal"><div class="letter-paper"><span class="close" onclick="closeLetter()">✕</span><div id="letterText"></div></div></div>
 </section>
 
 <!-- ACHIEVEMENTS -->
-<section id="achievements">
-    <div class="section-heading"><div><p class="eyebrow">BADGES</p><h2>Things you accidentally unlocked</h2></div><p>Mostly by being nosy around the site.</p></div>
-    <div class="card">
-        <p>Unlock cute badges by exploring Yannie World.</p>
-        <div id="achievementList" class="achievement-list"></div>
-    </div>
+<section id="achievements" class="personal-section achievements-v3">
+    <div class="section-heading"><div><p class="eyebrow">BADGES</p><h2>Things you accidentally unlocked.</h2></div><p>We’ll turn these into the proper Progression system later.</p></div>
+    <div class="badge-board-v3"><div id="achievementList" class="achievement-list"></div></div>
 </section>
 
 <!-- SECRET VAULT -->
-<section id="vault">
-    <div class="section-heading"><div><p class="eyebrow">VAULT</p><h2>Still locked?</h2></div><p>Explore first. Then come back.</p></div>
-    <div id="vaultContent" class="card vault-card">
-        Loading vault...
+<section id="vault" class="personal-section vault-v3">
+    <div class="section-heading"><div><p class="eyebrow">VAULT</p><h2>The one thing that still wants effort.</h2></div><p>Explore first. The proper progression system will make this even better later.</p></div>
+    <div class="vault-stage-v3">
+        <div class="vault-door-v3" aria-hidden="true"><div class="vault-wheel-v3"><span>Y</span></div><i class="vault-hinge h1"></i><i class="vault-hinge h2"></i></div>
+        <div id="vaultContent" class="card vault-card">Loading vault...</div>
     </div>
 </section>
 
@@ -652,7 +689,7 @@
         <div class="receipt-row"><span>Chocolate moist cake</span><b>x2</b></div>
         <div class="receipt-row"><span>Total</span><b>RM6.00</b></div>
         <div class="receipt-line"></div>
-        <p class="receipt-note">Nobody involved knew this would become lore.</p>
+        <p class="receipt-note">Nobody knew this would be the start of something special...</p>
         <button class="receipt-stamp" id="receiptStamp" type="button">tap to stamp</button>
     </div>
 </div>
@@ -924,8 +961,88 @@
     <p>Call ended · replay complete.</p>
 </div>
 
+
+
+<!-- FULL-SCREEN YANNIEVERSE — added layer; existing website content is untouched -->
+<div id="yverseOverlay" class="yverse-overlay" aria-hidden="true">
+    <canvas id="yverseStarCanvas" aria-hidden="true"></canvas>
+    <div class="yverse-space-haze" aria-hidden="true"></div>
+    <div class="yverse-space-grid" aria-hidden="true"></div>
+
+    <div class="yverse-topbar">
+        <div class="yverse-brand">
+            <span class="yverse-brand-dot"></span>
+            <div><small>YW · DEEP SPACE</small><strong>YANNIEVERSE</strong></div>
+        </div>
+        <button id="closeYannieverseBtn" class="yverse-close" type="button" aria-label="Exit Yannieverse">EXIT ×</button>
+    </div>
+
+    <div id="yverseMap" class="yverse-map" aria-label="Interactive Yannieverse map">
+        <div class="yverse-orbit orbit-a" aria-hidden="true"></div>
+        <div class="yverse-orbit orbit-b" aria-hidden="true"></div>
+        <div class="yverse-orbit orbit-c" aria-hidden="true"></div>
+
+        <button class="yverse-planet yv2-prime" data-yv2-key="prime" type="button" style="--px:50%;--py:50%;--ps:176px;--psm:136px;--delay:-1s;">
+            <span class="yv2-ring yv2-ring-wide"></span><span class="yv2-ball"><i class="yv2-surface"></i><b>Y</b></span>
+            <span class="yv2-name">Yannie Prime<small>centre</small></span>
+        </button>
+
+        <button class="yverse-planet yv2-fy" data-yv2-key="fy" type="button" style="--px:22%;--py:22%;--ps:124px;--psm:96px;--delay:-4.1s;">
+            <span class="yv2-ring"></span><span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">YannieFy</span>
+        </button>
+        <button class="yverse-planet yv2-tube" data-yv2-key="tube" type="button" style="--px:78%;--py:20%;--ps:118px;--psm:92px;--delay:-2.8s;">
+            <span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">YannieTube</span>
+        </button>
+        <button class="yverse-planet yv2-gram" data-yv2-key="gram" type="button" style="--px:15%;--py:59%;--ps:110px;--psm:88px;--delay:-6s;">
+            <span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">YannieGram</span>
+        </button>
+        <button class="yverse-planet yv2-memoryworld" data-yv2-key="memoryworld" type="button" style="--px:84%;--py:58%;--ps:138px;--psm:104px;--delay:-3.5s;">
+            <span class="yv2-ring yv2-ring-thin"></span><span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">Memory World</span>
+        </button>
+        <button class="yverse-planet yv2-museum" data-yv2-key="museum" type="button" style="--px:30%;--py:81%;--ps:120px;--psm:94px;--delay:-5.2s;">
+            <span class="yv2-ring"></span><span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">Museum</span>
+        </button>
+        <button class="yverse-planet yv2-scrapbook" data-yv2-key="scrapbook" type="button" style="--px:68%;--py:82%;--ps:112px;--psm:90px;--delay:-1.9s;">
+            <span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">Scrapbook</span>
+        </button>
+        <button class="yverse-planet yv2-birthday" data-yv2-key="birthday" type="button" style="--px:50%;--py:16%;--ps:104px;--psm:86px;--delay:-4.9s;">
+            <span class="yv2-ball"><i class="yv2-surface"></i><b>02</b></span><span class="yv2-name">Yannie Day</span>
+        </button>
+        <button class="yverse-planet yv2-cookie" data-yv2-key="cookie" type="button" style="--px:91%;--py:36%;--ps:92px;--psm:78px;--delay:-2.2s;">
+            <span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">YannieTok</span>
+        </button>
+
+        <button class="yverse-moon yv2-origin" data-yv2-key="receipt" type="button" style="--px:57%;--py:67%;--ms:76px;"><b>RM6</b><small>origin moon</small></button>
+        <button class="yverse-moon yv2-daily" data-yv2-key="daily" type="button" style="--px:38%;--py:36%;--ms:72px;"><b>☀</b><small>daily</small></button>
+        <button class="yverse-moon yv2-memories" data-yv2-key="memories" type="button" style="--px:64%;--py:34%;--ms:76px;"><b>◫</b><small>memories</small></button>
+        <button class="yverse-moon yv2-vault" data-yv2-key="vault" type="button" style="--px:43%;--py:91%;--ms:68px;"><b>02</b><small>vault</small></button>
+        <button class="yverse-mystery" data-yv2-key="locked" type="button" style="--px:8%;--py:12%;">?<span>signal too weak</span></button>
+    </div>
+
+    <div class="yverse-intro" id="yverseIntro">
+        <small>HASRIEYANNIE IMAN DELAILA</small>
+        <h2>Welcome to your universe.</h2>
+        <p>Tap a planet to pull it into focus.</p>
+        <button id="dismissYverseIntro" type="button">EXPLORE ✦</button>
+    </div>
+
+    <aside id="yverseFocus" class="yverse-focus" aria-live="polite">
+        <button id="yverseBackBtn" class="yverse-back" type="button">← BACK TO MAP</button>
+        <div id="yverseFocusVisual" class="yverse-focus-visual"><span class="yv2-ball"><i class="yv2-surface"></i></span></div>
+        <small id="yverseFocusKicker">PLANET</small>
+        <h2 id="yverseFocusTitle">Yannie Prime</h2>
+        <p id="yverseFocusDesc">The centre of the Yannieverse.</p>
+        <div id="yverseFocusTags" class="yverse-focus-tags"></div>
+        <button id="yverseEnterWorldBtn" class="yverse-enter-world" type="button">ENTER WORLD →</button>
+    </aside>
+
+    <div class="yverse-bottomhint"><span>drag / move to look around</span><i>•</i><span>tap a planet to focus</span></div>
+    <div id="yverseWarp" class="yverse-warp" aria-hidden="true"></div>
+</div>
+
+
 <div id="achievementToast" class="achievement-toast"></div>
 
-<script src="script.js"></script>
+<script src="script.js?v=personal-3"></script>
 </body>
 </html>

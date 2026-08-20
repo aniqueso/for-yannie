@@ -2,19 +2,19 @@ const PASSWORD = "02082009";
 const STORAGE_KEY = "yannieWorldV2State";
 
 const achievementData = {
-    daily_visitor: { icon: "🌞", title: "Daily Visitor", desc: "Completed a daily love mission." },
-    mood_checked: { icon: "🧸", title: "Mood Checked", desc: "Used the mood check-in." },
-    secret_finder: { icon: "🔍", title: "Secret Finder", desc: "Found a secret search result." },
-    super_secret_finder: { icon: "🕵️", title: "Super Secret Finder", desc: "Found three secret search results." },
-    letter_reader: { icon: "💌", title: "Letter Reader", desc: "Opened an Open When letter." },
-    envelope_collector: { icon: "✉️", title: "Envelope Collector", desc: "Opened all Open When letters." },
-    heart_reader: { icon: "❤️", title: "Heart Reader", desc: "Finished the main letter." },
-    memory_reader: { icon: "📖", title: "Memory Reader", desc: "Read a memory card." },
-    memory_keeper: { icon: "📸", title: "Memory Keeper", desc: "Opened all gallery photos." },
-    cookie_destroyer: { icon: "🍪", title: "Cookie Destroyer", desc: "Finished the Dubai cookie simulator." },
-    yannietube_visitor: { icon: "▶️", title: "YannieTube Visitor", desc: "Opened YannieTube." },
-    pov_player: { icon: "🎮", title: "POV Player", desc: "Opened Memory World." },
-    vault_unlocked: { icon: "🎁", title: "Secret Vault", desc: "Unlocked the final vault." }
+    daily_visitor: { icon: "☀️", title: "Today Was Here", desc: "Pulled a daily card and actually did it." },
+    mood_checked: { icon: "📻", title: "Read the Room", desc: "Used the Yannie Mood check-in." },
+    secret_finder: { icon: "🔎", title: "Lore Found", desc: "Found one hidden search result." },
+    super_secret_finder: { icon: "🗂️", title: "Deep Lore", desc: "Found three hidden search results." },
+    letter_reader: { icon: "💌", title: "Opened the Envelope", desc: "Read one Open When note." },
+    envelope_collector: { icon: "📬", title: "Every Envelope", desc: "Opened all six Open When notes." },
+    heart_reader: { icon: "📝", title: "Read the Whole Thing", desc: "Finished the main letter." },
+    memory_reader: { icon: "🎞️", title: "Plot Remembered", desc: "Opened one real memory." },
+    memory_keeper: { icon: "📷", title: "Camera Roll", desc: "Opened all four photos." },
+    cookie_destroyer: { icon: "🍪", title: "DCC Destroyer", desc: "Finished the Dubai cookie simulator." },
+    yannietube_visitor: { icon: "🎬", title: "Cinema Ticket", desc: "Entered YannieTube." },
+    pov_player: { icon: "🕹️", title: "Timeline Player", desc: "Entered Memory World." },
+    vault_unlocked: { icon: "🔐", title: "Vault Open", desc: "Unlocked the final vault." }
 };
 
 const defaultState = {
@@ -69,7 +69,6 @@ function checkPassword(){
         document.getElementById("lockScreen").style.display = "none";
         document.getElementById("website").style.display = "block";
         showSection("home");
-        showNotification("Yannie World unlocked. Welcome back.");
     }
     else{
         alert("Wrong password. Hint: it is a date you know.");
@@ -77,6 +76,7 @@ function checkPassword(){
 }
 
 function showSection(id){
+    document.body.classList.toggle("home-landing", id === "home");
     document.querySelectorAll("section").forEach(section => section.classList.remove("active"));
     const target = document.getElementById(id);
     if(target) target.classList.add("active");
@@ -115,48 +115,59 @@ function setDailyMessage(){
 }
 
 const missions = [
-    "Open one memory you have not looked at in a while.",
-    "Use Yannie Search and try one of the inside-joke keywords.",
-    "Open one Open When envelope only if the label actually fits today.",
-    "Pick your mood honestly. No overthinking the button choice.",
-    "Open the scrapbook and swipe through one chapter.",
-    "Open the museum and replace one placeholder photo when you have time.",
-    "Take a break from the site and do one useful thing first."
+    "Send one completely unnecessary update. Those somehow became part of the routine.",
+    "If both of you are free later, call instead of forcing ten dry texts.",
+    "Do one useful thing first — one question, one note, one small task — then relax properly.",
+    "Open one old photo and remember what was happening around it, not just how it looked.",
+    "Eat something decent before saying you are not hungry. Yes, this keeps appearing here.",
+    "Save one random story from today for the next call.",
+    "Open one part of the website you usually skip instead of revisiting the same favourite."
 ];
 
 const dailyMemories = [
-    "1 March: chocolate moist cake x2. Total RM6.",
-    "The birthday caramel pudding that became permanent lore.",
-    "Coming to the bazaar mostly for pudding and pretending that was completely normal.",
-    "The wake-up call that refused to stay a normal wake-up call.",
-    "Raya colours: matcha strawberry and champagne.",
-    "The stadium date and the burger-with-spoon investigation.",
-    "Those absurdly long calls that made normal texting feel insufficient.",
-    "SPM on one side, UTeM on the other, phone line somewhere in the middle."
+    "01 Mar — ‘hola yannie ke ni’ → two cake moist → RM6.",
+    "02 Mar — the first free birthday pudding for a customer.",
+    "03 Mar — coming back basically just for caramel pudding. ‘effort banget si.’",
+    "12 Mar — a lasagna tutorial somehow became a RM70 side quest.",
+    "04 Apr — directions, awkwardness, photos, then actually talking about the boundary afterwards.",
+    "08 Apr — ‘call me / im bored’ → a nine-hour video call.",
+    "20 Jul — ‘update mee okay’ while UTeM life was starting.",
+    "03 Aug — ‘saya sumpa tk pandai react weh’ while actually being excited.",
+    "31 Jul — no line, so an old video call recording became the substitute.",
+    "SPM × UTeM — two different schedules, one very overused call button."
 ];
 
 function renderDaily(){
     const mission = pickDaily(missions);
     const memory = pickDaily(dailyMemories);
     const doneToday = state.completedMissionDates.includes(todayKey());
-
-    document.getElementById("dailyMission").innerText = mission;
-    document.getElementById("dailyMemory").innerText = memory;
-    document.getElementById("homeDailyPreview").innerText = `${mission} Today’s memory: ${memory}`;
+    const missionEl = document.getElementById("dailyMission");
+    const memoryEl = document.getElementById("dailyMemory");
+    if(missionEl) missionEl.innerText = mission;
+    if(memoryEl) memoryEl.innerText = memory;
 
     const btn = document.getElementById("completeMissionBtn");
     const status = document.getElementById("missionStatus");
-    if(doneToday){
-        btn.innerText = "Completed today";
-        btn.classList.add("done");
-        status.innerText = "A new one appears tomorrow.";
+    if(btn && status){
+        if(doneToday){
+            btn.innerText = "stamped for today ✓";
+            btn.classList.add("done");
+            status.innerText = "done. tomorrow gets a different card.";
+        } else {
+            btn.innerText = "stamp it done";
+            btn.classList.remove("done");
+            status.innerText = "pull the card first. do it whenever it actually fits.";
+        }
     }
-    else{
-        btn.innerText = "Complete Today's Mission";
-        btn.classList.remove("done");
-        status.innerText = "Do it first, then mark it complete.";
-    }
-    document.getElementById("streakNumber").innerText = calculateStreak();
+    const streak = document.getElementById("streakNumber");
+    if(streak) streak.innerText = calculateStreak();
+}
+
+function pullDailyCard(force=false){
+    const deck = document.getElementById("dailyDeckButton");
+    if(!deck) return;
+    if(force) deck.classList.remove("pulled");
+    requestAnimationFrame(()=>deck.classList.add("pulled"));
 }
 
 function completeDailyMission(){
@@ -165,8 +176,10 @@ function completeDailyMission(){
         unlockAchievement("daily_visitor");
         saveState();
     }
+    const deck = document.getElementById("dailyDeckButton");
+    if(deck) deck.classList.add("pulled");
     renderDaily();
-    showNotification("Daily drop marked complete. Come back tomorrow.");
+    showNotification("Stamped. That is enough productivity for the button.");
 }
 
 function calculateStreak(){
@@ -178,37 +191,101 @@ function calculateStreak(){
         if(set.has(key)){
             streak++;
             d.setDate(d.getDate()-1);
-        }
-        else break;
+        } else break;
     }
     return streak;
 }
 
 const moodMessages = {
-    happy: "Good. Keep the good mood. Go enjoy it instead of analysing why you feel good.",
-    miss: "Noted. Save the stories for later, then call when both of you are free.",
-    sad: "You do not need a motivational speech right now. Eat, drink something, rest a bit, and talk when you feel ready.",
-    mad: "Do not force a conversation while annoyed. Cool down first, then explain the actual problem without turning it into ten other problems.",
-    tired: "This one is easy: rest. Revision and everything else works better when you are actually awake.",
-    stress: "Pick the smallest next task and do only that. One paper, one question, one thing at a time."
+    happy: {
+        icon:"✨", label:"GOOD GOOD", title:"Then do not overanalyse a good day.",
+        text:"Send a random update, take the nice photo, eat the good food, laugh at whatever is funny. Good moods do not need a repair plan.",
+        note:"The chats are full of tiny updates becoming whole conversations anyway."
+    },
+    miss: {
+        icon:"📞", label:"RINDU", title:"This one has an extremely obvious solution.",
+        text:"If both of you are free, call. If not, save the stories and send the little updates until you can. You two have repeatedly turned ‘rindu’ or ‘I’m bored’ into very long calls.",
+        note:"Actual evidence: ‘call me / im bored’ eventually became a 9-hour video call."
+    },
+    tired: {
+        icon:"😴", label:"PENAT GILA", title:"Rest first. Seriously.",
+        text:"When you are properly tired, the useful move is sleep, food, water and less pressure — not trying to squeeze another five tasks into the same hour.",
+        note:"You literally said ‘saya penat sgt lately’ during the trial period."
+    },
+    stress: {
+        icon:"📚", label:"TRIAL BRAIN", title:"Make the problem smaller.",
+        text:"One question. One chapter. One thing you actually understand next. If a quiet call in the background helps, fine — but the website is not allowed to become another assignment.",
+        note:"A lot of your July/August chats are basically school + tiredness + calls in between."
+    },
+    quiet: {
+        icon:"😐", label:"NONCHALANT MODE", title:"A flat reaction does not automatically mean a flat feeling.",
+        text:"Do not force a bigger reaction just so other people can read it. You already explained this yourself after your birthday: excited inside, not always obvious outside.",
+        note:"Official diagnosis: born to be excited, forced to be nonchalant."
+    },
+    overthink: {
+        icon:"🌀", label:"OVERTHINKING", title:"Ask the real question, not the ten imaginary ones.",
+        text:"Clear reassurance works better than guessing what the other person means. Answer the actual concern, then give the conversation enough room to calm down instead of flooding it.",
+        note:"You two have had moments where ‘something feels different’ was solved better by actually talking about what felt different."
+    }
 };
 
-function chooseMood(mood){
-    document.getElementById("moodResult").innerText = moodMessages[mood];
+function chooseMood(mood, button){
+    const data = moodMessages[mood];
+    if(!data) return;
+    document.querySelectorAll(".mood-vibe").forEach(btn=>btn.classList.remove("selected"));
+    if(button) button.classList.add("selected");
+    const result = document.getElementById("moodResult");
+    if(result){
+        result.innerHTML = `<span class="mood-console-icon">${data.icon}</span><div><small>${data.label}</small><h3>${data.title}</h3><p>${data.text}</p><em>${data.note}</em></div>`;
+        result.classList.add("answered");
+    }
     unlockAchievement("mood_checked");
 }
 
 const careMessages = {
-    period: "Period mode: less arguing, more patience. Food, water, rest, and do not keep asking the same question five times.",
-    silent: "If one of us goes quiet: ask once, do not chase every minute, and leave space for a proper conversation later.",
-    sad: "Listen before trying to fix it. Sometimes the useful answer is just 'yeah, that sucks'.",
-    stress: "Help reduce the problem, not add another one. Break it into smaller tasks and let the tired person rest.",
-    jealous: "Be clear, answer the actual concern, then move on. Reassurance works better than getting defensive.",
-    miss: "If both are free: call. If not: leave updates for later. We have survived this exact problem many times."
+    bored: "If you are both free: call. You have literal evidence that ‘call me / im bored’ can become nine hours, so pretending you need a complex solution is funny.",
+    noline: "Do not panic because messages are not going through. Save the stories, scheduled notes, photos or voice messages for later. You already did the ‘no line so I watched an old VC video’ version of this.",
+    tired: "Believe the tiredness. Rest before trying to make the person perform a whole conversation. Trial season had enough ‘penat’ and sleepy mornings to establish the pattern.",
+    quiet: "Do not demand a bigger visible reaction. Birthday weekend proved the face can say 😐 while the inside is genuinely excited.",
+    update: "Small updates matter more than polished paragraphs: where you are, what class ended, what random thing happened. ‘update mee okay’ basically became part of the UTeM chapter.",
+    school: "Reduce pressure, not add to it. One math question, one explanation, one break. If the call helps, let it sit in the background instead of turning every study session into relationship time."
 };
 
-function showCare(type){
-    document.getElementById("careResult").innerText = careMessages[type];
+function showCare(type, button){
+    const message = careMessages[type];
+    if(!message || !button) return;
+    const wasOpen = button.classList.contains("open");
+    document.querySelectorAll(".care-case").forEach(card=>{
+        card.classList.remove("open");
+        const answer = card.querySelector(".care-case-answer");
+        if(answer) answer.textContent = "";
+    });
+    if(!wasOpen){
+        button.classList.add("open");
+        const answer = button.querySelector(".care-case-answer");
+        if(answer) answer.textContent = message;
+    }
+}
+
+const smallThingStories = {
+    rm6: {kicker:"01 MARCH · ORIGIN", title:"The entire thing started at RM6.", text:"Two chocolate moist cakes. One order form. Dee’s Dessert. Nothing romantic about it at all — which is exactly why it works as the opening scene."},
+    pudding: {kicker:"02–03 MARCH · PUDDING", title:"A free birthday pudding became a recurring object.", text:"First free birthday customer. Then coming back to the bazaar basically just for caramel pudding. The pudding earned lore status before either of you realised it."},
+    call: {kicker:"08 APRIL · CALL ERA", title:"‘call me / im bored’ is dangerous wording around you two.", text:"That day: 4-minute voice call, then a 9-hour video call. Later, texting by itself started to feel weird because calls had become part of the routine."},
+    update: {kicker:"20 JULY · UTEM", title:"‘update mee okay’ became a whole communication style.", text:"Campus, roommates, buses, classes, food, prayer, random photos — the important bit was not the event. It was still being included in each other’s ordinary day."},
+    nonchalant: {kicker:"03 AUGUST · BIRTHDAY ENCORE", title:"Excitement level: high. Visible reaction: questionable.", text:"You worried your friends might think you were not excited about the gifts, then admitted you genuinely were — you just do not always know how to react. Hence the permanent nonchalant joke."},
+    ai: {kicker:"20 JULY · NAME LORE", title:"Aniq + Yannie = AI. Apparently.", text:"You noticed the initials and immediately got ‘YANNIE LOVE AI’. One of those jokes that is objectively silly enough to deserve a hidden corner of the site."
+    }
+};
+
+function showSmallThing(key, button){
+    const data = smallThingStories[key];
+    const display = document.getElementById("smallThingDisplay");
+    if(!data || !display) return;
+    document.querySelectorAll(".smallthings-chatpile button").forEach(btn=>btn.classList.remove("selected"));
+    if(button) button.classList.add("selected");
+    display.innerHTML = `<small>${data.kicker}</small><h3>${data.title}</h3><p>${data.text}</p>`;
+    display.classList.remove("flash");
+    requestAnimationFrame(()=>display.classList.add("flash"));
 }
 
 const secretSearches = {
@@ -256,34 +333,48 @@ function searchYannie(){
 }
 
 const openWhenLetters = [
-`If you miss me:
+`If you say “rindu”:
 
-Save the random stories. Send the updates if you want. If we are both free, just call — we already know texting alone sometimes feels weirdly insufficient.
+You do not need to manufacture a giant conversation. Save whatever random story happened today. If we are both free, call. If not, send the update and let the story wait.
 
-— Aniq`,
-`If today is bad:
-
-You do not need to fix the entire day. Eat something, drink water, get through the next hour, then tell me what happened when you feel like talking.
+You already know how often “just call for a bit” fails to stay “for a bit”.
 
 — Aniq`,
-`If you are stressed:
+`If you are properly tired:
 
-Stop looking at the whole pile at once. Pick one chapter, one exercise, or one problem. Finish that first. Then decide what is next.
+I believe you. You do not have to be interesting, energetic or productive for me right now. Eat something, charge yourself, sleep if you can.
 
-— Aniq`,
-`If you are overthinking:
-
-Ask the actual question instead of building ten imaginary answers in your head. I would rather explain something properly than have you guess.
+Trial season already proved that tired Yannie does not need another task disguised as encouragement.
 
 — Aniq`,
-`Birthday note:
+`If trial/SPM brain is winning:
 
-I hope the day feels like yours — good food, people you like, and enough quiet time to actually enjoy it. Also: the original birthday pudding is still an important historical event.
+Ignore the whole mountain for a minute. Do one question. If that works, do the next. If it does not, ask. If you need a quiet call while studying, that is allowed too.
+
+One problem at a time. The future can queue.
 
 — Aniq`,
-`After SPM:
+`If you are overthinking us:
 
-Whatever happens next, I hope you get to choose something you genuinely want. Finish this chapter properly first. Future-you can handle the next one after that.
+Ask me the real question. I would rather answer something directly than have either of us guess what the other person means and build a worse story in our heads.
+
+And if you need a bit of space before talking, say that too. Clear is better than perfect.
+
+— Aniq`,
+`If it is 02.08 again:
+
+I hope you get good food, people who care about you, enough pictures, and enough quiet time to actually enjoy the day.
+
+Also, I hope you are still terrible at looking as excited as you actually are. It is tradition now.
+
+— Aniq`,
+`If SPM is finally over:
+
+Do nothing important for a little while. Sleep. Eat. Be bored. Let your brain understand that the exam is actually finished.
+
+Then decide what you want next because you want it — not because everyone else has already started asking.
+
+I want to hear the whole post-SPM yap when you are ready.
 
 — Aniq`
 ];
@@ -408,6 +499,9 @@ function openYannieTube(){
 }
 
 function setupLoveMachine(){
+    const loveButton = document.getElementById("loveButton");
+    const loveOutput = document.getElementById("loveResult");
+    if(!loveButton || !loveOutput) return;
     const loveResults = [
         "Call later: probably yes.",
         "Pudding rating: still suspiciously important.",
@@ -417,9 +511,9 @@ function setupLoveMachine(){
         "Study first. Complain after.",
         "RM6 investment return: statistically ridiculous."
     ];
-    document.getElementById("loveButton").addEventListener("click",()=>{
+    loveButton.addEventListener("click",()=>{
         const result = loveResults[Math.floor(Math.random()*loveResults.length)];
-        document.getElementById("loveResult").textContent = result;
+        loveOutput.textContent = result;
     });
 }
 
@@ -987,6 +1081,44 @@ function setupYannieDay(){
 }
 
 
+
+/* =========================================================
+   CLEAN HOME — room portal navigation
+   ========================================================= */
+function homeWorldNavigate(url){
+    document.body.classList.add("home-world-leaving");
+    setTimeout(()=>{ window.location.href = url; }, 150);
+}
+
+function runHomeWorldAction(action, source){
+    source?.classList.add("activated");
+    setTimeout(()=>source?.classList.remove("activated"),300);
+    switch(action){
+        case "museum": homeWorldNavigate("yannie-museum/index.html"); break;
+        case "scrapbook": homeWorldNavigate("yannie-scrapbook/index.html"); break;
+        case "fy": homeWorldNavigate("yanniefy.html"); break;
+        case "gram": homeWorldNavigate("yanniegram.html"); break;
+        case "tube": openYannieTube(); break;
+        case "memoryworld":
+            unlockAchievement("pov_player");
+            homeWorldNavigate("MemoryWorld_V2/index.html");
+            break;
+        case "birthday": showSection("birthday"); break;
+        case "gallery": showSection("gallery"); break;
+        case "memories": showSection("memories"); break;
+        case "daily": showSection("daily"); break;
+        case "letter": showSection("letter"); break;
+        case "vault": showSection("vault"); break;
+        case "receipt": openOriginReceipt(); break;
+    }
+}
+
+function setupHomeWorld(){
+    document.querySelectorAll("[data-home-action]").forEach(el=>{
+        el.addEventListener("click",()=>runHomeWorldAction(el.dataset.homeAction,el));
+    });
+}
+
 window.addEventListener("DOMContentLoaded",()=>{
     countdown();
     setDailyMessage();
@@ -997,7 +1129,550 @@ window.addEventListener("DOMContentLoaded",()=>{
     setupCookieShop();
     setupFacetime();
     setupMakeoverInteractions();
+    setupHomeWorld();
+    setupYannieverse();
     setupYannieDay();
     startDecorations();
     scheduleNotification();
 });
+
+
+/* =========================================================
+   YANNIEVERSE — stylized planet map
+   ========================================================= */
+const yannieverseEntries = {
+    prime: {
+        type: "prime",
+        title: "Yannie Prime",
+        kicker: "CENTRE OF THE YANNIEVERSE",
+        desc: "The calm middle of everything. The clean front door stays above. Scroll a little more and the bigger connected world starts here.",
+        tags: ["portrait first", "big worlds orbit around this", "not another loud homepage"],
+        action: null,
+        cta: "Choose a planet below"
+    },
+    fy: {
+        title: "YannieFy",
+        kicker: "PLANET 01 · LISTEN",
+        desc: "A record-lounge planet. Late-night music, soft glow, and whatever song ends up attached to a memory.",
+        tags: ["music district", "record groove planet", "best in Tonight Mode"],
+        action: "fy",
+        cta: "Enter YannieFy"
+    },
+    tube: {
+        title: "YannieTube",
+        kicker: "PLANET 02 · WATCH",
+        desc: "Mini cinema energy. A whole little movie planet for videos, edits, clips and whatever deserves a screen bigger than the chat itself.",
+        tags: ["mini cinema", "watch room", "projection glow"],
+        action: "tube",
+        cta: "Enter YannieTube"
+    },
+    gram: {
+        title: "YannieGram",
+        kicker: "PLANET 03 · POSTS",
+        desc: "A photo-studio planet: polaroids, camera-flash vibes, and all the little moments worth keeping as pictures instead of just text.",
+        tags: ["photo studio", "polaroid satellites", "camera roll energy"],
+        action: "gram",
+        cta: "Enter YannieGram"
+    },
+    memoryworld: {
+        title: "Memory World",
+        kicker: "PLANET 04 · PLAY",
+        desc: "The arcade planet. Replay the actual story with routes, risk and consequences instead of just reading a summary of what happened.",
+        tags: ["story arcade", "real-text routes", "riskier choices"],
+        action: "memoryworld",
+        cta: "Enter Memory World"
+    },
+    museum: {
+        title: "Museum",
+        kicker: "PLANET 05 · WALK",
+        desc: "A preserved memory planet. Marble mood, gold frames, lights, and the whole dramatic ‘this memory is important enough to display’ feeling.",
+        tags: ["gallery hall", "vault", "gold frames"],
+        action: "museum",
+        cta: "Enter the Museum"
+    },
+    scrapbook: {
+        title: "Scrapbook",
+        kicker: "PLANET 06 · FLIP",
+        desc: "The handmade planet. Messier, softer, more tactile. Pull things open, flip pages, and revisit the story in a more personal way.",
+        tags: ["craft desk", "interactive pages", "real chronology"],
+        action: "scrapbook",
+        cta: "Enter Scrapbook"
+    },
+    birthday: {
+        title: "Yannie Day",
+        kicker: "PLANET 07 · 02.08",
+        desc: "The birthday planet. Bright, playful, a bit chaotic, and deliberately more game-like than the rest of the website.",
+        tags: ["birthday room", "1 Aug → 3 Aug", "cake + confetti"],
+        action: "birthday",
+        cta: "Open Yannie Day"
+    },
+    cookie: {
+        title: "YannieTok",
+        kicker: "PLANET 08 · SNACK",
+        desc: "A tiny dessert world. Cookies, little shop energy, and the sort of food-lore side quest that absolutely belongs somewhere in this universe.",
+        tags: ["cookie counter", "snack planet", "dessert-adjacent lore"],
+        action: "cookie-shop",
+        cta: "Open YannieTok"
+    },
+    receipt: {
+        type: "mini",
+        title: "Dee’s Dessert Moon",
+        kicker: "ORIGIN MOON",
+        desc: "The whole Yannieverse basically starts here. RM6. Two cake moist. One extremely normal order that very much stopped being normal later.",
+        tags: ["RM6", "origin receipt", "caramel pudding nearby"],
+        action: "receipt",
+        cta: "Open the receipt"
+    },
+    daily: {
+        type: "mini",
+        title: "Daily Satellite",
+        kicker: "SIDE ORBIT",
+        desc: "Tiny plans, one real memory, and something small to do today instead of another giant paragraph.",
+        tags: ["today card", "one memory", "stamp it done"],
+        action: "daily",
+        cta: "Open Daily"
+    },
+    memories: {
+        type: "mini",
+        title: "Memory Cluster",
+        kicker: "SIDE ORBIT",
+        desc: "The plot without rewriting history. The actual milestones still matter more than generic romance filler.",
+        tags: ["RM6", "lasagna", "calls", "SPM × UTeM"],
+        action: "memories",
+        cta: "Open Memories"
+    },
+    vault: {
+        type: "mini",
+        title: "Vault Moon",
+        kicker: "LOCKED ORBIT",
+        desc: "A darker little moon that only really makes sense after you explore the rest. Better as a reward than as a main entrance.",
+        tags: ["late reward", "exploration", "secret ending"],
+        action: "vault",
+        cta: "Open Vault"
+    },
+    locked: {
+        type: "locked",
+        title: "Signal Too Weak",
+        kicker: "DISTANT WORLD",
+        desc: "Something is out there, but not yet. Leave at least one future place in the Yannieverse for memories that do not exist yet.",
+        tags: ["future room", "not available yet", "come back later"],
+        action: null,
+        cta: "Locked"
+    }
+};
+
+let currentYannieverseSelection = "prime";
+
+function injectYannieverse(){
+    const home = document.getElementById("home");
+    const landing = document.getElementById("landingCover");
+    if(!home || !landing || document.getElementById("yannieverseLaunch")) return;
+
+    const section = document.createElement("div");
+    section.className = "yannieverse-launch";
+    section.id = "yannieverseLaunch";
+    section.innerHTML = `
+        <div class="yv-heading">
+            <div>
+                <p class="eyebrow">OR STEP INTO THE BIGGER ONE</p>
+                <h2>Enter the Yannieverse ✦</h2>
+            </div>
+            <p>A stylized little universe where the big apps become planets. Tap one, feel the vibe, then enter the world properly.</p>
+        </div>
+        <div class="yv-shell">
+            <div class="yv-stage" id="yvStage" aria-label="Yannieverse interactive map">
+                <div class="yv-nebula"></div>
+                <div class="yv-dust"></div>
+                <div class="yv-orbits"></div>
+                <div class="yv-stars" id="yvStars"></div>
+
+                <button type="button" class="yv-planet yv-prime active" data-yv-key="prime" style="--x:50%;--y:52%;--s:144px;--s-mobile:126px;--depth:.2;--float:10.2s;">
+                    <span class="yv-sphere"><span class="yv-surface"></span></span>
+                    <span class="yv-label">Yannie Prime <small>core</small></span>
+                </button>
+
+                <button type="button" class="yv-planet yv-fy has-ring" data-yv-key="fy" style="--x:23%;--y:24%;--s:108px;--s-mobile:94px;--depth:.95;--float:8.4s;">
+                    <span class="yv-orbit back"></span><span class="yv-sphere"><span class="yv-surface"></span></span><span class="yv-orbit front"></span>
+                    <span class="yv-label">YannieFy</span>
+                </button>
+                <button type="button" class="yv-planet yv-tube" data-yv-key="tube" style="--x:76%;--y:21%;--s:102px;--s-mobile:88px;--depth:1;--float:8.8s;">
+                    <span class="yv-sphere"><span class="yv-surface"></span></span>
+                    <span class="yv-label">YannieTube</span>
+                </button>
+                <button type="button" class="yv-planet yv-gram" data-yv-key="gram" style="--x:16%;--y:62%;--s:94px;--s-mobile:82px;--depth:1.1;--float:9.6s;">
+                    <span class="yv-sphere"><span class="yv-surface"></span></span>
+                    <span class="yv-label">YannieGram</span>
+                </button>
+                <button type="button" class="yv-planet yv-memoryworld" data-yv-key="memoryworld" style="--x:82%;--y:61%;--s:118px;--s-mobile:100px;--depth:1.12;--float:9.2s;">
+                    <span class="yv-sphere"><span class="yv-surface"></span></span>
+                    <span class="yv-label">Memory World</span>
+                </button>
+                <button type="button" class="yv-planet yv-museum has-ring" data-yv-key="museum" style="--x:33%;--y:80%;--s:104px;--s-mobile:90px;--depth:.84;--float:8.9s;">
+                    <span class="yv-orbit back"></span><span class="yv-sphere"><span class="yv-surface"></span></span><span class="yv-orbit front"></span>
+                    <span class="yv-label">Museum</span>
+                </button>
+                <button type="button" class="yv-planet yv-scrapbook" data-yv-key="scrapbook" style="--x:66%;--y:80%;--s:100px;--s-mobile:86px;--depth:.82;--float:8.6s;">
+                    <span class="yv-sphere"><span class="yv-surface"></span></span>
+                    <span class="yv-label">Scrapbook</span>
+                </button>
+                <button type="button" class="yv-planet yv-birthday" data-yv-key="birthday" style="--x:50%;--y:17%;--s:92px;--s-mobile:80px;--depth:.75;--float:8.3s;">
+                    <span class="yv-sphere"><span class="yv-surface"></span></span>
+                    <span class="yv-label">Yannie Day</span>
+                </button>
+                <button type="button" class="yv-planet yv-cookie" data-yv-key="cookie" style="--x:87%;--y:37%;--s:84px;--s-mobile:74px;--depth:1.18;--float:7.9s;">
+                    <span class="yv-sphere"><span class="yv-surface"></span></span>
+                    <span class="yv-label">YannieTok</span>
+                </button>
+
+                <button type="button" class="yv-mini-node receipt" data-yv-key="receipt" style="--x:57%;--y:68%;--s:76px;--depth:.5;--float:7.8s;"><div><b>RM6</b><span>origin moon</span></div></button>
+                <button type="button" class="yv-mini-node daily" data-yv-key="daily" style="--x:39%;--y:37%;--s:78px;--depth:.52;--float:8.1s;"><div><b>☀</b><span>daily</span></div></button>
+                <button type="button" class="yv-mini-node memories" data-yv-key="memories" style="--x:64%;--y:35%;--s:80px;--depth:.56;--float:8.5s;"><div><b>◫</b><span>memories</span></div></button>
+                <button type="button" class="yv-mini-node vault" data-yv-key="vault" style="--x:44%;--y:90%;--s:72px;--depth:.44;--float:9.4s;"><div><b>02</b><span>vault</span></div></button>
+                <button type="button" class="yv-locked-world" data-yv-key="locked" style="--x:12%;--y:12%;--depth:1.3;">???</button>
+            </div>
+            <div class="yv-info">
+                <div class="yv-card">
+                    <small id="yvKicker">${yannieverseEntries.prime.kicker}</small>
+                    <h3 id="yvTitle">${yannieverseEntries.prime.title}</h3>
+                    <p id="yvDesc">${yannieverseEntries.prime.desc}</p>
+                    <div class="yv-tags" id="yvTags">${yannieverseEntries.prime.tags.map(tag=>`<span class="yv-tag">${tag}</span>`).join("")}</div>
+                    <button type="button" class="yv-enter" id="yvEnterBtn" disabled>${yannieverseEntries.prime.cta}</button>
+                    <div class="yv-hint" id="yvHint">Tap any planet or small moon in the map. The clean landing stays the intro — this is the deeper universe layer underneath it.</div>
+                </div>
+                <div class="yv-subgrid">
+                    <div class="yv-mini-card">
+                        <h4>Why this works</h4>
+                        <p>It turns the big apps into connected places without forcing the homepage itself to become a game.</p>
+                        <button type="button" data-yv-quick="memoryworld">Preview Memory World</button>
+                    </div>
+                    <div class="yv-mini-card">
+                        <h4>Not just planets</h4>
+                        <p>Smaller parts of the site become moons and satellites, so the Yannieverse can expand later without turning into visual chaos.</p>
+                        <button type="button" data-yv-quick="receipt">See the origin moon</button>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+
+    landing.insertAdjacentElement("afterend", section);
+}
+
+function buildYannieverseStars(){
+    const container = document.getElementById("yvStars");
+    if(!container || container.childElementCount) return;
+    for(let i=0;i<54;i++){
+        const star = document.createElement("span");
+        const size = Math.random() < .18 ? 3 : Math.random() < .45 ? 2 : 1.5;
+        const color = ["rgba(255,255,255,.9)","rgba(255,197,224,.88)","rgba(168,201,255,.82)"][Math.floor(Math.random()*3)];
+        star.style.left = `${Math.random()*100}%`;
+        star.style.top = `${Math.random()*100}%`;
+        star.style.setProperty("--size", `${size}px`);
+        star.style.setProperty("--delay", `${Math.random()*5.5}s`);
+        star.style.setProperty("--dur", `${4.5 + Math.random()*4}s`);
+        star.style.setProperty("--color", color);
+        container.appendChild(star);
+    }
+}
+
+function renderYannieversePanel(key){
+    const data = yannieverseEntries[key] || yannieverseEntries.prime;
+    currentYannieverseSelection = key;
+    document.querySelectorAll("[data-yv-key]").forEach(el=>el.classList.toggle("active", el.dataset.yvKey === key));
+    const title = document.getElementById("yvTitle");
+    const kicker = document.getElementById("yvKicker");
+    const desc = document.getElementById("yvDesc");
+    const tags = document.getElementById("yvTags");
+    const enter = document.getElementById("yvEnterBtn");
+    const hint = document.getElementById("yvHint");
+    if(title) title.textContent = data.title;
+    if(kicker) kicker.textContent = data.kicker;
+    if(desc) desc.textContent = data.desc;
+    if(tags) tags.innerHTML = (data.tags || []).map(tag=>`<span class="yv-tag">${tag}</span>`).join("");
+    if(enter){
+        enter.textContent = data.cta || "Open";
+        enter.disabled = !data.action;
+        enter.dataset.yvAction = data.action || "";
+    }
+    if(hint){
+        hint.textContent = key === "locked"
+            ? "Leave at least one future place unresolved. That way the universe can grow with new memories instead of pretending it is finished now."
+            : data.type === "mini"
+                ? "The big planets are the main worlds. Smaller pieces of the site become moons, stations and side orbits."
+                : "Select another planet if you just want to explore the map first. Nothing on the clean landing screen gets replaced by this. It only starts after you scroll.";
+    }
+}
+
+function openYannieverseAction(action){
+    if(!action) return;
+    if(action === "cookie-shop"){
+        document.getElementById("openCookieShop")?.click();
+        return;
+    }
+    const direct = {
+        mood: ()=>showSection("mood"),
+        care: ()=>showSection("about"),
+        lore: ()=>showSection("smallthings"),
+        envelopes: ()=>showSection("envelopes"),
+        achievements: ()=>showSection("achievements")
+    };
+    if(direct[action]) {
+        direct[action]();
+        return;
+    }
+    runHomeWorldAction(action);
+}
+
+function setupYannieverse(){
+    injectYannieverse();
+    buildYannieverseStars();
+    const stage = document.getElementById("yvStage");
+    if(!stage) return;
+
+    renderYannieversePanel("prime");
+
+    document.querySelectorAll("[data-yv-key]").forEach(node=>{
+        node.addEventListener("click", ()=>renderYannieversePanel(node.dataset.yvKey));
+    });
+    document.getElementById("yvEnterBtn")?.addEventListener("click", e=>openYannieverseAction(e.currentTarget.dataset.yvAction));
+    document.querySelectorAll("[data-yv-quick]").forEach(btn=>btn.addEventListener("click", ()=>renderYannieversePanel(btn.dataset.yvQuick)));
+
+    let raf = null;
+    const setParallax = (clientX, clientY) => {
+        const rect = stage.getBoundingClientRect();
+        const x = ((clientX - rect.left) / rect.width) - 0.5;
+        const y = ((clientY - rect.top) / rect.height) - 0.5;
+        stage.querySelectorAll("[data-yv-key]").forEach(node=>{
+            const depth = parseFloat(getComputedStyle(node).getPropertyValue("--depth")) || 1;
+            node.style.setProperty("--parallax-x", `${x * depth * 16}px`);
+            node.style.setProperty("--parallax-y", `${y * depth * 12}px`);
+        });
+    };
+    stage.addEventListener("mousemove", e=>{
+        if(raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(()=>setParallax(e.clientX, e.clientY));
+    });
+    stage.addEventListener("mouseleave", ()=>{
+        stage.querySelectorAll("[data-yv-key]").forEach(node=>{
+            node.style.setProperty("--parallax-x", `0px`);
+            node.style.setProperty("--parallax-y", `0px`);
+        });
+    });
+    stage.addEventListener("touchmove", e=>{
+        const t = e.touches[0];
+        if(!t) return;
+        setParallax(t.clientX, t.clientY);
+    }, {passive:true});
+}
+
+/* =========================================================
+   YANNIEVERSE V2 — full-screen immersive universe
+   This overrides the earlier prototype setup without removing
+   any of the user's existing HTML content.
+   ========================================================= */
+const yverseWorlds = {
+  prime:{title:"Yannie Prime",kicker:"CENTRE OF THE YANNIEVERSE",desc:"The centre of everything, but not another app. This is just the quiet core that the rest of the worlds orbit around.",tags:["Hasrieyannie","centre","home signal"],action:null,visual:"prime"},
+  fy:{title:"YannieFy",kicker:"PLANET 01 · LISTEN",desc:"A deep-pink record planet for the music side of the site. Grooves, late-night glow and songs that somehow get attached to whole memories.",tags:["record lounge","music district","late-night planet"],action:"fy",visual:"fy"},
+  tube:{title:"YannieTube",kicker:"PLANET 02 · WATCH",desc:"The cinema planet. Videos, edits and clips live here instead of getting lost inside a normal gallery.",tags:["mini cinema","video planet","projector glow"],action:"tube",visual:"tube"},
+  gram:{title:"YannieGram",kicker:"PLANET 03 · POSTS",desc:"A soft photo-studio world for posts, pictures and camera-roll energy. Cleaner than a feed, but still unmistakably YannieGram.",tags:["photo studio","polaroids","camera flash"],action:"gram",visual:"gram"},
+  memoryworld:{title:"Memory World",kicker:"PLANET 04 · PLAY",desc:"The arcade planet where the real timeline becomes playable: actual messages, risky choices, routes, fumbles and hidden endings.",tags:["story arcade","real-text routes","risk system"],action:"memoryworld",visual:"memoryworld"},
+  museum:{title:"Museum",kicker:"PLANET 05 · WALK",desc:"An elegant marble world for memories that deserve to be displayed properly instead of just appearing in another card grid.",tags:["gallery hall","preserved memories","vault energy"],action:"museum",visual:"museum"},
+  scrapbook:{title:"Scrapbook",kicker:"PLANET 06 · FLIP",desc:"The handmade planet: paper, tape, little mistakes, chronology and all the tactile stuff that makes it feel different from the Museum.",tags:["craft desk","interactive pages","messy in a good way"],action:"scrapbook",visual:"scrapbook"},
+  birthday:{title:"Yannie Day",kicker:"PLANET 07 · 02.08",desc:"The birthday planet. Bright, playful and intentionally more chaotic than the rest of the universe because 02.08 gets its own rules.",tags:["02.08","birthday game","confetti planet"],action:"birthday",visual:"birthday"},
+  cookie:{title:"YannieTok",kicker:"PLANET 08 · SNACK",desc:"A warm dessert world for the Dubai cookie side quest and all the ridiculous food-related lore that keeps following this website around.",tags:["cookie counter","dessert world","snack DLC"],action:"cookie-shop",visual:"cookie"},
+  receipt:{title:"Dee's Dessert Moon",kicker:"ORIGIN MOON · RM6",desc:"The tiny moon that technically started the whole thing: two chocolate moist cakes, total RM6, one normal order that did not remain normal for very long.",tags:["01.03.2026","RM6","origin"],action:"receipt",visual:"origin"},
+  daily:{title:"Daily Satellite",kicker:"SIDE ORBIT · TODAY",desc:"A small orbiting station for today's card, one little plan and one real memory. Not every part of the Yannieverse needs to be a whole planet.",tags:["daily card","tiny mission","streak"],action:"daily",visual:"daily"},
+  memories:{title:"Memory Cluster",kicker:"SIDE ORBIT · REAL MOMENTS",desc:"A little cluster of the actual milestones: RM6, pudding, lasagna, calls, open house, SPM × UTeM and the rest of the plot without rewriting it.",tags:["real chronology","small lore","milestones"],action:"memories",visual:"memories"},
+  vault:{title:"Vault Moon",kicker:"LOCKED ORBIT",desc:"The darker moon at the edge of the map. It makes more sense as something earned after exploring than as another normal destination.",tags:["reward","exploration","locked"],action:"vault",visual:"vault"},
+  locked:{title:"Signal Too Weak",kicker:"UNKNOWN WORLD",desc:"Something is out there, but it should stay unresolved for now. The Yannieverse needs at least one place reserved for memories that do not exist yet.",tags:["future","???","not yet"],action:null,visual:"locked"}
+};
+
+let yverseSelected = "prime";
+let yverseStarAnimation = null;
+let yverseStars = [];
+let yversePointer = {x:0,y:0,targetX:0,targetY:0};
+
+function setupYannieverse(){
+  const openBtn = document.getElementById("openYannieverseBtn");
+  const overlay = document.getElementById("yverseOverlay");
+  if(!openBtn || !overlay) return;
+
+  openBtn.addEventListener("click", openFullYannieverse);
+  document.getElementById("closeYannieverseBtn")?.addEventListener("click", closeFullYannieverse);
+  document.getElementById("dismissYverseIntro")?.addEventListener("click", ()=>document.getElementById("yverseIntro")?.classList.add("hidden"));
+  document.getElementById("yverseBackBtn")?.addEventListener("click", clearYverseFocus);
+  document.getElementById("yverseEnterWorldBtn")?.addEventListener("click", e=>{
+    const action = e.currentTarget.dataset.action;
+    if(action) warpIntoYverseWorld(action, yverseSelected);
+  });
+
+  overlay.querySelectorAll("[data-yv2-key]").forEach(node=>node.addEventListener("click", e=>{
+    e.stopPropagation();
+    focusYverseWorld(node.dataset.yv2Key,node);
+  }));
+
+  document.getElementById("yverseMap")?.addEventListener("pointermove", e=>{
+    if(e.pointerType === "touch") return;
+    yversePointer.targetX = (e.clientX / window.innerWidth - .5) * 28;
+    yversePointer.targetY = (e.clientY / window.innerHeight - .5) * 20;
+  });
+  document.getElementById("yverseMap")?.addEventListener("pointerleave", ()=>{
+    yversePointer.targetX = 0;
+    yversePointer.targetY = 0;
+  });
+
+  let dragStart=null,camStart=null;
+  const map=document.getElementById("yverseMap");
+  map?.addEventListener("pointerdown",e=>{
+    if(e.target.closest("button")) return;
+    dragStart={x:e.clientX,y:e.clientY};
+    camStart={x:parseFloat(map.dataset.dragX||0),y:parseFloat(map.dataset.dragY||0)};
+    map.setPointerCapture?.(e.pointerId);
+  });
+  map?.addEventListener("pointermove",e=>{
+    if(!dragStart) return;
+    const maxX=window.innerWidth*.08,maxY=window.innerHeight*.06;
+    const nx=Math.max(-maxX,Math.min(maxX,camStart.x+(e.clientX-dragStart.x)*.45));
+    const ny=Math.max(-maxY,Math.min(maxY,camStart.y+(e.clientY-dragStart.y)*.35));
+    map.dataset.dragX=nx;map.dataset.dragY=ny;
+    map.style.setProperty("--cam-x",`${nx}px`);map.style.setProperty("--cam-y",`${ny}px`);
+  });
+  const endDrag=()=>dragStart=null;
+  map?.addEventListener("pointerup",endDrag);map?.addEventListener("pointercancel",endDrag);
+
+  document.addEventListener("keydown", e=>{
+    if(!overlay.classList.contains("open")) return;
+    if(e.key === "Escape"){
+      if(overlay.classList.contains("focused")) clearYverseFocus();
+      else closeFullYannieverse();
+    }
+  });
+}
+
+function openFullYannieverse(){
+  const overlay=document.getElementById("yverseOverlay");
+  if(!overlay) return;
+  overlay.classList.remove("closing","warping","focused");
+  overlay.classList.add("open","opening");
+  overlay.setAttribute("aria-hidden","false");
+  document.body.classList.add("yverse-open");
+  document.getElementById("yverseIntro")?.classList.remove("hidden");
+  clearYverseFocus();
+  initYverseStarfield();
+  requestAnimationFrame(()=>{
+    overlay.classList.remove("opening");
+    startYverseStars();
+  });
+}
+
+function closeFullYannieverse(){
+  const overlay=document.getElementById("yverseOverlay");
+  if(!overlay || !overlay.classList.contains("open")) return;
+  overlay.classList.remove("focused","warping");
+  overlay.classList.add("closing");
+  document.body.classList.remove("yverse-open");
+  setTimeout(()=>{
+    overlay.classList.remove("open","closing");
+    overlay.setAttribute("aria-hidden","true");
+    stopYverseStars();
+  },440);
+}
+
+function focusYverseWorld(key,node){
+  const overlay=document.getElementById("yverseOverlay");
+  const data=yverseWorlds[key];
+  if(!overlay || !data) return;
+  yverseSelected=key;
+  document.getElementById("yverseIntro")?.classList.add("hidden");
+  overlay.querySelectorAll("[data-yv2-key]").forEach(n=>n.classList.toggle("active",n===node));
+  overlay.classList.add("focused");
+
+  const kicker=document.getElementById("yverseFocusKicker");
+  const title=document.getElementById("yverseFocusTitle");
+  const desc=document.getElementById("yverseFocusDesc");
+  const tags=document.getElementById("yverseFocusTags");
+  const enter=document.getElementById("yverseEnterWorldBtn");
+  const visual=document.getElementById("yverseFocusVisual");
+  if(kicker) kicker.textContent=data.kicker;
+  if(title) title.textContent=data.title;
+  if(desc) desc.textContent=data.desc;
+  if(tags) tags.innerHTML=data.tags.map(tag=>`<span>${tag}</span>`).join("");
+  if(enter){enter.disabled=!data.action;enter.dataset.action=data.action||"";enter.textContent=data.action?`ENTER ${data.title.toUpperCase()} →`:"NOT AVAILABLE YET";}
+  if(visual){
+    visual.className=`yverse-focus-visual yv2-${data.visual}`;
+    visual.innerHTML=`<span class="yv2-ball"><i class="yv2-surface"></i>${key==="prime"?"<b>Y</b>":key==="birthday"?"<b>02</b>":""}</span>`;
+  }
+}
+
+function clearYverseFocus(){
+  const overlay=document.getElementById("yverseOverlay");
+  overlay?.classList.remove("focused");
+  overlay?.querySelectorAll("[data-yv2-key]").forEach(n=>n.classList.remove("active"));
+  yverseSelected="prime";
+}
+
+function yverseAction(action){
+  if(action==="cookie-shop"){
+    closeFullYannieverse();
+    setTimeout(()=>document.getElementById("openCookieShop")?.click(),460);
+    return;
+  }
+  const direct={
+    birthday:()=>showSection("birthday"),daily:()=>showSection("daily"),memories:()=>showSection("memories"),vault:()=>showSection("vault"),
+    gallery:()=>showSection("gallery"),letter:()=>showSection("letter"),receipt:()=>openOriginReceipt()
+  };
+  if(direct[action]){closeFullYannieverse();setTimeout(direct[action],460);return;}
+  closeFullYannieverse();
+  setTimeout(()=>runHomeWorldAction(action),460);
+}
+
+function warpIntoYverseWorld(action,key){
+  const overlay=document.getElementById("yverseOverlay");
+  const target=overlay?.querySelector(`[data-yv2-key="${key}"]`);
+  const warp=document.getElementById("yverseWarp");
+  if(!overlay || !warp) return;
+  const rect=target?.getBoundingClientRect();
+  const x=rect?((rect.left+rect.width/2)/window.innerWidth*100):50;
+  const y=rect?((rect.top+rect.height/2)/window.innerHeight*100):50;
+  warp.style.setProperty("--warp-x",`${x}%`);warp.style.setProperty("--warp-y",`${y}%`);
+  overlay.classList.add("warping");
+  setTimeout(()=>yverseAction(action),620);
+}
+
+function initYverseStarfield(){
+  const canvas=document.getElementById("yverseStarCanvas");
+  if(!canvas) return;
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  const w=window.innerWidth,h=window.innerHeight;
+  canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);canvas.style.width=`${w}px`;canvas.style.height=`${h}px`;
+  const count=Math.min(260,Math.max(120,Math.floor((w*h)/6500)));
+  yverseStars=Array.from({length:count},()=>({
+    x:Math.random()*w,y:Math.random()*h,z:.2+Math.random()*.8,r:.45+Math.random()*1.45,a:.22+Math.random()*.72,tw:Math.random()*Math.PI*2,hue:Math.random()
+  }));
+}
+
+function startYverseStars(){
+  stopYverseStars();
+  const canvas=document.getElementById("yverseStarCanvas");
+  const overlay=document.getElementById("yverseOverlay");
+  if(!canvas || !overlay?.classList.contains("open")) return;
+  const ctx=canvas.getContext("2d");
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  const w=canvas.width/dpr,h=canvas.height/dpr;
+  const tick=t=>{
+    if(!overlay.classList.contains("open")) return;
+    yversePointer.x+=(yversePointer.targetX-yversePointer.x)*.045;
+    yversePointer.y+=(yversePointer.targetY-yversePointer.y)*.045;
+    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+    for(const s of yverseStars){
+      const pulse=.72+.28*Math.sin(t*.0015+s.tw);
+      const sx=(s.x+yversePointer.x*s.z+w)%w,sy=(s.y+yversePointer.y*s.z+h)%h;
+      const pink=s.hue>.82,blue=s.hue<.12;
+      ctx.fillStyle=pink?`rgba(255,188,220,${s.a*pulse})`:blue?`rgba(178,207,255,${s.a*pulse})`:`rgba(255,255,255,${s.a*pulse})`;
+      ctx.beginPath();ctx.arc(sx,sy,s.r*s.z,0,Math.PI*2);ctx.fill();
+    }
+    yverseStarAnimation=requestAnimationFrame(tick);
+  };
+  yverseStarAnimation=requestAnimationFrame(tick);
+}
+function stopYverseStars(){if(yverseStarAnimation){cancelAnimationFrame(yverseStarAnimation);yverseStarAnimation=null}}
+window.addEventListener("resize",()=>{if(document.getElementById("yverseOverlay")?.classList.contains("open")){initYverseStarfield();startYverseStars();}});
