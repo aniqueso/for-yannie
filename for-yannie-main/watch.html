@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <title>Watch — YannieTube</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="watch.css">
+</head>
+
+<body>
+    <main class="watch-page">
+        <header class="watch-header">
+            <button type="button" onclick="history.back()" aria-label="Back">‹</button>
+            <span>YannieTube</span>
+            <button type="button" id="shareTopBtn" aria-label="Share">💌</button>
+        </header>
+
+        <section class="video-player">
+            <video
+                id="mainVideo"
+                controls
+                playsinline
+                autoplay
+            ></video>
+        </section>
+
+        <section class="video-details">
+            <h1 id="videoTitle">Loading...</h1>
+            <p id="videoMeta"></p>
+
+            <div class="action-row">
+                <button id="likeBtn" type="button">♡ Like</button>
+                <button id="dislikeBtn" type="button">Dislike</button>
+                <button id="shareBtn" type="button">Share</button>
+                <button id="saveBtn" type="button">Save</button>
+                <button id="downloadBtn" type="button">Download</button>
+                <button id="replayBtn" type="button">Replay</button>
+            </div>
+
+            <div class="creator-card">
+                <img src="images/us1.jpg" alt="YannieTube">
+                <div>
+                    <h2>YannieTube</h2>
+                    <p>17.3M subscribers • favourite channel forever</p>
+                </div>
+
+                <button id="subscribeBtn" type="button">Subscribe</button>
+            </div>
+
+            <details class="description-card" open>
+                <summary>Description</summary>
+                <p id="videoDescription"></p>
+                <p class="hashtags">#YannieTube #MemoryArchive #ForYannie</p>
+            </details>
+        </section>
+
+        <section class="comments-card">
+            <div class="comment-header">
+                <h2>Comments</h2>
+                <select id="commentSort">
+                    <option value="top">Top comments</option>
+                    <option value="new">Newest first</option>
+                </select>
+            </div>
+
+            <div class="comment-box">
+                <input
+                    id="commentInput"
+                    type="text"
+                    placeholder="Add a cute comment..."
+                >
+
+                <button id="commentBtn" type="button">Post</button>
+            </div>
+
+            <div id="commentList"></div>
+        </section>
+
+        <section class="recommended-card">
+            <div class="block-title">
+                <h2>Up next</h2>
+                <span>More YannieTube</span>
+            </div>
+
+            <div id="recommendedGrid"></div>
+        </section>
+    </main>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="watch.js"></script>
+</body>
+</html>

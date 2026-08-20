@@ -1,0 +1,21 @@
+PUT THIS FOLDER HERE:
+
+for-yannie-main/
+├── index.html
+├── style.css
+├── script.js
+├── ...
+└── yannie-scrapbook/
+    ├── index.html
+    ├── scrapbook.css
+    ├── scrapbook.js
+    ├── scrapbook-content.js
+    └── assets/
+
+ADD THIS TO YOUR EXISTING HOME .app-grid:
+
+<a class="app-icon app-link" href="yannie-scrapbook/index.html">
+    📖<span>Our Scrapbook</span>
+</a>
+
+THEN OPEN YOUR MAIN WEBSITE THROUGH LIVE SERVER.

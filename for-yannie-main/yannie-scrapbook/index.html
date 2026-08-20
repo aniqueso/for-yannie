@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#f7eadf" />
+  <title>Our Little Scrapbook</title>
+  <link rel="stylesheet" href="scrapbook.css" />
+</head>
+<body>
+  <main class="scrapbook-app" id="scrapbookApp">
+    <header class="topbar" aria-label="Scrapbook controls">
+      <button class="icon-btn" id="homeBtn" aria-label="Go to scrapbook cover">⌂</button>
+      <div class="top-title">
+        <strong id="pageKicker">OUR STORY</strong>
+        <span id="pageTitle">Our Little Scrapbook</span>
+      </div>
+      <button class="icon-btn" id="helpBtn" aria-label="Open scrapbook guide">?</button>
+    </header>
+
+    <section class="book-stage" id="bookStage" aria-live="polite">
+      <div id="book" class="book"></div>
+    </section>
+
+    <nav class="bottom-nav" aria-label="Page navigation">
+      <button id="prevBtn" class="nav-btn" aria-label="Previous page">‹</button>
+      <div id="progressDots" class="progress-dots" aria-label="Scrapbook pages"></div>
+      <button id="nextBtn" class="nav-btn" aria-label="Next page">›</button>
+    </nav>
+
+    <div id="swipeHint" class="swipe-hint">Swipe the page ↔</div>
+  </main>
+
+  <div id="helpModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <button class="modal-backdrop" data-close-modal aria-label="Close guide"></button>
+    <div class="modal-card">
+      <button class="modal-close" data-close-modal aria-label="Close guide">×</button>
+      <p class="mini-kicker">HOW TO EXPLORE</p>
+      <h2 id="helpTitle">Touch everything.</h2>
+      <p>This scrapbook is made for phones first. Swipe left or right to turn pages. Tap receipts, stickers, polaroids, phones, flaps and notes. Some pages have things you can drag.</p>
+      <div class="guide-chips">
+        <span>↔ Swipe</span><span>☝ Tap</span><span>✋ Drag</span><span>♥ Discover</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="photoModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="photoModalTitle">
+    <button class="modal-backdrop" data-close-photo aria-label="Close photo"></button>
+    <div class="photo-modal-card">
+      <button class="modal-close" data-close-photo aria-label="Close photo">×</button>
+      <div class="big-polaroid"><img id="photoModalImage" alt="Memory" /></div>
+      <p class="mini-kicker" id="photoModalKicker">MEMORY</p>
+      <h2 id="photoModalTitle">Photo</h2>
+      <p id="photoModalCaption"></p>
+    </div>
+  </div>
+
+  <script type="module" src="scrapbook.js"></script>
+</body>
+</html>

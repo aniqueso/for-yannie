@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <title>YannieTube Ultimate</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="yannietube.css">
+</head>
+
+<body>
+    <div id="flowerBackground" aria-hidden="true"></div>
+
+    <div id="appShell">
+
+        <header class="topbar">
+            <button
+                class="round-btn"
+                id="backBtn"
+                type="button"
+                aria-label="Back"
+            >
+                ‹
+            </button>
+
+            <div class="brand" onclick="showPage('home')">
+                <img
+                    src="images/mofusand-logo.png"
+                    alt="YannieTube logo"
+                    class="brand-logo"
+                >
+                <span>YannieTube</span>
+            </div>
+
+            <button
+                class="round-btn"
+                id="notificationBtn"
+                type="button"
+                aria-label="Notifications"
+            >
+                🔔
+            </button>
+        </header>
+
+        <section class="search-area">
+            <div class="search-box">
+                <span>🔍</span>
+                <input
+                    id="searchInput"
+                    type="search"
+                    placeholder="Search YannieTube..."
+                    autocomplete="off"
+                >
+                <button
+                    id="clearSearchBtn"
+                    type="button"
+                    aria-label="Clear search"
+                >
+                    ✕
+                </button>
+            </div>
+
+            <div id="searchSuggestions"></div>
+        </section>
+
+        <main>
+
+            <!-- HOME PAGE -->
+            <section id="homePage" class="page active">
+
+                <section class="channel-hero">
+                    <img
+                        src="images/us1.jpg"
+                        class="channel-avatar"
+                        alt="YannieTube profile"
+                    >
+
+                    <div class="channel-copy">
+                        <h1>YannieTube</h1>
+                        <p>17.3M subscribers • made only for Hasrieyannie Iman Delaila 💗</p>
+
+                        <div class="channel-actions">
+                            <button id="subscribeBtn" type="button">
+                                Subscribe
+                            </button>
+
+                            <button id="joinBtn" type="button">
+                                Join
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="featured-card">
+                    <div>
+                        <p class="eyebrow">Today’s Featured Memory</p>
+                        <h2 id="featuredTitle">Loading...</h2>
+                        <p id="featuredMeta">Preparing the cutest upload...</p>
+                    </div>
+
+                    <button id="featuredPlayBtn" type="button">
+                        ▶ Play
+                    </button>
+                </section>
+
+                <section class="chips">
+                    <button class="chip active" data-filter="all">All</button>
+                    <button class="chip" data-filter="memory">Memories</button>
+                    <button class="chip" data-filter="date">Dates</button>
+                    <button class="chip" data-filter="outfit">Outfits</button>
+                    <button class="chip" data-filter="cute">Cute</button>
+                    <button class="chip" data-filter="short">Shorts</button>
+                    <button class="chip" data-filter="favourite">Favourites</button>
+                </section>
+
+                <section class="content-block">
+                    <div class="block-title">
+                        <h2>Recommended</h2>
+                        <span id="videoCount">0 videos</span>
+                    </div>
+
+                    <div id="videoGrid" class="video-grid"></div>
+
+                    <div id="emptyState" class="empty-state">
+                        <h3>No videos found 🥺</h3>
+                        <p>Try searching “love”, “date”, “call”, “outfit”, or “cinema”.</p>
+                    </div>
+                </section>
+
+            </section>
+
+            <!-- SHORTS PAGE -->
+            <section id="shortsPage" class="page">
+                <div class="page-heading">
+                    <h1>Shorts 🎬</h1>
+                    <p>Tiny clips from the YannieTube archive.</p>
+                </div>
+
+                <div id="shortsFeed"></div>
+            </section>
+
+            <!-- SUBSCRIPTIONS PAGE -->
+            <section id="subscriptionsPage" class="page">
+                <div class="page-heading">
+                    <h1>Subscriptions ❤️</h1>
+                    <p>Only one channel matters here.</p>
+                </div>
+
+                <div class="subscription-card">
+                    <img src="images/us1.jpg" alt="YannieTube">
+                    <div>
+                        <h2>YannieTube</h2>
+                        <p>Subscribed • all notifications on • favourite channel forever.</p>
+                    </div>
+                </div>
+
+                <div class="content-block">
+                    <div class="block-title">
+                        <h2>Latest from YannieTube</h2>
+                        <span>Personal archive</span>
+                    </div>
+
+                    <div id="subscriptionGrid" class="video-grid"></div>
+                </div>
+            </section>
+
+            <!-- LIBRARY PAGE -->
+            <section id="libraryPage" class="page">
+                <div class="page-heading">
+                    <h1>You 👤</h1>
+                    <p>Your YannieTube activity is saved on this device.</p>
+                </div>
+
+                <div class="library-grid">
+                    <button class="library-card" data-library="history">
+                        <span>🕘</span>
+                        <b>History</b>
+                        <small id="historyCount">0 watched</small>
+                    </button>
+
+                    <button class="library-card" data-library="liked">
+                        <span>❤️</span>
+                        <b>Liked videos</b>
+                        <small id="likedCount">0 liked</small>
+                    </button>
+
+                    <button class="library-card" data-library="watchLater">
+                        <span>⏰</span>
+                        <b>Watch Later</b>
+                        <small id="watchLaterCount">0 saved</small>
+                    </button>
+
+                    <button class="library-card" data-library="playlist">
+                        <span>🌸</span>
+                        <b>Favourite Memories</b>
+                        <small id="playlistCount">0 saved</small>
+                    </button>
+                </div>
+
+                <section class="content-block">
+                    <div class="block-title">
+                        <h2 id="libraryTitle">History</h2>
+                        <span id="librarySubtitle">Recently watched</span>
+                    </div>
+
+                    <div id="libraryGrid" class="video-grid"></div>
+
+                    <div id="libraryEmpty" class="empty-state">
+                        <h3>Nothing here yet</h3>
+                        <p>Watch, like, or save a video first.</p>
+                    </div>
+                </section>
+            </section>
+
+        </main>
+
+        <nav class="bottom-nav" aria-label="Main navigation">
+            <button class="nav-item active" data-page="home" type="button">
+                🏠
+                <span>Home</span>
+            </button>
+
+            <button class="nav-item" data-page="shorts" type="button">
+                🎬
+                <span>Shorts</span>
+            </button>
+
+            <button class="nav-item" data-page="subscriptions" type="button">
+                ❤️
+                <span>Subs</span>
+            </button>
+
+            <button class="nav-item" data-page="library" type="button">
+                👤
+                <span>You</span>
+            </button>
+        </nav>
+
+    </div>
+
+    <!-- CREATE / UPLOAD SIMULATOR -->
+    <button id="createBtn" type="button" aria-label="Create">
+        ＋
+    </button>
+
+    <div id="uploadModal" class="modal">
+        <div class="modal-card">
+            <button class="modal-close" id="closeUploadBtn" type="button">✕</button>
+            <h2>Upload to YannieTube</h2>
+            <p>This is a cute simulator — your real files are edited manually in the code.</p>
+
+            <input id="uploadTitle" type="text" placeholder="Video title">
+            <textarea id="uploadDesc" placeholder="Cute description"></textarea>
+
+            <button id="fakeUploadBtn" type="button">
+                Upload Memory
+            </button>
+
+            <div id="uploadStatus"></div>
+        </div>
+    </div>
+
+    <!-- MINI PLAYER -->
+    <div id="miniPlayer">
+        <video id="miniVideo" muted playsinline></video>
+
+        <div>
+            <h3 id="miniTitle">Now playing</h3>
+            <p>Mini player</p>
+        </div>
+
+        <button id="miniOpenBtn" type="button">Open</button>
+        <button id="miniCloseBtn" type="button">✕</button>
+    </div>
+
+    <div id="toast" role="status" aria-live="polite"></div>
+
+    <script src="yannietube.js"></script>
+</body>
+</html>
