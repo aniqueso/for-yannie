@@ -20,10 +20,10 @@
     <div class="lock-card">
         <div class="lock-mark">YW</div>
         <h2>Yannie World</h2>
-        <p>Your little corner. You already know the password, babyy!</p>
+        <p>Your little corner. You already know the password.</p>
         <input type="password" id="passwordInput" placeholder="Password" autocomplete="off">
         <button onclick="checkPassword()">Enter</button>
-        <small class="tiny-hint">Hint: the dayy my princess was born!</small>
+        <small class="tiny-hint">Hint: a date you definitely know.</small>
     </div>
 </div>
 
@@ -59,7 +59,7 @@
 <section id="home" class="active clean-home-section">
     <div class="landing-cover" id="landingCover">
         <figure class="landing-portrait">
-            <img src="images/us11.jpg" alt="Hasrieyannie Iman Delaila">
+            <img src="images/us10.jpg" alt="Hasrieyannie Iman Delaila">
         </figure>
         <div class="landing-copy">
             <p class="landing-kicker">YANNIE WORLD</p>
@@ -68,19 +68,30 @@
         </div>
     </div>
 
-
-
-    <!-- YANNIEVERSE FULL-SCREEN GATE — added without replacing the custom home content -->
-    <div class="yverse-gate" id="yverseGate">
-        <div class="yverse-gate-copy">
-            <p class="eyebrow">A BIGGER WORLD IS HIDING UNDER THIS ONE</p>
-            <h2>Ready to enter the Yannieverse?</h2>
-            <p>One tap takes over the whole screen. The apps become planets, the smaller sections become moons, and the normal website stays right here when you come back.</p>
+    <!-- EDITORIAL CURRENT CHAPTER — added without replacing existing home content -->
+    <div class="editorial-current" id="editorialCurrent">
+        <div class="editorial-current-copy">
+            <p class="editorial-overline">CURRENT CHAPTER</p>
+            <h2>Two different routines.<br>Still part of the same day.</h2>
+            <p>SPM on one side, UTeM on the other — classes, tired mornings, random updates, and finding the quiet time in between.</p>
+            <div class="editorial-current-actions">
+                <button id="tonightModeToggle" class="tonight-toggle" type="button" aria-pressed="false">
+                    <span class="tonight-toggle-icon">☾</span>
+                    <span><small>VIEW</small><strong>Tonight Mode</strong></span>
+                </button>
+                <button id="chapterCardShuffle" class="chapter-card-shuffle" type="button">
+                    <span>↻</span><span><small>SWITCH CARD</small><strong>Another chapter</strong></span>
+                </button>
+            </div>
         </div>
-        <button id="openYannieverseBtn" class="yverse-gate-button" type="button">
-            <span>ENTER THE YANNIEVERSE</span>
-            <i>✦</i>
-        </button>
+        <div class="editorial-current-photo">
+            <img id="editorialChapterImage" src="images/us5.jpg" alt="Current Yannie World chapter">
+            <div class="editorial-photo-caption">
+                <span id="editorialChapterDate">JUL → AUG 2026</span>
+                <strong id="editorialChapterTitle">SPM × UTeM</strong>
+                <small id="editorialChapterNote">ordinary updates became the bridge between two schedules</small>
+            </div>
+        </div>
     </div>
 
     <div class="room-directory" id="roomDirectory">
@@ -149,6 +160,54 @@
                 <span class="portal-meta"><small>ROOM 08 · SNACK</small><strong>YannieTok</strong><em>cookie counter</em></span>
             </button>
         </div>
+
+        <!-- EDITORIAL INTERACTIONS — lightweight, mobile-first -->
+        <div class="editorial-extras">
+            <div class="editorial-stat-strip" aria-label="Yannie World timeline statistics">
+                <button type="button" class="editorial-stat" data-stat-note="The first message. Just an order at the time.">
+                    <small>FIRST CHAT</small><strong>01 MAR</strong><span>2026</span>
+                </button>
+                <button type="button" class="editorial-stat" data-stat-note="A short request to call turned into one of the longest early call memories.">
+                    <small>CALL ERA</small><strong>08 APR</strong><span>9 hr video call</span>
+                </button>
+                <button type="button" class="editorial-stat" data-stat-note="One of the longest logged calls in the chat export.">
+                    <small>LONGEST LOGGED</small><strong>12 HR</strong><span>15 Jul</span>
+                </button>
+                <button type="button" class="editorial-stat" data-stat-note="The birthday chapter gets its own whole section for a reason.">
+                    <small>YANNIE DAY</small><strong>02 AUG</strong><span>every year</span>
+                </button>
+            </div>
+            <p id="editorialStatNote" class="editorial-stat-note">Tap a number for the note behind it.</p>
+
+            <div class="call-machine" id="callMachine">
+                <div class="call-machine-copy">
+                    <p class="editorial-overline">THE CALL MACHINE</p>
+                    <h3>Slide to connect to a memory.</h3>
+                    <p>No giant transcript. Just one tiny moment from the call era at a time.</p>
+                    <div class="call-memory-result" id="callMemoryResult" aria-live="polite">
+                        <small>LINE IDLE</small>
+                        <strong>waiting for a call...</strong>
+                        <span>slide the receiver on the phone</span>
+                    </div>
+                </div>
+                <div class="call-phone" id="callPhone">
+                    <div class="call-phone-speaker"></div>
+                    <div class="call-phone-screen">
+                        <span class="call-phone-status">yanniess</span>
+                        <div class="call-phone-avatar">Y</div>
+                        <small id="callPhoneDate">memory line</small>
+                        <strong id="callPhoneDuration">—:—:—</strong>
+                        <span id="callPhoneLabel">slide to connect</span>
+                    </div>
+                    <label class="call-slide">
+                        <span class="call-slide-track"><i id="callSlideThumb">☎</i><b>slide to call</b></span>
+                        <input id="callMemorySlider" type="range" min="0" max="100" value="0" aria-label="Slide to connect to a call memory">
+                    </label>
+                    <button id="callAnotherButton" type="button" class="call-another">another line</button>
+                </div>
+            </div>
+        </div>
+
 
         <div class="home-sidequests">
             <div class="room-directory-heading sidequest-heading">
@@ -359,7 +418,7 @@
                 <div class="bday-call-avatar">Y</div>
                 <small>YANNIE DAY</small>
                 <h4 id="bdayPhoneHeadline">GOOD MORNINGGGG<br>BIRTHDAYYY GIRLLL</h4>
-                <p id="bdayPhoneSub">incoming birthday chaos..</p>
+                <p id="bdayPhoneSub">incoming birthday chaos...</p>
                 <div class="bday-answer-track">
                     <i id="bdayAnswerThumb">☎</i>
                     <span>slide to answer</span>
@@ -431,7 +490,7 @@
                     <span data-candle-slot="1"></span><span data-candle-slot="2"></span><span data-candle-slot="3"></span><span data-candle-slot="4"></span><span data-candle-slot="5"></span>
                 </div>
                 <div class="bday-cake-icing"></div>
-                <div class="bday-cake-body">1 6-7</div>
+                <div class="bday-cake-body">02</div>
                 <div class="bday-cake-plate"></div>
             </div>
         </div>
@@ -440,7 +499,7 @@
             <div class="bday-blow-ring"><i></i></div>
             <b>press + hold</b><span>to blow them out</span>
         </div>
-        <div id="bdayCakeDone" class="bday-cake-done">wish sent ✦ problem solved.</div>
+        <div id="bdayCakeDone" class="bday-cake-done">wish sent ✦ DIY problem solved.</div>
     </div>
 
     <div id="bdayAug3" class="bday-scene bday-school-scene">
@@ -641,7 +700,7 @@
 <section id="envelopes" class="personal-section envelopes-v3">
     <div class="section-heading"><div><p class="eyebrow">OPEN WHEN</p><h2>Pick the envelope that actually fits.</h2></div><p>No need to open all six in one sitting. They are better when the label is true.</p></div>
     <div class="letters-grid letters-grid-v3">
-        <button class="envelope envelope-v3 e-rindu" type="button" onclick="openLetter(0)"><small>OPEN WHEN</small><span>you rinduu!</span><i>01</i></button>
+        <button class="envelope envelope-v3 e-rindu" type="button" onclick="openLetter(0)"><small>OPEN WHEN</small><span>you say “rindu”</span><i>01</i></button>
         <button class="envelope envelope-v3 e-tired" type="button" onclick="openLetter(1)"><small>OPEN WHEN</small><span>you’re properly tired</span><i>02</i></button>
         <button class="envelope envelope-v3 e-stress" type="button" onclick="openLetter(2)"><small>OPEN WHEN</small><span>trial brain wins</span><i>03</i></button>
         <button class="envelope envelope-v3 e-think" type="button" onclick="openLetter(3)"><small>OPEN WHEN</small><span>you overthink us</span><i>04</i></button>
@@ -960,86 +1019,6 @@
     <h1>Call Ended</h1>
     <p>Call ended · replay complete.</p>
 </div>
-
-
-
-<!-- FULL-SCREEN YANNIEVERSE — added layer; existing website content is untouched -->
-<div id="yverseOverlay" class="yverse-overlay" aria-hidden="true">
-    <canvas id="yverseStarCanvas" aria-hidden="true"></canvas>
-    <div class="yverse-space-haze" aria-hidden="true"></div>
-    <div class="yverse-space-grid" aria-hidden="true"></div>
-
-    <div class="yverse-topbar">
-        <div class="yverse-brand">
-            <span class="yverse-brand-dot"></span>
-            <div><small>YW · DEEP SPACE</small><strong>YANNIEVERSE</strong></div>
-        </div>
-        <button id="closeYannieverseBtn" class="yverse-close" type="button" aria-label="Exit Yannieverse">EXIT ×</button>
-    </div>
-
-    <div id="yverseMap" class="yverse-map" aria-label="Interactive Yannieverse map">
-        <div class="yverse-orbit orbit-a" aria-hidden="true"></div>
-        <div class="yverse-orbit orbit-b" aria-hidden="true"></div>
-        <div class="yverse-orbit orbit-c" aria-hidden="true"></div>
-
-        <button class="yverse-planet yv2-prime" data-yv2-key="prime" type="button" style="--px:50%;--py:50%;--ps:176px;--psm:136px;--delay:-1s;">
-            <span class="yv2-ring yv2-ring-wide"></span><span class="yv2-ball"><i class="yv2-surface"></i><b>Y</b></span>
-            <span class="yv2-name">Yannie Prime<small>centre</small></span>
-        </button>
-
-        <button class="yverse-planet yv2-fy" data-yv2-key="fy" type="button" style="--px:22%;--py:22%;--ps:124px;--psm:96px;--delay:-4.1s;">
-            <span class="yv2-ring"></span><span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">YannieFy</span>
-        </button>
-        <button class="yverse-planet yv2-tube" data-yv2-key="tube" type="button" style="--px:78%;--py:20%;--ps:118px;--psm:92px;--delay:-2.8s;">
-            <span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">YannieTube</span>
-        </button>
-        <button class="yverse-planet yv2-gram" data-yv2-key="gram" type="button" style="--px:15%;--py:59%;--ps:110px;--psm:88px;--delay:-6s;">
-            <span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">YannieGram</span>
-        </button>
-        <button class="yverse-planet yv2-memoryworld" data-yv2-key="memoryworld" type="button" style="--px:84%;--py:58%;--ps:138px;--psm:104px;--delay:-3.5s;">
-            <span class="yv2-ring yv2-ring-thin"></span><span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">Memory World</span>
-        </button>
-        <button class="yverse-planet yv2-museum" data-yv2-key="museum" type="button" style="--px:30%;--py:81%;--ps:120px;--psm:94px;--delay:-5.2s;">
-            <span class="yv2-ring"></span><span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">Museum</span>
-        </button>
-        <button class="yverse-planet yv2-scrapbook" data-yv2-key="scrapbook" type="button" style="--px:68%;--py:82%;--ps:112px;--psm:90px;--delay:-1.9s;">
-            <span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">Scrapbook</span>
-        </button>
-        <button class="yverse-planet yv2-birthday" data-yv2-key="birthday" type="button" style="--px:50%;--py:16%;--ps:104px;--psm:86px;--delay:-4.9s;">
-            <span class="yv2-ball"><i class="yv2-surface"></i><b>02</b></span><span class="yv2-name">Yannie Day</span>
-        </button>
-        <button class="yverse-planet yv2-cookie" data-yv2-key="cookie" type="button" style="--px:91%;--py:36%;--ps:92px;--psm:78px;--delay:-2.2s;">
-            <span class="yv2-ball"><i class="yv2-surface"></i></span><span class="yv2-name">YannieTok</span>
-        </button>
-
-        <button class="yverse-moon yv2-origin" data-yv2-key="receipt" type="button" style="--px:57%;--py:67%;--ms:76px;"><b>RM6</b><small>origin moon</small></button>
-        <button class="yverse-moon yv2-daily" data-yv2-key="daily" type="button" style="--px:38%;--py:36%;--ms:72px;"><b>☀</b><small>daily</small></button>
-        <button class="yverse-moon yv2-memories" data-yv2-key="memories" type="button" style="--px:64%;--py:34%;--ms:76px;"><b>◫</b><small>memories</small></button>
-        <button class="yverse-moon yv2-vault" data-yv2-key="vault" type="button" style="--px:43%;--py:91%;--ms:68px;"><b>02</b><small>vault</small></button>
-        <button class="yverse-mystery" data-yv2-key="locked" type="button" style="--px:8%;--py:12%;">?<span>signal too weak</span></button>
-    </div>
-
-    <div class="yverse-intro" id="yverseIntro">
-        <small>HASRIEYANNIE IMAN DELAILA</small>
-        <h2>Welcome to your universe.</h2>
-        <p>Tap a planet to pull it into focus.</p>
-        <button id="dismissYverseIntro" type="button">EXPLORE ✦</button>
-    </div>
-
-    <aside id="yverseFocus" class="yverse-focus" aria-live="polite">
-        <button id="yverseBackBtn" class="yverse-back" type="button">← BACK TO MAP</button>
-        <div id="yverseFocusVisual" class="yverse-focus-visual"><span class="yv2-ball"><i class="yv2-surface"></i></span></div>
-        <small id="yverseFocusKicker">PLANET</small>
-        <h2 id="yverseFocusTitle">Yannie Prime</h2>
-        <p id="yverseFocusDesc">The centre of the Yannieverse.</p>
-        <div id="yverseFocusTags" class="yverse-focus-tags"></div>
-        <button id="yverseEnterWorldBtn" class="yverse-enter-world" type="button">ENTER WORLD →</button>
-    </aside>
-
-    <div class="yverse-bottomhint"><span>drag / move to look around</span><i>•</i><span>tap a planet to focus</span></div>
-    <div id="yverseWarp" class="yverse-warp" aria-hidden="true"></div>
-</div>
-
 
 <div id="achievementToast" class="achievement-toast"></div>
 

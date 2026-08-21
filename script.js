@@ -1130,7 +1130,7 @@ window.addEventListener("DOMContentLoaded",()=>{
     setupFacetime();
     setupMakeoverInteractions();
     setupHomeWorld();
-    setupYannieverse();
+    setupEditorialV4();
     setupYannieDay();
     startDecorations();
     scheduleNotification();
@@ -1138,541 +1138,295 @@ window.addEventListener("DOMContentLoaded",()=>{
 
 
 /* =========================================================
-   YANNIEVERSE — stylized planet map
+   EDITORIAL YANNIE WORLD V4 — mobile-first interactions
    ========================================================= */
-const yannieverseEntries = {
-    prime: {
-        type: "prime",
-        title: "Yannie Prime",
-        kicker: "CENTRE OF THE YANNIEVERSE",
-        desc: "The calm middle of everything. The clean front door stays above. Scroll a little more and the bigger connected world starts here.",
-        tags: ["portrait first", "big worlds orbit around this", "not another loud homepage"],
-        action: null,
-        cta: "Choose a planet below"
+const editorialChapterCards = [
+    {
+        date:"01 MAR 2026",
+        title:"The Bazaar",
+        note:"a normal order opened the first chapter",
+        image:"images/us2.jpg"
     },
-    fy: {
-        title: "YannieFy",
-        kicker: "PLANET 01 · LISTEN",
-        desc: "A record-lounge planet. Late-night music, soft glow, and whatever song ends up attached to a memory.",
-        tags: ["music district", "record groove planet", "best in Tonight Mode"],
-        action: "fy",
-        cta: "Enter YannieFy"
+    {
+        date:"APR → JUN 2026",
+        title:"Calls Became Normal",
+        note:"somewhere along the way, calling stopped feeling like an event",
+        image:"images/us3.jpg"
     },
-    tube: {
-        title: "YannieTube",
-        kicker: "PLANET 02 · WATCH",
-        desc: "Mini cinema energy. A whole little movie planet for videos, edits, clips and whatever deserves a screen bigger than the chat itself.",
-        tags: ["mini cinema", "watch room", "projection glow"],
-        action: "tube",
-        cta: "Enter YannieTube"
+    {
+        date:"JUL 2026",
+        title:"Two Routines",
+        note:"trial season and university life started running at the same time",
+        image:"images/us4.jpg"
     },
-    gram: {
-        title: "YannieGram",
-        kicker: "PLANET 03 · POSTS",
-        desc: "A photo-studio planet: polaroids, camera-flash vibes, and all the little moments worth keeping as pictures instead of just text.",
-        tags: ["photo studio", "polaroid satellites", "camera roll energy"],
-        action: "gram",
-        cta: "Enter YannieGram"
+    {
+        date:"01 → 03 AUG 2026",
+        title:"Birthday Weekend",
+        note:"the birthday chapter gets the playful version in Yannie Day",
+        image:"images/us10.jpg"
     },
-    memoryworld: {
-        title: "Memory World",
-        kicker: "PLANET 04 · PLAY",
-        desc: "The arcade planet. Replay the actual story with routes, risk and consequences instead of just reading a summary of what happened.",
-        tags: ["story arcade", "real-text routes", "riskier choices"],
-        action: "memoryworld",
-        cta: "Enter Memory World"
-    },
-    museum: {
-        title: "Museum",
-        kicker: "PLANET 05 · WALK",
-        desc: "A preserved memory planet. Marble mood, gold frames, lights, and the whole dramatic ‘this memory is important enough to display’ feeling.",
-        tags: ["gallery hall", "vault", "gold frames"],
-        action: "museum",
-        cta: "Enter the Museum"
-    },
-    scrapbook: {
-        title: "Scrapbook",
-        kicker: "PLANET 06 · FLIP",
-        desc: "The handmade planet. Messier, softer, more tactile. Pull things open, flip pages, and revisit the story in a more personal way.",
-        tags: ["craft desk", "interactive pages", "real chronology"],
-        action: "scrapbook",
-        cta: "Enter Scrapbook"
-    },
-    birthday: {
-        title: "Yannie Day",
-        kicker: "PLANET 07 · 02.08",
-        desc: "The birthday planet. Bright, playful, a bit chaotic, and deliberately more game-like than the rest of the website.",
-        tags: ["birthday room", "1 Aug → 3 Aug", "cake + confetti"],
-        action: "birthday",
-        cta: "Open Yannie Day"
-    },
-    cookie: {
-        title: "YannieTok",
-        kicker: "PLANET 08 · SNACK",
-        desc: "A tiny dessert world. Cookies, little shop energy, and the sort of food-lore side quest that absolutely belongs somewhere in this universe.",
-        tags: ["cookie counter", "snack planet", "dessert-adjacent lore"],
-        action: "cookie-shop",
-        cta: "Open YannieTok"
-    },
-    receipt: {
-        type: "mini",
-        title: "Dee’s Dessert Moon",
-        kicker: "ORIGIN MOON",
-        desc: "The whole Yannieverse basically starts here. RM6. Two cake moist. One extremely normal order that very much stopped being normal later.",
-        tags: ["RM6", "origin receipt", "caramel pudding nearby"],
-        action: "receipt",
-        cta: "Open the receipt"
-    },
-    daily: {
-        type: "mini",
-        title: "Daily Satellite",
-        kicker: "SIDE ORBIT",
-        desc: "Tiny plans, one real memory, and something small to do today instead of another giant paragraph.",
-        tags: ["today card", "one memory", "stamp it done"],
-        action: "daily",
-        cta: "Open Daily"
-    },
-    memories: {
-        type: "mini",
-        title: "Memory Cluster",
-        kicker: "SIDE ORBIT",
-        desc: "The plot without rewriting history. The actual milestones still matter more than generic romance filler.",
-        tags: ["RM6", "lasagna", "calls", "SPM × UTeM"],
-        action: "memories",
-        cta: "Open Memories"
-    },
-    vault: {
-        type: "mini",
-        title: "Vault Moon",
-        kicker: "LOCKED ORBIT",
-        desc: "A darker little moon that only really makes sense after you explore the rest. Better as a reward than as a main entrance.",
-        tags: ["late reward", "exploration", "secret ending"],
-        action: "vault",
-        cta: "Open Vault"
-    },
-    locked: {
-        type: "locked",
-        title: "Signal Too Weak",
-        kicker: "DISTANT WORLD",
-        desc: "Something is out there, but not yet. Leave at least one future place in the Yannieverse for memories that do not exist yet.",
-        tags: ["future room", "not available yet", "come back later"],
-        action: null,
-        cta: "Locked"
+    {
+        date:"JUL → AUG 2026",
+        title:"SPM × UTeM",
+        note:"ordinary updates became the bridge between two schedules",
+        image:"images/us5.jpg"
     }
-};
+];
 
-let currentYannieverseSelection = "prime";
+const editorialCallMemories = [
+    {
+        date:"08 APR 2026",
+        duration:"09:00:00",
+        title:"‘call me / im bored’",
+        note:"A short request to call turned into a nine-hour video call."
+    },
+    {
+        date:"05 APR 2026",
+        duration:"02:00:00",
+        title:"the 10:40 wake-up call",
+        note:"A practical wake-up request somehow became a two-hour call."
+    },
+    {
+        date:"15 JUN 2026",
+        duration:"11:00:00",
+        title:"an entire evening on call",
+        note:"One of the long calls that quietly became part of the normal routine."
+    },
+    {
+        date:"15 JUL 2026",
+        duration:"12:00:00",
+        title:"trial season, still connected",
+        note:"Even on tired study days, calls kept finding their way into the background."
+    }
+];
 
-function injectYannieverse(){
-    const home = document.getElementById("home");
-    const landing = document.getElementById("landingCover");
-    if(!home || !landing || document.getElementById("yannieverseLaunch")) return;
+let editorialChapterIndex = editorialChapterCards.length - 1;
+let editorialCallIndex = 0;
+let editorialCallConnected = false;
+let editorialScrollRAF = null;
 
-    const section = document.createElement("div");
-    section.className = "yannieverse-launch";
-    section.id = "yannieverseLaunch";
-    section.innerHTML = `
-        <div class="yv-heading">
-            <div>
-                <p class="eyebrow">OR STEP INTO THE BIGGER ONE</p>
-                <h2>Enter the Yannieverse ✦</h2>
-            </div>
-            <p>A stylized little universe where the big apps become planets. Tap one, feel the vibe, then enter the world properly.</p>
-        </div>
-        <div class="yv-shell">
-            <div class="yv-stage" id="yvStage" aria-label="Yannieverse interactive map">
-                <div class="yv-nebula"></div>
-                <div class="yv-dust"></div>
-                <div class="yv-orbits"></div>
-                <div class="yv-stars" id="yvStars"></div>
-
-                <button type="button" class="yv-planet yv-prime active" data-yv-key="prime" style="--x:50%;--y:52%;--s:144px;--s-mobile:126px;--depth:.2;--float:10.2s;">
-                    <span class="yv-sphere"><span class="yv-surface"></span></span>
-                    <span class="yv-label">Yannie Prime <small>core</small></span>
-                </button>
-
-                <button type="button" class="yv-planet yv-fy has-ring" data-yv-key="fy" style="--x:23%;--y:24%;--s:108px;--s-mobile:94px;--depth:.95;--float:8.4s;">
-                    <span class="yv-orbit back"></span><span class="yv-sphere"><span class="yv-surface"></span></span><span class="yv-orbit front"></span>
-                    <span class="yv-label">YannieFy</span>
-                </button>
-                <button type="button" class="yv-planet yv-tube" data-yv-key="tube" style="--x:76%;--y:21%;--s:102px;--s-mobile:88px;--depth:1;--float:8.8s;">
-                    <span class="yv-sphere"><span class="yv-surface"></span></span>
-                    <span class="yv-label">YannieTube</span>
-                </button>
-                <button type="button" class="yv-planet yv-gram" data-yv-key="gram" style="--x:16%;--y:62%;--s:94px;--s-mobile:82px;--depth:1.1;--float:9.6s;">
-                    <span class="yv-sphere"><span class="yv-surface"></span></span>
-                    <span class="yv-label">YannieGram</span>
-                </button>
-                <button type="button" class="yv-planet yv-memoryworld" data-yv-key="memoryworld" style="--x:82%;--y:61%;--s:118px;--s-mobile:100px;--depth:1.12;--float:9.2s;">
-                    <span class="yv-sphere"><span class="yv-surface"></span></span>
-                    <span class="yv-label">Memory World</span>
-                </button>
-                <button type="button" class="yv-planet yv-museum has-ring" data-yv-key="museum" style="--x:33%;--y:80%;--s:104px;--s-mobile:90px;--depth:.84;--float:8.9s;">
-                    <span class="yv-orbit back"></span><span class="yv-sphere"><span class="yv-surface"></span></span><span class="yv-orbit front"></span>
-                    <span class="yv-label">Museum</span>
-                </button>
-                <button type="button" class="yv-planet yv-scrapbook" data-yv-key="scrapbook" style="--x:66%;--y:80%;--s:100px;--s-mobile:86px;--depth:.82;--float:8.6s;">
-                    <span class="yv-sphere"><span class="yv-surface"></span></span>
-                    <span class="yv-label">Scrapbook</span>
-                </button>
-                <button type="button" class="yv-planet yv-birthday" data-yv-key="birthday" style="--x:50%;--y:17%;--s:92px;--s-mobile:80px;--depth:.75;--float:8.3s;">
-                    <span class="yv-sphere"><span class="yv-surface"></span></span>
-                    <span class="yv-label">Yannie Day</span>
-                </button>
-                <button type="button" class="yv-planet yv-cookie" data-yv-key="cookie" style="--x:87%;--y:37%;--s:84px;--s-mobile:74px;--depth:1.18;--float:7.9s;">
-                    <span class="yv-sphere"><span class="yv-surface"></span></span>
-                    <span class="yv-label">YannieTok</span>
-                </button>
-
-                <button type="button" class="yv-mini-node receipt" data-yv-key="receipt" style="--x:57%;--y:68%;--s:76px;--depth:.5;--float:7.8s;"><div><b>RM6</b><span>origin moon</span></div></button>
-                <button type="button" class="yv-mini-node daily" data-yv-key="daily" style="--x:39%;--y:37%;--s:78px;--depth:.52;--float:8.1s;"><div><b>☀</b><span>daily</span></div></button>
-                <button type="button" class="yv-mini-node memories" data-yv-key="memories" style="--x:64%;--y:35%;--s:80px;--depth:.56;--float:8.5s;"><div><b>◫</b><span>memories</span></div></button>
-                <button type="button" class="yv-mini-node vault" data-yv-key="vault" style="--x:44%;--y:90%;--s:72px;--depth:.44;--float:9.4s;"><div><b>02</b><span>vault</span></div></button>
-                <button type="button" class="yv-locked-world" data-yv-key="locked" style="--x:12%;--y:12%;--depth:1.3;">???</button>
-            </div>
-            <div class="yv-info">
-                <div class="yv-card">
-                    <small id="yvKicker">${yannieverseEntries.prime.kicker}</small>
-                    <h3 id="yvTitle">${yannieverseEntries.prime.title}</h3>
-                    <p id="yvDesc">${yannieverseEntries.prime.desc}</p>
-                    <div class="yv-tags" id="yvTags">${yannieverseEntries.prime.tags.map(tag=>`<span class="yv-tag">${tag}</span>`).join("")}</div>
-                    <button type="button" class="yv-enter" id="yvEnterBtn" disabled>${yannieverseEntries.prime.cta}</button>
-                    <div class="yv-hint" id="yvHint">Tap any planet or small moon in the map. The clean landing stays the intro — this is the deeper universe layer underneath it.</div>
-                </div>
-                <div class="yv-subgrid">
-                    <div class="yv-mini-card">
-                        <h4>Why this works</h4>
-                        <p>It turns the big apps into connected places without forcing the homepage itself to become a game.</p>
-                        <button type="button" data-yv-quick="memoryworld">Preview Memory World</button>
-                    </div>
-                    <div class="yv-mini-card">
-                        <h4>Not just planets</h4>
-                        <p>Smaller parts of the site become moons and satellites, so the Yannieverse can expand later without turning into visual chaos.</p>
-                        <button type="button" data-yv-quick="receipt">See the origin moon</button>
-                    </div>
-                </div>
-            </div>
-        </div>`;
-
-    landing.insertAdjacentElement("afterend", section);
+function editorialIsNaturalNight(){
+    const hour = new Date().getHours();
+    return hour >= 19 || hour < 6;
 }
 
-function buildYannieverseStars(){
-    const container = document.getElementById("yvStars");
-    if(!container || container.childElementCount) return;
-    for(let i=0;i<54;i++){
-        const star = document.createElement("span");
-        const size = Math.random() < .18 ? 3 : Math.random() < .45 ? 2 : 1.5;
-        const color = ["rgba(255,255,255,.9)","rgba(255,197,224,.88)","rgba(168,201,255,.82)"][Math.floor(Math.random()*3)];
-        star.style.left = `${Math.random()*100}%`;
-        star.style.top = `${Math.random()*100}%`;
-        star.style.setProperty("--size", `${size}px`);
-        star.style.setProperty("--delay", `${Math.random()*5.5}s`);
-        star.style.setProperty("--dur", `${4.5 + Math.random()*4}s`);
-        star.style.setProperty("--color", color);
-        container.appendChild(star);
+function editorialApplyTheme(mode){
+    const isNight = mode === "night";
+    document.body.classList.toggle("tonight-mode", isNight);
+    document.documentElement.style.colorScheme = isNight ? "dark" : "light";
+    const toggle = document.getElementById("tonightModeToggle");
+    if(toggle){
+        toggle.setAttribute("aria-pressed", String(isNight));
+        const icon = toggle.querySelector(".tonight-toggle-icon");
+        const title = toggle.querySelector("strong");
+        if(icon) icon.textContent = isNight ? "☀" : "☾";
+        if(title) title.textContent = isNight ? "Day Mode" : "Tonight Mode";
     }
+    document.querySelectorAll("[data-editorial-theme-label]").forEach(el=>{
+        el.textContent = isNight ? "Switch to day" : "Tonight mode";
+    });
 }
 
-function renderYannieversePanel(key){
-    const data = yannieverseEntries[key] || yannieverseEntries.prime;
-    currentYannieverseSelection = key;
-    document.querySelectorAll("[data-yv-key]").forEach(el=>el.classList.toggle("active", el.dataset.yvKey === key));
-    const title = document.getElementById("yvTitle");
-    const kicker = document.getElementById("yvKicker");
-    const desc = document.getElementById("yvDesc");
-    const tags = document.getElementById("yvTags");
-    const enter = document.getElementById("yvEnterBtn");
-    const hint = document.getElementById("yvHint");
+function editorialInitialTheme(){
+    let choice = null;
+    try{ choice = sessionStorage.getItem("yannieWorldThemeChoice"); }catch(e){}
+    if(choice !== "night" && choice !== "day") choice = editorialIsNaturalNight() ? "night" : "day";
+    editorialApplyTheme(choice);
+}
+
+function editorialToggleTheme(){
+    const next = document.body.classList.contains("tonight-mode") ? "day" : "night";
+    try{ sessionStorage.setItem("yannieWorldThemeChoice", next); }catch(e){}
+    editorialApplyTheme(next);
+    if(navigator.vibrate) navigator.vibrate(18);
+}
+
+function editorialRenderChapter(index){
+    const data = editorialChapterCards[index];
+    if(!data) return;
+    editorialChapterIndex = index;
+    const img = document.getElementById("editorialChapterImage");
+    const date = document.getElementById("editorialChapterDate");
+    const title = document.getElementById("editorialChapterTitle");
+    const note = document.getElementById("editorialChapterNote");
+    if(img){
+        img.style.opacity = ".45";
+        const preloader = new Image();
+        preloader.onload = ()=>{
+            img.src = data.image;
+            requestAnimationFrame(()=>img.style.opacity = "1");
+        };
+        preloader.onerror = ()=>{ img.style.opacity = "1"; };
+        preloader.src = data.image;
+    }
+    if(date) date.textContent = data.date;
     if(title) title.textContent = data.title;
-    if(kicker) kicker.textContent = data.kicker;
-    if(desc) desc.textContent = data.desc;
-    if(tags) tags.innerHTML = (data.tags || []).map(tag=>`<span class="yv-tag">${tag}</span>`).join("");
-    if(enter){
-        enter.textContent = data.cta || "Open";
-        enter.disabled = !data.action;
-        enter.dataset.yvAction = data.action || "";
-    }
-    if(hint){
-        hint.textContent = key === "locked"
-            ? "Leave at least one future place unresolved. That way the universe can grow with new memories instead of pretending it is finished now."
-            : data.type === "mini"
-                ? "The big planets are the main worlds. Smaller pieces of the site become moons, stations and side orbits."
-                : "Select another planet if you just want to explore the map first. Nothing on the clean landing screen gets replaced by this. It only starts after you scroll.";
+    if(note) note.textContent = data.note;
+}
+
+function editorialCycleChapter(){
+    editorialRenderChapter((editorialChapterIndex + 1) % editorialChapterCards.length);
+    if(navigator.vibrate) navigator.vibrate(12);
+}
+
+function editorialSelectStat(button){
+    document.querySelectorAll(".editorial-stat").forEach(el=>el.classList.remove("active"));
+    button.classList.add("active");
+    const note = document.getElementById("editorialStatNote");
+    if(note) note.textContent = button.dataset.statNote || "";
+}
+
+function editorialRenderCall(connected=false){
+    const data = editorialCallMemories[editorialCallIndex];
+    if(!data) return;
+    const phone = document.getElementById("callPhone");
+    const date = document.getElementById("callPhoneDate");
+    const duration = document.getElementById("callPhoneDuration");
+    const label = document.getElementById("callPhoneLabel");
+    const result = document.getElementById("callMemoryResult");
+    phone?.classList.toggle("connected", connected);
+    if(date) date.textContent = connected ? data.date : "memory line";
+    if(duration) duration.textContent = connected ? data.duration : "—:—:—";
+    if(label) label.textContent = connected ? "connected" : "slide to connect";
+    if(result){
+        result.innerHTML = connected
+            ? `<small>${data.date}</small><strong>${data.title}</strong><span>${data.note}</span>`
+            : `<small>LINE IDLE</small><strong>waiting for a call...</strong><span>slide the receiver on the phone</span>`;
     }
 }
 
-function openYannieverseAction(action){
-    if(!action) return;
-    if(action === "cookie-shop"){
-        document.getElementById("openCookieShop")?.click();
-        return;
-    }
-    const direct = {
-        mood: ()=>showSection("mood"),
-        care: ()=>showSection("about"),
-        lore: ()=>showSection("smallthings"),
-        envelopes: ()=>showSection("envelopes"),
-        achievements: ()=>showSection("achievements")
-    };
-    if(direct[action]) {
-        direct[action]();
-        return;
-    }
-    runHomeWorldAction(action);
+function editorialResetCallSlider(){
+    const slider = document.getElementById("callMemorySlider");
+    const phone = document.getElementById("callPhone");
+    if(slider) slider.value = 0;
+    if(phone) phone.style.setProperty("--call-x","0px");
 }
 
-function setupYannieverse(){
-    injectYannieverse();
-    buildYannieverseStars();
-    const stage = document.getElementById("yvStage");
-    if(!stage) return;
+function editorialConnectCall(){
+    if(editorialCallConnected) return;
+    editorialCallConnected = true;
+    editorialRenderCall(true);
+    if(navigator.vibrate) navigator.vibrate([35,25,35]);
+}
 
-    renderYannieversePanel("prime");
+function editorialNextCall(){
+    editorialCallIndex = (editorialCallIndex + 1) % editorialCallMemories.length;
+    editorialCallConnected = false;
+    editorialResetCallSlider();
+    editorialRenderCall(false);
+}
 
-    document.querySelectorAll("[data-yv-key]").forEach(node=>{
-        node.addEventListener("click", ()=>renderYannieversePanel(node.dataset.yvKey));
+function editorialUpdatePastCover(){
+    const landing = document.getElementById("landingCover");
+    if(!landing) return;
+    const passed = window.scrollY > Math.max(120, landing.offsetHeight * .52);
+    document.body.classList.toggle("past-cover", passed);
+}
+
+function editorialScrollTo(selector){
+    if(!document.getElementById("home")?.classList.contains("active")) showSection("home");
+    requestAnimationFrame(()=>document.querySelector(selector)?.scrollIntoView({behavior:"smooth",block:"start"}));
+}
+
+function editorialCloseMore(){
+    document.getElementById("mobileMoreSheet")?.classList.remove("open");
+    document.body.style.removeProperty("overflow");
+}
+
+function editorialOpenMore(){
+    document.getElementById("mobileMoreSheet")?.classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+
+function editorialOpenSection(id){
+    editorialCloseMore();
+    showSection(id);
+}
+
+function injectEditorialMobileDock(){
+    if(document.getElementById("mobileEditorialDock")) return;
+    const dock = document.createElement("div");
+    dock.className = "mobile-editorial-dock";
+    dock.id = "mobileEditorialDock";
+    dock.setAttribute("aria-label","Mobile Yannie World navigation");
+    dock.innerHTML = `
+      <button type="button" data-editorial-dock="home"><span>⌂</span><small>Home</small></button>
+      <button type="button" data-editorial-dock="explore"><span>◇</span><small>Explore</small></button>
+      <button type="button" data-editorial-dock="foryou"><span>♡</span><small>For You</small></button>
+      <button type="button" data-editorial-dock="more"><span>•••</span><small>More</small></button>`;
+    document.body.appendChild(dock);
+
+    const sheet = document.createElement("div");
+    sheet.className = "mobile-more-sheet";
+    sheet.id = "mobileMoreSheet";
+    sheet.innerHTML = `
+      <div class="mobile-more-panel" role="dialog" aria-modal="true" aria-label="More Yannie World sections">
+        <div class="mobile-more-handle"></div>
+        <div class="mobile-more-title"><h3>More of Yannie World</h3><button type="button" data-more-close>×</button></div>
+        <div class="mobile-more-grid">
+          <button type="button" data-more-section="birthday"><span>02</span><strong>Birthday</strong></button>
+          <button type="button" data-more-section="mood"><span>◌</span><strong>Mood</strong></button>
+          <button type="button" data-more-section="about"><span>＋</span><strong>Care</strong></button>
+          <button type="button" data-more-section="smallthings"><span>⌁</span><strong>Lore</strong></button>
+          <button type="button" data-more-section="memories"><span>▣</span><strong>Memories</strong></button>
+          <button type="button" data-more-section="gallery"><span>□</span><strong>Photos</strong></button>
+          <button type="button" data-more-section="letter"><span>✎</span><strong>Letter</strong></button>
+          <button type="button" data-more-section="envelopes"><span>◇</span><strong>Open When</strong></button>
+          <button type="button" data-more-section="achievements"><span>☆</span><strong>Badges</strong></button>
+          <button type="button" data-more-section="vault"><span>⌁</span><strong>Vault</strong></button>
+          <button type="button" data-more-theme><span>☾</span><strong data-editorial-theme-label>Tonight mode</strong></button>
+        </div>
+      </div>`;
+    document.body.appendChild(sheet);
+
+    dock.querySelector('[data-editorial-dock="home"]')?.addEventListener("click",()=>{
+        if(!document.getElementById("home")?.classList.contains("active")) showSection("home");
+        window.scrollTo({top:0,behavior:"smooth"});
     });
-    document.getElementById("yvEnterBtn")?.addEventListener("click", e=>openYannieverseAction(e.currentTarget.dataset.yvAction));
-    document.querySelectorAll("[data-yv-quick]").forEach(btn=>btn.addEventListener("click", ()=>renderYannieversePanel(btn.dataset.yvQuick)));
+    dock.querySelector('[data-editorial-dock="explore"]')?.addEventListener("click",()=>editorialScrollTo("#roomDirectory"));
+    dock.querySelector('[data-editorial-dock="foryou"]')?.addEventListener("click",()=>editorialScrollTo(".home-sidequests"));
+    dock.querySelector('[data-editorial-dock="more"]')?.addEventListener("click",editorialOpenMore);
+    sheet.querySelector("[data-more-close]")?.addEventListener("click",editorialCloseMore);
+    sheet.addEventListener("click",e=>{ if(e.target === sheet) editorialCloseMore(); });
+    sheet.querySelectorAll("[data-more-section]").forEach(btn=>btn.addEventListener("click",()=>editorialOpenSection(btn.dataset.moreSection)));
+    sheet.querySelector("[data-more-theme]")?.addEventListener("click",()=>{
+        editorialToggleTheme();
+        editorialApplyTheme(document.body.classList.contains("tonight-mode") ? "night" : "day");
+    });
+}
 
-    let raf = null;
-    const setParallax = (clientX, clientY) => {
-        const rect = stage.getBoundingClientRect();
-        const x = ((clientX - rect.left) / rect.width) - 0.5;
-        const y = ((clientY - rect.top) / rect.height) - 0.5;
-        stage.querySelectorAll("[data-yv-key]").forEach(node=>{
-            const depth = parseFloat(getComputedStyle(node).getPropertyValue("--depth")) || 1;
-            node.style.setProperty("--parallax-x", `${x * depth * 16}px`);
-            node.style.setProperty("--parallax-y", `${y * depth * 12}px`);
+function setupEditorialV4(){
+    injectEditorialMobileDock();
+    editorialInitialTheme();
+    editorialRenderChapter(editorialChapterIndex);
+    editorialUpdatePastCover();
+
+    document.getElementById("tonightModeToggle")?.addEventListener("click", editorialToggleTheme);
+    document.getElementById("chapterCardShuffle")?.addEventListener("click", editorialCycleChapter);
+    document.querySelectorAll(".editorial-stat").forEach(btn=>btn.addEventListener("click",()=>editorialSelectStat(btn)));
+
+    const slider = document.getElementById("callMemorySlider");
+    const phone = document.getElementById("callPhone");
+    slider?.addEventListener("input",()=>{
+        const v = Number(slider.value);
+        const track = slider.closest(".call-slide")?.querySelector(".call-slide-track");
+        const maxX = Math.max(0,(track?.clientWidth || 0) - 54);
+        phone?.style.setProperty("--call-x",`${maxX*(v/100)}px`);
+        if(v >= 96) editorialConnectCall();
+    });
+    slider?.addEventListener("change",()=>{
+        if(Number(slider.value) < 96 && !editorialCallConnected) editorialResetCallSlider();
+    });
+    document.getElementById("callAnotherButton")?.addEventListener("click",editorialNextCall);
+
+    window.addEventListener("scroll",()=>{
+        if(editorialScrollRAF) return;
+        editorialScrollRAF = requestAnimationFrame(()=>{
+            editorialScrollRAF = null;
+            editorialUpdatePastCover();
         });
-    };
-    stage.addEventListener("mousemove", e=>{
-        if(raf) cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(()=>setParallax(e.clientX, e.clientY));
-    });
-    stage.addEventListener("mouseleave", ()=>{
-        stage.querySelectorAll("[data-yv-key]").forEach(node=>{
-            node.style.setProperty("--parallax-x", `0px`);
-            node.style.setProperty("--parallax-y", `0px`);
-        });
-    });
-    stage.addEventListener("touchmove", e=>{
-        const t = e.touches[0];
-        if(!t) return;
-        setParallax(t.clientX, t.clientY);
-    }, {passive:true});
+    },{passive:true});
+
+    window.addEventListener("resize", editorialUpdatePastCover, {passive:true});
+    document.addEventListener("keydown",e=>{ if(e.key === "Escape") editorialCloseMore(); });
 }
-
-/* =========================================================
-   YANNIEVERSE V2 — full-screen immersive universe
-   This overrides the earlier prototype setup without removing
-   any of the user's existing HTML content.
-   ========================================================= */
-const yverseWorlds = {
-  prime:{title:"Yannie Prime",kicker:"CENTRE OF THE YANNIEVERSE",desc:"The centre of everything, but not another app. This is just the quiet core that the rest of the worlds orbit around.",tags:["Hasrieyannie","centre","home signal"],action:null,visual:"prime"},
-  fy:{title:"YannieFy",kicker:"PLANET 01 · LISTEN",desc:"A deep-pink record planet for the music side of the site. Grooves, late-night glow and songs that somehow get attached to whole memories.",tags:["record lounge","music district","late-night planet"],action:"fy",visual:"fy"},
-  tube:{title:"YannieTube",kicker:"PLANET 02 · WATCH",desc:"The cinema planet. Videos, edits and clips live here instead of getting lost inside a normal gallery.",tags:["mini cinema","video planet","projector glow"],action:"tube",visual:"tube"},
-  gram:{title:"YannieGram",kicker:"PLANET 03 · POSTS",desc:"A soft photo-studio world for posts, pictures and camera-roll energy. Cleaner than a feed, but still unmistakably YannieGram.",tags:["photo studio","polaroids","camera flash"],action:"gram",visual:"gram"},
-  memoryworld:{title:"Memory World",kicker:"PLANET 04 · PLAY",desc:"The arcade planet where the real timeline becomes playable: actual messages, risky choices, routes, fumbles and hidden endings.",tags:["story arcade","real-text routes","risk system"],action:"memoryworld",visual:"memoryworld"},
-  museum:{title:"Museum",kicker:"PLANET 05 · WALK",desc:"An elegant marble world for memories that deserve to be displayed properly instead of just appearing in another card grid.",tags:["gallery hall","preserved memories","vault energy"],action:"museum",visual:"museum"},
-  scrapbook:{title:"Scrapbook",kicker:"PLANET 06 · FLIP",desc:"The handmade planet: paper, tape, little mistakes, chronology and all the tactile stuff that makes it feel different from the Museum.",tags:["craft desk","interactive pages","messy in a good way"],action:"scrapbook",visual:"scrapbook"},
-  birthday:{title:"Yannie Day",kicker:"PLANET 07 · 02.08",desc:"The birthday planet. Bright, playful and intentionally more chaotic than the rest of the universe because 02.08 gets its own rules.",tags:["02.08","birthday game","confetti planet"],action:"birthday",visual:"birthday"},
-  cookie:{title:"YannieTok",kicker:"PLANET 08 · SNACK",desc:"A warm dessert world for the Dubai cookie side quest and all the ridiculous food-related lore that keeps following this website around.",tags:["cookie counter","dessert world","snack DLC"],action:"cookie-shop",visual:"cookie"},
-  receipt:{title:"Dee's Dessert Moon",kicker:"ORIGIN MOON · RM6",desc:"The tiny moon that technically started the whole thing: two chocolate moist cakes, total RM6, one normal order that did not remain normal for very long.",tags:["01.03.2026","RM6","origin"],action:"receipt",visual:"origin"},
-  daily:{title:"Daily Satellite",kicker:"SIDE ORBIT · TODAY",desc:"A small orbiting station for today's card, one little plan and one real memory. Not every part of the Yannieverse needs to be a whole planet.",tags:["daily card","tiny mission","streak"],action:"daily",visual:"daily"},
-  memories:{title:"Memory Cluster",kicker:"SIDE ORBIT · REAL MOMENTS",desc:"A little cluster of the actual milestones: RM6, pudding, lasagna, calls, open house, SPM × UTeM and the rest of the plot without rewriting it.",tags:["real chronology","small lore","milestones"],action:"memories",visual:"memories"},
-  vault:{title:"Vault Moon",kicker:"LOCKED ORBIT",desc:"The darker moon at the edge of the map. It makes more sense as something earned after exploring than as another normal destination.",tags:["reward","exploration","locked"],action:"vault",visual:"vault"},
-  locked:{title:"Signal Too Weak",kicker:"UNKNOWN WORLD",desc:"Something is out there, but it should stay unresolved for now. The Yannieverse needs at least one place reserved for memories that do not exist yet.",tags:["future","???","not yet"],action:null,visual:"locked"}
-};
-
-let yverseSelected = "prime";
-let yverseStarAnimation = null;
-let yverseStars = [];
-let yversePointer = {x:0,y:0,targetX:0,targetY:0};
-
-function setupYannieverse(){
-  const openBtn = document.getElementById("openYannieverseBtn");
-  const overlay = document.getElementById("yverseOverlay");
-  if(!openBtn || !overlay) return;
-
-  openBtn.addEventListener("click", openFullYannieverse);
-  document.getElementById("closeYannieverseBtn")?.addEventListener("click", closeFullYannieverse);
-  document.getElementById("dismissYverseIntro")?.addEventListener("click", ()=>document.getElementById("yverseIntro")?.classList.add("hidden"));
-  document.getElementById("yverseBackBtn")?.addEventListener("click", clearYverseFocus);
-  document.getElementById("yverseEnterWorldBtn")?.addEventListener("click", e=>{
-    const action = e.currentTarget.dataset.action;
-    if(action) warpIntoYverseWorld(action, yverseSelected);
-  });
-
-  overlay.querySelectorAll("[data-yv2-key]").forEach(node=>node.addEventListener("click", e=>{
-    e.stopPropagation();
-    focusYverseWorld(node.dataset.yv2Key,node);
-  }));
-
-  document.getElementById("yverseMap")?.addEventListener("pointermove", e=>{
-    if(e.pointerType === "touch") return;
-    yversePointer.targetX = (e.clientX / window.innerWidth - .5) * 28;
-    yversePointer.targetY = (e.clientY / window.innerHeight - .5) * 20;
-  });
-  document.getElementById("yverseMap")?.addEventListener("pointerleave", ()=>{
-    yversePointer.targetX = 0;
-    yversePointer.targetY = 0;
-  });
-
-  let dragStart=null,camStart=null;
-  const map=document.getElementById("yverseMap");
-  map?.addEventListener("pointerdown",e=>{
-    if(e.target.closest("button")) return;
-    dragStart={x:e.clientX,y:e.clientY};
-    camStart={x:parseFloat(map.dataset.dragX||0),y:parseFloat(map.dataset.dragY||0)};
-    map.setPointerCapture?.(e.pointerId);
-  });
-  map?.addEventListener("pointermove",e=>{
-    if(!dragStart) return;
-    const maxX=window.innerWidth*.08,maxY=window.innerHeight*.06;
-    const nx=Math.max(-maxX,Math.min(maxX,camStart.x+(e.clientX-dragStart.x)*.45));
-    const ny=Math.max(-maxY,Math.min(maxY,camStart.y+(e.clientY-dragStart.y)*.35));
-    map.dataset.dragX=nx;map.dataset.dragY=ny;
-    map.style.setProperty("--cam-x",`${nx}px`);map.style.setProperty("--cam-y",`${ny}px`);
-  });
-  const endDrag=()=>dragStart=null;
-  map?.addEventListener("pointerup",endDrag);map?.addEventListener("pointercancel",endDrag);
-
-  document.addEventListener("keydown", e=>{
-    if(!overlay.classList.contains("open")) return;
-    if(e.key === "Escape"){
-      if(overlay.classList.contains("focused")) clearYverseFocus();
-      else closeFullYannieverse();
-    }
-  });
-}
-
-function openFullYannieverse(){
-  const overlay=document.getElementById("yverseOverlay");
-  if(!overlay) return;
-  overlay.classList.remove("closing","warping","focused");
-  overlay.classList.add("open","opening");
-  overlay.setAttribute("aria-hidden","false");
-  document.body.classList.add("yverse-open");
-  document.getElementById("yverseIntro")?.classList.remove("hidden");
-  clearYverseFocus();
-  initYverseStarfield();
-  requestAnimationFrame(()=>{
-    overlay.classList.remove("opening");
-    startYverseStars();
-  });
-}
-
-function closeFullYannieverse(){
-  const overlay=document.getElementById("yverseOverlay");
-  if(!overlay || !overlay.classList.contains("open")) return;
-  overlay.classList.remove("focused","warping");
-  overlay.classList.add("closing");
-  document.body.classList.remove("yverse-open");
-  setTimeout(()=>{
-    overlay.classList.remove("open","closing");
-    overlay.setAttribute("aria-hidden","true");
-    stopYverseStars();
-  },440);
-}
-
-function focusYverseWorld(key,node){
-  const overlay=document.getElementById("yverseOverlay");
-  const data=yverseWorlds[key];
-  if(!overlay || !data) return;
-  yverseSelected=key;
-  document.getElementById("yverseIntro")?.classList.add("hidden");
-  overlay.querySelectorAll("[data-yv2-key]").forEach(n=>n.classList.toggle("active",n===node));
-  overlay.classList.add("focused");
-
-  const kicker=document.getElementById("yverseFocusKicker");
-  const title=document.getElementById("yverseFocusTitle");
-  const desc=document.getElementById("yverseFocusDesc");
-  const tags=document.getElementById("yverseFocusTags");
-  const enter=document.getElementById("yverseEnterWorldBtn");
-  const visual=document.getElementById("yverseFocusVisual");
-  if(kicker) kicker.textContent=data.kicker;
-  if(title) title.textContent=data.title;
-  if(desc) desc.textContent=data.desc;
-  if(tags) tags.innerHTML=data.tags.map(tag=>`<span>${tag}</span>`).join("");
-  if(enter){enter.disabled=!data.action;enter.dataset.action=data.action||"";enter.textContent=data.action?`ENTER ${data.title.toUpperCase()} →`:"NOT AVAILABLE YET";}
-  if(visual){
-    visual.className=`yverse-focus-visual yv2-${data.visual}`;
-    visual.innerHTML=`<span class="yv2-ball"><i class="yv2-surface"></i>${key==="prime"?"<b>Y</b>":key==="birthday"?"<b>02</b>":""}</span>`;
-  }
-}
-
-function clearYverseFocus(){
-  const overlay=document.getElementById("yverseOverlay");
-  overlay?.classList.remove("focused");
-  overlay?.querySelectorAll("[data-yv2-key]").forEach(n=>n.classList.remove("active"));
-  yverseSelected="prime";
-}
-
-function yverseAction(action){
-  if(action==="cookie-shop"){
-    closeFullYannieverse();
-    setTimeout(()=>document.getElementById("openCookieShop")?.click(),460);
-    return;
-  }
-  const direct={
-    birthday:()=>showSection("birthday"),daily:()=>showSection("daily"),memories:()=>showSection("memories"),vault:()=>showSection("vault"),
-    gallery:()=>showSection("gallery"),letter:()=>showSection("letter"),receipt:()=>openOriginReceipt()
-  };
-  if(direct[action]){closeFullYannieverse();setTimeout(direct[action],460);return;}
-  closeFullYannieverse();
-  setTimeout(()=>runHomeWorldAction(action),460);
-}
-
-function warpIntoYverseWorld(action,key){
-  const overlay=document.getElementById("yverseOverlay");
-  const target=overlay?.querySelector(`[data-yv2-key="${key}"]`);
-  const warp=document.getElementById("yverseWarp");
-  if(!overlay || !warp) return;
-  const rect=target?.getBoundingClientRect();
-  const x=rect?((rect.left+rect.width/2)/window.innerWidth*100):50;
-  const y=rect?((rect.top+rect.height/2)/window.innerHeight*100):50;
-  warp.style.setProperty("--warp-x",`${x}%`);warp.style.setProperty("--warp-y",`${y}%`);
-  overlay.classList.add("warping");
-  setTimeout(()=>yverseAction(action),620);
-}
-
-function initYverseStarfield(){
-  const canvas=document.getElementById("yverseStarCanvas");
-  if(!canvas) return;
-  const dpr=Math.min(window.devicePixelRatio||1,2);
-  const w=window.innerWidth,h=window.innerHeight;
-  canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);canvas.style.width=`${w}px`;canvas.style.height=`${h}px`;
-  const count=Math.min(260,Math.max(120,Math.floor((w*h)/6500)));
-  yverseStars=Array.from({length:count},()=>({
-    x:Math.random()*w,y:Math.random()*h,z:.2+Math.random()*.8,r:.45+Math.random()*1.45,a:.22+Math.random()*.72,tw:Math.random()*Math.PI*2,hue:Math.random()
-  }));
-}
-
-function startYverseStars(){
-  stopYverseStars();
-  const canvas=document.getElementById("yverseStarCanvas");
-  const overlay=document.getElementById("yverseOverlay");
-  if(!canvas || !overlay?.classList.contains("open")) return;
-  const ctx=canvas.getContext("2d");
-  const dpr=Math.min(window.devicePixelRatio||1,2);
-  const w=canvas.width/dpr,h=canvas.height/dpr;
-  const tick=t=>{
-    if(!overlay.classList.contains("open")) return;
-    yversePointer.x+=(yversePointer.targetX-yversePointer.x)*.045;
-    yversePointer.y+=(yversePointer.targetY-yversePointer.y)*.045;
-    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
-    for(const s of yverseStars){
-      const pulse=.72+.28*Math.sin(t*.0015+s.tw);
-      const sx=(s.x+yversePointer.x*s.z+w)%w,sy=(s.y+yversePointer.y*s.z+h)%h;
-      const pink=s.hue>.82,blue=s.hue<.12;
-      ctx.fillStyle=pink?`rgba(255,188,220,${s.a*pulse})`:blue?`rgba(178,207,255,${s.a*pulse})`:`rgba(255,255,255,${s.a*pulse})`;
-      ctx.beginPath();ctx.arc(sx,sy,s.r*s.z,0,Math.PI*2);ctx.fill();
-    }
-    yverseStarAnimation=requestAnimationFrame(tick);
-  };
-  yverseStarAnimation=requestAnimationFrame(tick);
-}
-function stopYverseStars(){if(yverseStarAnimation){cancelAnimationFrame(yverseStarAnimation);yverseStarAnimation=null}}
-window.addEventListener("resize",()=>{if(document.getElementById("yverseOverlay")?.classList.contains("open")){initYverseStarfield();startYverseStars();}});
