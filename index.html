@@ -9,7 +9,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css?v=personal-3">
+<link rel="stylesheet" href="style.css?v=rtm-1-3">
+
+<style id="rtm13-inline-style">
+/* ROAD TO MIDNIGHT 1.3 — intentionally self-contained */
+.rtm13-cover{display:block;width:100%;margin:20px 0 0;padding:16px 18px;border:1px solid rgba(91,44,63,.13);border-radius:22px;background:linear-gradient(135deg,rgba(255,255,255,.92),rgba(247,224,234,.95));box-shadow:0 14px 38px rgba(79,38,55,.09);color:#4b2637;text-align:left;cursor:pointer}
+.rtm13-cover-top,.rtm13-cover-foot{display:flex;align-items:center;justify-content:space-between;gap:12px}.rtm13-cover-top b{font-size:.62rem;letter-spacing:.14em}.rtm13-cover-top em{font-style:normal;font-size:.58rem;color:#a25b78;font-weight:800;letter-spacing:.09em}
+.rtm13-cover-clock{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:14px 0}.rtm13-cover-clock>span{padding:9px 7px;border-radius:14px;background:rgba(255,255,255,.76);text-align:center}.rtm13-cover-clock strong{display:block;font:700 clamp(1.35rem,4vw,2rem)/1 "Cormorant Garamond",Georgia,serif;font-variant-numeric:tabular-nums}.rtm13-cover-clock small{display:block;margin-top:4px;font-size:.45rem;letter-spacing:.14em;color:#a2687f;font-weight:900}.rtm13-cover-foot{font-size:.57rem;color:#8c6575}.rtm13-cover-foot i{width:7px;height:7px;border-radius:50%;background:#e57da5;box-shadow:0 0 0 5px rgba(229,125,165,.12);animation:rtm13pulse 1.3s ease-in-out infinite alternate}.rtm13-cover-foot b{margin-right:auto}.rtm13-cover-foot em{font-style:normal}
+.rtm13-section{width:min(1180px,calc(100% - 32px));margin:22px auto 54px;padding:clamp(22px,4vw,46px);border-radius:34px;background:radial-gradient(circle at 88% 10%,rgba(229,125,165,.17),transparent 25%),linear-gradient(145deg,#fff9fb,#f6e6ed);border:1px solid rgba(90,43,61,.11);box-shadow:0 24px 80px rgba(72,33,49,.08);color:#4b2637;scroll-margin-top:24px}.rtm13-head{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);gap:24px;align-items:end}.rtm13-kicker{margin:0 0 8px;font-size:.66rem;font-weight:900;letter-spacing:.17em;color:#a54c70}.rtm13-head h2{margin:0;font:700 clamp(3rem,7vw,6rem)/.88 "Cormorant Garamond",Georgia,serif;letter-spacing:-.04em}.rtm13-head>div>p:not(.rtm13-kicker){max-width:640px;color:#80616f;line-height:1.7}.rtm13-progress-card{padding:20px;border-radius:22px;background:rgba(255,255,255,.7);border:1px solid rgba(85,40,58,.09)}.rtm13-progress-card>div:first-child,.rtm13-progress-card p{display:flex;justify-content:space-between;gap:12px;align-items:center}.rtm13-progress-card>div:first-child span{font-size:.58rem;font-weight:900;letter-spacing:.13em}.rtm13-progress-card>div:first-child strong{font:700 1.8rem/1 "Cormorant Garamond",serif}.rtm13-progress-card p{margin:8px 0 0;font-size:.58rem;color:#966f7f}.rtm13-track{height:7px;margin:13px 0 0;border-radius:999px;background:rgba(87,41,60,.1);overflow:hidden}.rtm13-track i{display:block;height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,#a94c72,#ed91b3);transition:width .6s ease}
+.rtm13-bigclock{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:30px}.rtm13-bigclock div{padding:18px 12px;border-radius:22px;background:#4b2637;color:#fff;text-align:center}.rtm13-bigclock strong{display:block;font:700 clamp(2.5rem,7vw,5.5rem)/.85 "Cormorant Garamond",Georgia,serif;font-variant-numeric:tabular-nums}.rtm13-bigclock span{display:block;margin-top:8px;font-size:.53rem;letter-spacing:.17em;color:#e8b8ca;font-weight:900}.rtm13-bigclock div:last-child strong{animation:rtm13sec 1s ease-out infinite}.rtm13-target{text-align:center;margin:11px 0 0!important;font-size:.58rem!important;font-weight:900;letter-spacing:.13em;color:#9c7182!important}
+.rtm13-now-card{display:grid;grid-template-columns:58px 1fr auto;gap:15px;align-items:center;margin-top:24px;padding:17px;border-radius:22px;background:#fff;border:1px solid rgba(88,41,60,.1)}.rtm13-now-icon{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;background:#4b2637;color:#fff;font-size:1.4rem;animation:rtm13spin 5s linear infinite}.rtm13-now-card small{display:block;font-size:.52rem;font-weight:900;letter-spacing:.14em;color:#ad5879}.rtm13-now-card strong{display:block;margin-top:2px;font:700 1.65rem/1 "Cormorant Garamond",serif}.rtm13-now-card p{margin:5px 0 0;color:#896976;font-size:.75rem}.rtm13-now-card button{border:0;border-radius:999px;padding:12px 18px;background:#e47da4;color:#fff;font-weight:900;font-size:.68rem;cursor:pointer}
+.rtm13-milestones{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:12px}.rtm13-milestones button{position:relative;min-height:135px;padding:17px;border:1px solid rgba(83,40,57,.09);border-radius:19px;background:#fff9fb;color:#52303f;text-align:left;cursor:pointer;transition:.2s ease}.rtm13-milestones button:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(70,32,48,.08)}.rtm13-milestones small{font-size:.54rem;font-weight:900;letter-spacing:.16em;color:#ae5578}.rtm13-milestones strong{display:block;margin-top:12px;font:700 1.35rem/1 "Cormorant Garamond",serif}.rtm13-milestones span{display:block;margin-top:7px;color:#876875;font-size:.7rem}.rtm13-milestones button.is-locked{opacity:.48;filter:saturate(.45)}.rtm13-milestones button.is-locked::after{content:"LOCKED · TAP";position:absolute;bottom:14px;left:17px;font-size:.48rem;font-weight:900;letter-spacing:.11em;color:#9b7181}.rtm13-milestones button.is-current{border-color:rgba(207,86,132,.42);box-shadow:0 0 0 4px rgba(226,122,162,.07)}.rtm13-milestones button.is-current::after{content:"OPEN NOW";position:absolute;right:12px;top:12px;padding:5px 7px;border-radius:999px;background:#4b2637;color:white;font-size:.45rem;font-weight:900;letter-spacing:.1em}
+.rtm13-spm{margin-top:16px;padding:24px;border-radius:25px;background:linear-gradient(145deg,#fffaf5,#f2e5e2);border:1px solid rgba(95,55,54,.1)}.rtm13-spm[hidden]{display:none!important}.rtm13-spm-head{display:flex;justify-content:space-between;gap:16px}.rtm13-spm-head small{font-size:.55rem;font-weight:900;letter-spacing:.15em;color:#9b5969}.rtm13-spm h3{margin:4px 0 0;font:700 clamp(2.4rem,5vw,4.2rem)/.9 "Cormorant Garamond",serif}.rtm13-spm-head>strong{font:700 2.2rem/1 "Cormorant Garamond",serif}.rtm13-spm>p{color:#806365}.rtm13-spm-next{margin-top:16px;padding:18px;border-radius:19px;background:#4b2a34;color:#fff}.rtm13-spm-next small{display:block;font-size:.52rem;letter-spacing:.14em;color:#e8b8c8}.rtm13-spm-next strong{display:block;margin-top:3px;font:700 1.9rem/1 "Cormorant Garamond",serif}.rtm13-spm-next span{display:block;margin-top:5px;font-size:.68rem;color:#f0cfda}.rtm13-spm-next p{margin:10px 0 0;padding-top:10px;border-top:1px solid rgba(255,255,255,.12);font-size:.7rem;color:#ebccd6}.rtm13-subjects{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:10px}.rtm13-subjects div{padding:11px 12px;border-radius:14px;background:rgba(255,255,255,.75);font-size:.66rem}.rtm13-subjects b{display:block}.rtm13-subjects span{display:block;margin-top:3px;color:#98777d;font-size:.56rem}.rtm13-subjects .done{opacity:.5}
+.rtm13-modal{position:fixed;inset:0;z-index:50000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(27,13,20,.78);backdrop-filter:blur(16px)}.rtm13-modal[hidden]{display:none!important}.rtm13-modal-card{position:relative;width:min(720px,100%);max-height:90vh;overflow:auto;padding:clamp(24px,5vw,46px);border-radius:30px;background:linear-gradient(145deg,#fff9fb,#f4e0e9);color:#4b2637;box-shadow:0 30px 110px rgba(24,10,17,.45)}.rtm13-close{position:absolute;right:17px;top:17px;width:40px;height:40px;border:0;border-radius:50%;background:#4b2637;color:white;font-size:1.2rem;cursor:pointer}.rtm13-modal-card small{font-size:.58rem;font-weight:900;letter-spacing:.16em;color:#a95073}.rtm13-modal-card h3{margin:7px 0 10px;font:700 clamp(3rem,8vw,5.4rem)/.88 "Cormorant Garamond",serif;letter-spacing:-.03em}.rtm13-modal-card p{color:#80616f;line-height:1.7}.rtm13-signal-button{width:100%;margin-top:18px;padding:18px;border:0;border-radius:20px;background:#4b2637;color:white;text-align:left;cursor:pointer}.rtm13-signal-button b{display:block;font:700 1.45rem/1 "Cormorant Garamond",serif}.rtm13-secret{margin-top:12px;padding:20px;border-radius:20px;background:#fff;border:1px solid rgba(85,40,58,.1)}.rtm13-secret[hidden]{display:none!important}.rtm13-secret>strong{display:block;margin:4px 0 10px;font:700 clamp(2.7rem,8vw,4.8rem)/.9 "Cormorant Garamond",serif}.rtm13-lockdate{margin-top:18px;padding:18px;border-radius:18px;background:#fff}.rtm13-lockdate strong{display:block;margin-top:4px;font:700 1.6rem/1 "Cormorant Garamond",serif}.rtm13-question{padding:20px;border-radius:20px;background:#4b2637;color:white}.rtm13-question h4{margin:0;font:700 2.4rem/1 "Cormorant Garamond",serif}.rtm13-question p{color:#edccd8}.rtm13-answers{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:14px}.rtm13-answers button{padding:12px;border:1px solid rgba(255,255,255,.15);border-radius:14px;background:rgba(255,255,255,.08);color:white;font-weight:800;cursor:pointer}.rtm13-answers button:first-child{background:#e47da4;border-color:#e47da4}
+@keyframes rtm13pulse{to{opacity:.45;transform:scale(.8)}}@keyframes rtm13sec{0%{opacity:.65;transform:translateY(-2px)}25%,100%{opacity:1;transform:none}}@keyframes rtm13spin{to{transform:rotate(360deg)}}
+@media(max-width:800px){.rtm13-head{grid-template-columns:1fr}.rtm13-bigclock{grid-template-columns:repeat(2,1fr)}.rtm13-milestones{display:flex;overflow:auto;scroll-snap-type:x mandatory}.rtm13-milestones button{flex:0 0 72vw;scroll-snap-align:start}.rtm13-subjects{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.rtm13-section{width:calc(100% - 20px);padding:20px 14px;border-radius:25px}.rtm13-now-card{grid-template-columns:50px 1fr}.rtm13-now-icon{width:50px;height:50px}.rtm13-now-card button{grid-column:1/-1;width:100%}.rtm13-cover{padding:14px}.rtm13-cover-foot em{display:none}.rtm13-bigclock div{padding:15px 8px}.rtm13-answers{grid-template-columns:1fr}}
+</style>
+
 </head>
 <body>
 
@@ -65,10 +82,72 @@
             <p class="landing-kicker">YANNIE WORLD</p>
             <h1>Hasrieyannie<br>Iman Delaila</h1>
             <p class="landing-welcome">Welcome to your very own website, my dearest cintaa hati!</p>
+
+            <button class="rtm13-cover" id="rtm13Cover" type="button" onclick="RTM13.openToday()" aria-label="Open Road to Midnight">
+                <span class="rtm13-cover-top"><b>ROAD TO MIDNIGHT ✦</b><em>01 · 01 · 2027</em></span>
+                <span class="rtm13-cover-clock" aria-live="polite">
+                    <span><strong data-rtm13="days">---</strong><small>DAYS</small></span>
+                    <span><strong data-rtm13="hours">--</strong><small>HRS</small></span>
+                    <span><strong data-rtm13="minutes">--</strong><small>MIN</small></span>
+                    <span><strong data-rtm13="seconds">--</strong><small>SEC</small></span>
+                </span>
+                <span class="rtm13-cover-foot"><i></i><b id="rtm13CoverStatus">ACT I · THE MYSTERY</b><em>tap to open today’s signal →</em></span>
+            </button>
         </div>
+
     </div>
 
+    <!-- ROAD TO MIDNIGHT 1.3 — self-contained, independent from script.js -->
+    <section class="rtm13-section" id="rtm13Section" data-build="1.3">
+        <div class="rtm13-head">
+            <div>
+                <p class="rtm13-kicker" id="rtm13Kicker">ROAD TO MIDNIGHT ✦</p>
+                <h2 id="rtm13Title">Something has started.</h2>
+                <p id="rtm13Body">Yannie World has a destination now. For today, it is only willing to show you the first signal.</p>
+            </div>
+            <div class="rtm13-progress-card">
+                <div><span id="rtm13Act">ACT I · THE MYSTERY</span><strong id="rtm13Pct">0%</strong></div>
+                <div class="rtm13-track"><i id="rtm13Fill"></i></div>
+                <p><span id="rtm13Day">DAY 1</span><span id="rtm13Next">NEXT CHANGE · 01 OCT</span></p>
+            </div>
+        </div>
+
+        <div class="rtm13-bigclock" aria-label="Live countdown to January 1 2027">
+            <div><strong data-rtm13="days">---</strong><span>DAYS</span></div>
+            <div><strong data-rtm13="hours">--</strong><span>HOURS</span></div>
+            <div><strong data-rtm13="minutes">--</strong><span>MINUTES</span></div>
+            <div><strong data-rtm13="seconds">--</strong><span>SECONDS</span></div>
+        </div>
+        <p class="rtm13-target">LIVE · 01 JANUARY 2027 · 12:00 AM MYT</p>
+
+        <div class="rtm13-now-card">
+            <div class="rtm13-now-icon">✦</div>
+            <div><small>AVAILABLE TODAY</small><strong id="rtm13NowTitle">Signal 01</strong><p id="rtm13NowText">The first clue is already here. The rest arrives with time.</p></div>
+            <button type="button" onclick="RTM13.openToday()">OPEN</button>
+        </div>
+
+        <div class="rtm13-milestones" aria-label="Road to Midnight acts">
+            <button type="button" data-rtm13-date="2026-09-14T00:00:00+08:00" data-rtm13-key="sep" onclick="RTM13.openMilestone(this)"><small>SEP</small><strong>The Mystery</strong><span>One date appears.</span></button>
+            <button type="button" data-rtm13-date="2026-10-01T00:00:00+08:00" data-rtm13-key="oct" onclick="RTM13.openMilestone(this)"><small>OCT</small><strong>The Past</strong><span>How this started.</span></button>
+            <button type="button" data-rtm13-date="2026-11-01T00:00:00+08:00" data-rtm13-key="nov" onclick="RTM13.openMilestone(this)"><small>NOV</small><strong>The Present</strong><span>What became normal.</span></button>
+            <button type="button" data-rtm13-date="2026-12-17T00:00:00+08:00" data-rtm13-key="dec" onclick="RTM13.openMilestone(this)"><small>DEC</small><strong>The Future</strong><span>After SPM.</span></button>
+            <button type="button" data-rtm13-date="2027-01-01T00:00:00+08:00" data-rtm13-key="jan" onclick="RTM13.openMilestone(this)"><small>JAN</small><strong>Chapter Two</strong><span>Not written yet.</span></button>
+        </div>
+
+        <section class="rtm13-spm" id="rtm13Spm" hidden>
+            <div class="rtm13-spm-head"><div><small>SPM ERA · 2026</small><h3 id="rtm13SpmTitle">One thing comes first.</h3></div><strong id="rtm13SpmPct">0%</strong></div>
+            <p id="rtm13SpmBody">Road to Midnight can wait. Finish this chapter first.</p>
+            <div class="rtm13-track"><i id="rtm13SpmFill"></i></div>
+            <div class="rtm13-spm-next"><small id="rtm13SpmLabel">NEXT PAPER</small><strong id="rtm13SpmSubject">Bahasa Melayu</strong><span id="rtm13SpmTime">23 Nov</span><p id="rtm13SpmCountdown">—</p></div>
+            <div class="rtm13-subjects" id="rtm13Subjects"></div>
+        </section>
+    </section>
+
     <!-- EDITORIAL CURRENT CHAPTER — added without replacing existing home content -->
+    <!-- ROAD TO MIDNIGHT / SPM SEASON — 2026 seasonal layer -->
+
+
+
     <div class="editorial-current" id="editorialCurrent">
         <div class="editorial-current-copy">
             <p class="editorial-overline">CURRENT CHAPTER</p>
@@ -93,6 +172,8 @@
             </div>
         </div>
     </div>
+
+
 
     <div class="room-directory" id="roomDirectory">
         <div class="room-directory-heading">
@@ -1022,6 +1103,103 @@
 
 <div id="achievementToast" class="achievement-toast"></div>
 
-<script src="script.js?v=personal-3"></script>
+<script src="script.js?v=rtm-1-3"></script>
+
+
+<div class="rtm13-modal" id="rtm13Modal" hidden>
+    <div class="rtm13-modal-card" role="dialog" aria-modal="true" aria-labelledby="rtm13ModalTitle">
+        <button class="rtm13-close" type="button" onclick="RTM13.close()" aria-label="Close">×</button>
+        <div id="rtm13ModalBody"></div>
+    </div>
+</div>
+
+
+<script id="rtm13-inline-script">
+(() => {
+  const T = {
+    start: new Date('2026-09-14T00:00:00+08:00'),
+    oct: new Date('2026-10-01T00:00:00+08:00'),
+    nov: new Date('2026-11-01T00:00:00+08:00'),
+    spmPrelude: new Date('2026-11-09T00:00:00+08:00'),
+    spmStart: new Date('2026-11-23T00:00:00+08:00'),
+    spmEnd: new Date('2026-12-16T17:00:00+08:00'),
+    finalAct: new Date('2026-12-17T00:00:00+08:00'),
+    finalDay: new Date('2026-12-31T00:00:00+08:00'),
+    midnight: new Date('2027-01-01T00:00:00+08:00')
+  };
+  const papers = [
+    ['Bahasa Melayu','23 NOV','2026-11-23T09:00:00+08:00','2026-11-23T17:00:00+08:00'],
+    ['English','24 NOV','2026-11-24T09:00:00+08:00','2026-11-24T16:00:00+08:00'],
+    ['Pendidikan Islam','25 NOV','2026-11-25T08:15:00+08:00','2026-11-25T10:45:00+08:00'],
+    ['Mathematics','26 NOV','2026-11-26T08:15:00+08:00','2026-11-26T13:15:00+08:00'],
+    ['Sejarah','30 NOV','2026-11-30T08:15:00+08:00','2026-11-30T13:00:00+08:00'],
+    ['Tasawwur Islam','30 NOV','2026-11-30T14:30:00+08:00','2026-11-30T17:00:00+08:00'],
+    ['Sains','03 DEC','2026-12-03T08:15:00+08:00','2026-12-03T13:00:00+08:00'],
+    ['Ekonomi','07 DEC','2026-12-07T08:15:00+08:00','2026-12-07T13:00:00+08:00'],
+    ['Geografi','16 DEC','2026-12-16T11:45:00+08:00','2026-12-16T17:00:00+08:00']
+  ].map(x=>({subject:x[0],label:x[1],start:new Date(x[2]),end:new Date(x[3])}));
+  const reveals = {
+    sep:{kicker:'ACT I · THE MYSTERY',title:'Signal 01',body:'A date has appeared inside Yannie World. Today, that is all the website is willing to explain.'},
+    oct:{kicker:'ACT II · THE PAST',title:'How this started.',body:'October begins opening the older chapters — not all at once, but enough to see how a normal conversation slowly became something worth keeping.'},
+    nov:{kicker:'ACT III · THE PRESENT',title:'What became normal.',body:'November shifts away from firsts and toward the ordinary things that quietly became part of both routines.'},
+    dec:{kicker:'FINAL ACT',title:'The Future.',body:'SPM is over. The thing that stayed quiet for five weeks is back, and now the remaining doors begin opening quickly.'},
+    jan:{kicker:'01 · 01 · 2027',title:'Chapter Two.',body:'This part cannot be written ahead of time.'}
+  };
+  const $=id=>document.getElementById(id);
+  const pad=n=>String(n).padStart(2,'0');
+  const diff=(to,now=new Date())=>{let ms=Math.max(0,to-now);return{days:Math.floor(ms/86400000),hours:Math.floor(ms/3600000)%24,minutes:Math.floor(ms/60000)%60,seconds:Math.floor(ms/1000)%60}};
+  const pct=(now,a,b)=>Math.max(0,Math.min(100,((now-a)/(b-a))*100));
+  const fmt=d=>new Intl.DateTimeFormat('en-MY',{day:'2-digit',month:'long',year:'numeric',timeZone:'Asia/Kuala_Lumpur'}).format(d);
+  const duration=ms=>{const d=Math.max(0,Math.floor(ms/86400000)),h=Math.floor(ms/3600000)%24,m=Math.floor(ms/60000)%60;return `${d}d ${pad(h)}h ${pad(m)}m`;};
+  function phase(now){
+    if(now>=T.midnight)return{act:'CHAPTER TWO',title:'The countdown reached zero.',body:'The rest is not something this website gets to decide on its own.',next:'NOW',now:'The Question'};
+    if(now>=T.finalDay)return{act:'FINAL NIGHT',title:'Tonight.',body:'The last door is waiting for midnight.',next:'MIDNIGHT',now:'Midnight Room'};
+    if(now>=T.finalAct)return{act:'FINAL ACT · THE FUTURE',title:'It came back.',body:'SPM is finished. There are only days left now.',next:'01 JAN',now:'Midnight Room'};
+    if(now>=T.spmPrelude)return{act:'SPM ERA · 2026',title:'One thing comes first.',body:'Road to Midnight stays quiet while Yannie finishes SPM.',next:now<T.spmStart?'23 NOV':'16 DEC',now:'SPM HQ'};
+    if(now>=T.nov)return{act:'ACT III · THE PRESENT',title:'What became normal.',body:'The story is moving from first memories toward the little things that became ordinary.',next:'09 NOV',now:'The Present'};
+    if(now>=T.oct)return{act:'ACT II · THE PAST',title:'Look backwards.',body:'October begins opening the pieces that explain how this started.',next:'01 NOV',now:'The Past'};
+    return{act:'ACT I · THE MYSTERY',title:'Something has started.',body:'Yannie World has a destination now. For today, it is only willing to show you the first signal.',next:'01 OCT',now:'Signal 01'};
+  }
+  function render(){
+    const now=new Date(),p=diff(T.midnight,now),ph=phase(now);
+    document.querySelectorAll('[data-rtm13="days"]').forEach(e=>e.textContent=p.days);
+    document.querySelectorAll('[data-rtm13="hours"]').forEach(e=>e.textContent=pad(p.hours));
+    document.querySelectorAll('[data-rtm13="minutes"]').forEach(e=>e.textContent=pad(p.minutes));
+    document.querySelectorAll('[data-rtm13="seconds"]').forEach(e=>e.textContent=pad(p.seconds));
+    $('rtm13CoverStatus').textContent=ph.act;$('rtm13Kicker').textContent=now>=T.spmPrelude&&now<T.finalAct?'SPM ERA · 2026':'ROAD TO MIDNIGHT ✦';$('rtm13Title').textContent=ph.title;$('rtm13Body').textContent=ph.body;$('rtm13Act').textContent=ph.act;$('rtm13Next').textContent=`NEXT CHANGE · ${ph.next}`;$('rtm13NowTitle').textContent=ph.now;
+    const progress=now>=T.midnight?100:pct(now,T.start,T.midnight);$('rtm13Pct').textContent=`${Math.round(progress)}%`;$('rtm13Fill').style.width=`${progress}%`;const day=Math.max(1,Math.floor((now-T.start)/86400000)+1);$('rtm13Day').textContent=`DAY ${day}`;
+    document.querySelectorAll('[data-rtm13-date]').forEach(btn=>{const at=new Date(btn.dataset.rtm13Date);btn.classList.toggle('is-locked',now<at);btn.classList.remove('is-current');});
+    const cards=[...document.querySelectorAll('[data-rtm13-date]')];for(let i=cards.length-1;i>=0;i--){if(now>=new Date(cards[i].dataset.rtm13Date)){cards[i].classList.add('is-current');break;}}
+    renderSPM(now);
+  }
+  function renderSPM(now){
+    const box=$('rtm13Spm'),visible=now>=T.spmPrelude&&now<T.finalAct;box.hidden=!visible;if(!visible)return;
+    const pre=now<T.spmStart,done=now>=T.spmEnd,progress=pre?0:done?100:pct(now,T.spmStart,T.spmEnd);$('rtm13SpmPct').textContent=`${Math.round(progress)}%`;$('rtm13SpmFill').style.width=`${progress}%`;$('rtm13SpmTitle').textContent=pre?'Two weeks to settle in.':done?'SPM: complete.':'Yannie’s SPM Era';
+    const next=papers.find(x=>now<x.end);if(next){$('rtm13SpmSubject').textContent=next.subject;$('rtm13SpmTime').textContent=next.label;$('rtm13SpmCountdown').textContent=now>=next.start?'This paper block is happening now.':`Starts in ${duration(next.start-now)}`;}else{$('rtm13SpmSubject').textContent='All nine subjects finished';$('rtm13SpmTime').textContent='16 DEC · 5:00 PM';$('rtm13SpmCountdown').textContent='100%. Close the SPM chapter.';}
+    $('rtm13Subjects').innerHTML=papers.map(x=>`<div class="${now>=x.end?'done':''}"><b>${x.subject}</b><span>${x.label}${now>=x.end?' · finished':''}</span></div>`).join('');
+  }
+  function openModal(content){$('rtm13ModalBody').innerHTML=content;$('rtm13Modal').hidden=false;document.body.style.overflow='hidden';}
+  function close(){$('rtm13Modal').hidden=true;document.body.style.overflow='';}
+  function openToday(){
+    const now=new Date();
+    if(now<T.oct){
+      const p=diff(T.midnight,now);openModal(`<small>ACT I · THE MYSTERY</small><h3 id="rtm13ModalTitle">Signal 01</h3><p>A new date has appeared inside Yannie World. Today, that is all the website is willing to admit.</p><button class="rtm13-signal-button" type="button" onclick="RTM13.revealSignal()"><b>✦ Reveal the first signal</b><span>tap once</span></button><div class="rtm13-secret" id="rtm13Secret" hidden><small>DESTINATION FOUND</small><strong>01 · 01 · 2027</strong><p>Yannie World is no longer only an archive of things that already happened. Something here is being built for a day that has not happened yet.</p><div class="rtm13-lockdate"><small>NEXT TRANSMISSION</small><strong>01 OCTOBER</strong><span>${p.days} days remain until midnight.</span></div></div>`);return;
+    }
+    if(now>=T.spmPrelude&&now<T.finalAct){$('rtm13Spm').scrollIntoView({behavior:'smooth',block:'center'});return;}
+    const key=now>=T.finalAct?'dec':now>=T.nov?'nov':'oct';openReveal(key);
+  }
+  function revealSignal(){const s=$('rtm13Secret');if(s)s.hidden=false;}
+  function openReveal(key){const r=reveals[key];if(!r)return;openModal(`<small>${r.kicker}</small><h3 id="rtm13ModalTitle">${r.title}</h3><p>${r.body}</p>${key==='jan'&&new Date()>=T.midnight?questionHTML():''}`);}
+  function questionHTML(){return `<div class="rtm13-question"><small>THE QUESTION</small><h4>Would you be my girlfriend?</h4><p>Whatever your answer is, it should be your answer. There is no pressure from a website.</p><div class="rtm13-answers"><button type="button" onclick="RTM13.answer('yes')">Yes ♡</button><button type="button" onclick="RTM13.answer('time')">I need a little time</button><button type="button" onclick="RTM13.answer('talk')">Let’s talk about it</button></div></div>`;}
+  function answer(v){try{localStorage.setItem('yannieRelationshipStatus',v)}catch(e){};openModal(`<small>01 · 01 · 2027</small><h3 id="rtm13ModalTitle">${v==='yes'?'Chapter Two begins here.':v==='time'?'Take your time.':'Then let’s talk.'}</h3><p>${v==='yes'?'The future pages are empty on purpose. They get filled by what actually happens next.':v==='time'?'There is no countdown on your answer.': 'The website can wait.'}</p>`);}
+  function openMilestone(btn){const now=new Date(),at=new Date(btn.dataset.rtm13Date),key=btn.dataset.rtm13Key;if(now<at){const p=diff(at,now);openModal(`<small>ROAD TO MIDNIGHT</small><h3 id="rtm13ModalTitle">Not yet.</h3><p>This part of the story is already here, but it is not supposed to open today.</p><div class="rtm13-lockdate"><small>UNLOCKS</small><strong>${fmt(at)}</strong><span>${p.days}d ${pad(p.hours)}h ${pad(p.minutes)}m</span></div>`);return;}if(key==='sep'&&now<T.oct){openToday();return;}openReveal(key);}
+  window.RTM13={openToday,openMilestone,revealSignal,close,answer};
+  $('rtm13Modal').addEventListener('click',e=>{if(e.target===$('rtm13Modal'))close();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('rtm13Modal').hidden)close();});
+  render();setInterval(render,1000);
+  console.info('Road to Midnight self-contained build 1.3 loaded');
+})();
+</script>
+
 </body>
 </html>

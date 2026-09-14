@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Hasrieyannie's Memory Gallery</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-particle-system-component@1.1.3/dist/aframe-particle-system-component.min.js"></script>
+
+  <style>
+    :root{
+      --rose:#ff78a9;
+      --rose-soft:#ffc0d6;
+      --cream:#fff5f8;
+      --ink:#160a10;
+      --panel:rgba(20,9,15,.72);
+      --line:rgba(255,255,255,.13);
+    }
+
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#080407;font-family:"DM Sans",sans-serif;touch-action:none}
+    button{font:inherit}
+
+    /* ---------- CINEMATIC ENTRY ---------- */
+    #entry{
+      position:fixed;inset:0;z-index:10000;
+      display:grid;place-items:center;
+      padding:max(24px,env(safe-area-inset-top)) 22px max(24px,env(safe-area-inset-bottom));
+      color:white;text-align:center;
+      background:#12080e;
+      transition:opacity .75s ease,visibility .75s ease;
+      overflow:hidden;
+    }
+    #entry::before{
+      content:"";position:absolute;inset:-7%;
+      background:
+        linear-gradient(180deg,rgba(9,4,7,.35),rgba(9,4,7,.86)),
+        linear-gradient(135deg,rgba(91,23,52,.36),rgba(12,6,10,.5)),
+        url("photos/special.jpg") center/cover no-repeat;
+      filter:blur(8px) saturate(.86);
+      transform:scale(1.08);
+      opacity:.6;
+    }
+    #entry::after{
+      content:"";position:absolute;inset:0;
+      background:radial-gradient(circle at 50% 35%,transparent 0 15%,rgba(9,4,7,.72) 72%);
+    }
+    #entry.hide{opacity:0;visibility:hidden;pointer-events:none}
+
+    .entry-card{position:relative;z-index:2;width:min(620px,100%);padding:clamp(26px,5vw,48px);border:1px solid rgba(255,255,255,.12);border-radius:30px;background:rgba(20,9,15,.62);box-shadow:0 32px 90px rgba(0,0,0,.38);backdrop-filter:blur(18px)}
+    .entry-kicker{margin:0 0 9px;color:var(--rose-soft);font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase}
+    .entry-card h1{margin:0;font:700 clamp(42px,9vw,74px)/.88 "Cormorant Garamond",serif;letter-spacing:-.04em}
+    .entry-card>p{margin:16px auto 0;max-width:440px;color:rgba(255,245,249,.78);font-size:14px;line-height:1.7}
+    .entry-rules{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:25px 0 27px}
+    .entry-rule{padding:13px 10px;border:1px solid rgba(255,255,255,.08);border-radius:16px;background:rgba(255,255,255,.05);color:rgba(255,247,250,.83);font-size:12px;line-height:1.35}
+    .entry-rule b{display:block;margin-bottom:4px;color:white;font-size:15px}
+    .enter-btn{border:0;border-radius:999px;padding:15px 30px;min-width:210px;background:linear-gradient(135deg,#ff7baa,#ff4c89);color:white;font-weight:700;cursor:pointer;box-shadow:0 16px 36px rgba(255,76,137,.24);transition:transform .18s ease,box-shadow .18s ease}
+    .enter-btn:active{transform:scale(.97)}
+    .entry-note{display:block;margin-top:13px;color:rgba(255,245,249,.48);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+
+    /* ---------- IN-GAME HUD ---------- */
+    #hud{position:fixed;inset:0;z-index:9998;display:none;pointer-events:none;color:white}
+    #hud.show{display:block}
+    .hud-top{position:absolute;top:max(14px,env(safe-area-inset-top));left:14px;right:14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .hud-group{display:flex;gap:8px;pointer-events:auto}
+    .hud-btn{border:1px solid var(--line);border-radius:999px;padding:10px 14px;background:var(--panel);color:#ffe8f1;font-weight:700;font-size:12px;backdrop-filter:blur(12px);cursor:pointer}
+    .hud-btn:active{transform:scale(.97)}
+    #floorLabel{padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(17,7,12,.58);backdrop-filter:blur(12px);color:rgba(255,245,249,.85);font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase}
+
+    .floor-nav{position:absolute;right:14px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;pointer-events:auto}
+    .floor-nav button{width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:rgba(18,8,13,.7);color:#ffd7e6;font-size:11px;font-weight:800;backdrop-filter:blur(10px);cursor:pointer}
+    .floor-nav button.active{background:#ff5f96;color:white;border-color:#ff8fb7;box-shadow:0 0 0 5px rgba(255,95,150,.12)}
+
+    #walkButton{position:absolute;left:50%;bottom:max(22px,env(safe-area-inset-bottom));transform:translateX(-50%);width:88px;height:88px;border-radius:50%;border:1px solid rgba(255,255,255,.15);background:rgba(20,9,15,.72);box-shadow:0 20px 50px rgba(0,0,0,.34);backdrop-filter:blur(12px);color:white;pointer-events:auto;display:grid;place-items:center;user-select:none;touch-action:none}
+    #walkButton::before{content:"↑";font-size:31px;line-height:1;font-weight:500;color:#ffc2d8}
+    #walkButton::after{content:"HOLD TO WALK";position:absolute;top:102%;white-space:nowrap;color:rgba(255,242,247,.6);font-size:9px;font-weight:700;letter-spacing:.12em}
+    #walkButton.walking{background:rgba(255,78,139,.82);box-shadow:0 0 0 8px rgba(255,78,139,.14),0 20px 50px rgba(0,0,0,.34)}
+
+    #reticle{position:absolute;left:50%;top:50%;width:8px;height:8px;transform:translate(-50%,-50%);border:1px solid rgba(255,255,255,.8);border-radius:50%;box-shadow:0 0 0 3px rgba(0,0,0,.2);opacity:.42;pointer-events:none}
+
+    /* ---------- PHOTO INSPECTOR ---------- */
+    #photoModal{position:fixed;inset:0;z-index:10020;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(7,3,5,.76);backdrop-filter:blur(16px)}
+    #photoModal.open{display:flex}
+    .photo-sheet{position:relative;width:min(560px,100%);max-height:92vh;padding:16px;border-radius:26px;background:#fff8fb;box-shadow:0 30px 90px rgba(0,0,0,.45);overflow:auto}
+    .photo-sheet img{display:block;width:100%;max-height:72vh;object-fit:contain;border-radius:18px;background:#160a10}
+    .photo-caption{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;padding:14px 5px 4px;color:#492633}
+    .photo-caption small{display:block;color:#a35e78;font-size:10px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+    .photo-caption strong{display:block;margin-top:3px;font:700 28px/1 "Cormorant Garamond",serif}
+    .close-photo{position:absolute;right:25px;top:25px;width:38px;height:38px;border:0;border-radius:50%;background:rgba(18,8,13,.75);color:white;font-size:18px;cursor:pointer}
+
+    /* ---------- LOADING / HELP ---------- */
+    #tip{position:absolute;left:50%;bottom:132px;transform:translateX(-50%);max-width:min(360px,calc(100vw - 40px));padding:10px 13px;border:1px solid rgba(255,255,255,.08);border-radius:14px;background:rgba(18,8,13,.6);color:rgba(255,243,248,.75);font-size:10px;line-height:1.5;text-align:center;opacity:0;transition:opacity .35s ease;pointer-events:none;backdrop-filter:blur(10px)}
+    #tip.show{opacity:1}
+
+    @media (max-width:640px){
+      .entry-card{border-radius:24px;padding:28px 18px}
+      .entry-rules{grid-template-columns:1fr;margin:20px 0}
+      .entry-rule{display:flex;align-items:center;gap:8px;text-align:left;padding:11px 13px}
+      .entry-rule b{display:inline;margin:0;min-width:62px;font-size:12px}
+      .hud-top{left:10px;right:10px}
+      .hud-btn{padding:9px 11px;font-size:10px}
+      #floorLabel{font-size:9px;padding:9px 10px}
+      .floor-nav{right:10px}
+      .floor-nav button{width:42px;height:42px}
+      #walkButton{width:78px;height:78px;bottom:max(20px,env(safe-area-inset-bottom))}
+      #walkButton::after{font-size:8px}
+      #reticle{display:none}
+    }
+  </style>
+
+  <script>
+    const IS_MOBILE = /Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent);
+    window.__museumMoving = false;
+    window.__museumFloor = 'ground';
+
+    AFRAME.registerComponent('museum-mover', {
+      schema: { speed: { default: 3.7 } },
+      tick: function (time, delta) {
+        if (!window.__museumMoving) return;
+        const cameraEl = this.el.querySelector('a-camera');
+        const camera = cameraEl && cameraEl.getObject3D('camera');
+        if (!camera) return;
+
+        const dir = new THREE.Vector3();
+        camera.getWorldDirection(dir);
+        dir.y = 0;
+        if (dir.lengthSq() < 0.001) return;
+        dir.normalize();
+
+        const current = this.el.object3D.position.clone();
+        const step = this.data.speed * Math.min(delta, 40) / 1000;
+        current.x += dir.x * step;
+        current.z += dir.z * step;
+
+        const r = Math.hypot(current.x, current.z);
+        const outer = 21.4;
+        if (r > outer) {
+          current.x *= outer / r;
+          current.z *= outer / r;
+        }
+
+        if (window.__museumFloor === 'upper') {
+          const rr = Math.hypot(current.x, current.z);
+          const inner = 10.6;
+          if (rr < inner) {
+            const safe = rr < 0.001 ? new THREE.Vector2(0, -inner) : new THREE.Vector2(current.x, current.z).normalize().multiplyScalar(inner);
+            current.x = safe.x;
+            current.z = safe.y;
+          }
+        }
+
+        this.el.object3D.position.x = current.x;
+        this.el.object3D.position.z = current.z;
+      }
+    });
+
+    AFRAME.registerComponent('memory-gallery', {
+      init: function () {
+        const scene = this.el;
+        const photoRadius = 17.4;
+        const wallRadius = 18.7;
+        const countPerFloor = 25;
+
+        // Circular wall panels. Separate boxes are cheaper and more reliable than complex curved geometry.
+        for (let floor = 0; floor < 2; floor++) {
+          const baseY = floor === 0 ? 2.9 : 10.9;
+          const wallY = floor === 0 ? 3.4 : 11.4;
+
+          for (let index = 0; index < countPerFloor; index++) {
+            const angle = index * Math.PI * 2 / countPerFloor;
+            const deg = angle * 180 / Math.PI;
+            const x = Math.cos(angle) * photoRadius;
+            const z = Math.sin(angle) * photoRadius;
+            const wx = Math.cos(angle) * wallRadius;
+            const wz = Math.sin(angle) * wallRadius;
+            const rotY = -90 - deg;
+            const photoNumber = floor * countPerFloor + index + 1;
+
+            const wall = document.createElement('a-box');
+            wall.setAttribute('position', `${wx} ${wallY} ${wz}`);
+            wall.setAttribute('rotation', `0 ${rotY} 0`);
+            wall.setAttribute('width', '4.85');
+            wall.setAttribute('height', '6.8');
+            wall.setAttribute('depth', '.28');
+            wall.setAttribute('material', 'color: #170b11; roughness: 0.92; metalness: 0.02');
+            scene.appendChild(wall);
+
+            const art = document.createElement('a-entity');
+            art.setAttribute('position', `${x} ${baseY} ${z}`);
+            art.setAttribute('rotation', `0 ${rotY} 0`);
+
+            const frame = document.createElement('a-box');
+            frame.setAttribute('width', '2.78');
+            frame.setAttribute('height', '2.78');
+            frame.setAttribute('depth', '.12');
+            frame.setAttribute('material', 'color: #c47f96; metalness: 0.38; roughness: 0.4');
+
+            const image = document.createElement('a-image');
+            image.setAttribute('position', '0 0 .075');
+            image.setAttribute('width', '2.38');
+            image.setAttribute('height', '2.38');
+            image.setAttribute('src', `photos/${photoNumber}.jpg`);
+            image.setAttribute('class', 'clickable memory-photo');
+            image.setAttribute('data-photo', `${photoNumber}`);
+            image.addEventListener('click', () => openPhoto(photoNumber));
+
+            art.appendChild(frame);
+            art.appendChild(image);
+            scene.appendChild(art);
+          }
+        }
+
+        // Art-deco columns, kept low-poly for mobile.
+        for (let i = 0; i < 8; i++) {
+          const angle = i * Math.PI * 2 / 8;
+          const x = Math.cos(angle) * 12.5;
+          const z = Math.sin(angle) * 12.5;
+
+          const lower = document.createElement('a-cylinder');
+          lower.setAttribute('position', `${x} 4 ${z}`);
+          lower.setAttribute('radius', '.22');
+          lower.setAttribute('height', '8');
+          lower.setAttribute('segments-radial', '8');
+          lower.setAttribute('material', 'color: #613244; metalness: .22; roughness: .55');
+          scene.appendChild(lower);
+
+          const upper = document.createElement('a-cylinder');
+          upper.setAttribute('position', `${x} 12 ${z}`);
+          upper.setAttribute('radius', '.22');
+          upper.setAttribute('height', '7.5');
+          upper.setAttribute('segments-radial', '8');
+          upper.setAttribute('material', 'color: #613244; metalness: .22; roughness: .55');
+          scene.appendChild(upper);
+        }
+      }
+    });
+
+    function startExperience(){
+      document.getElementById('entry').classList.add('hide');
+      document.getElementById('hud').classList.add('show');
+      const music = document.getElementById('bgMusic');
+      music.volume = .38;
+      const p = music.play();
+      if (p && p.catch) p.catch(()=>{});
+      showTip(IS_MOBILE ? 'You are inside the Ground Gallery. Swipe to look around and hold ↑ to walk.' : 'You are inside the Ground Gallery. Use WASD to walk, drag to look, and click a photograph.');
+    }
+
+    function toggleMusic(){
+      const music = document.getElementById('bgMusic');
+      const btn = document.getElementById('musicBtn');
+      if (music.paused) {
+        music.play().catch(()=>{});
+        btn.textContent = '♫ Music';
+      } else {
+        music.pause();
+        btn.textContent = '♫ Muted';
+      }
+    }
+
+    function setFloor(floor){
+      const rig = document.getElementById('rig');
+      const label = document.getElementById('floorLabel');
+      document.querySelectorAll('.floor-nav button').forEach(b => b.classList.toggle('active', b.dataset.floor === floor));
+
+      if (floor === 'ground') {
+        rig.setAttribute('position', '0 0 15.2');
+        rig.setAttribute('rotation', '0 0 0');
+        window.__museumFloor = 'ground';
+        label.textContent = 'Ground Gallery · 01–25';
+        showTip('Ground Gallery — memories 01 to 25.');
+      } else if (floor === 'upper') {
+        rig.setAttribute('position', '0 8 15.2');
+        rig.setAttribute('rotation', '0 0 0');
+        window.__museumFloor = 'upper';
+        label.textContent = 'Upper Gallery · 26–50';
+        showTip('Upper Gallery — memories 26 to 50.');
+      } else {
+        rig.setAttribute('position', '0 8 -13.8');
+        rig.setAttribute('rotation', '0 0 0');
+        window.__museumFloor = 'upper';
+        label.textContent = 'The Vault';
+        showTip('The Vault — one photo gets the room to itself.');
+      }
+    }
+
+    let tipTimer;
+    function showTip(text){
+      const tip = document.getElementById('tip');
+      tip.textContent = text;
+      tip.classList.add('show');
+      clearTimeout(tipTimer);
+      tipTimer = setTimeout(()=>tip.classList.remove('show'), 3300);
+    }
+
+    function openPhoto(number){
+      const modal = document.getElementById('photoModal');
+      document.getElementById('inspectImage').src = number === 'special' ? 'photos/special.jpg' : `photos/${number}.jpg`;
+      document.getElementById('inspectKicker').textContent = number === 'special' ? 'THE VAULT' : Number(number) <= 25 ? 'GROUND GALLERY' : 'UPPER GALLERY';
+      document.getElementById('inspectTitle').textContent = number === 'special' ? 'My Most Prized Possession' : `Memory ${String(number).padStart(2,'0')}`;
+      modal.classList.add('open');
+      window.__museumMoving = false;
+      document.getElementById('walkButton').classList.remove('walking');
+    }
+
+    function closePhoto(){
+      document.getElementById('photoModal').classList.remove('open');
+    }
+
+    window.addEventListener('DOMContentLoaded', ()=> {
+      const walk = document.getElementById('walkButton');
+      const beginWalk = e => {
+        e.preventDefault();
+        window.__museumMoving = true;
+        walk.classList.add('walking');
+      };
+      const stopWalk = () => {
+        window.__museumMoving = false;
+        walk.classList.remove('walking');
+      };
+
+      walk.addEventListener('pointerdown', beginWalk);
+      walk.addEventListener('pointerup', stopWalk);
+      walk.addEventListener('pointercancel', stopWalk);
+      walk.addEventListener('pointerleave', stopWalk);
+      window.addEventListener('pointerup', stopWalk);
+
+      document.getElementById('photoModal').addEventListener('click', e => {
+        if (e.target.id === 'photoModal') closePhoto();
+      });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && document.getElementById('photoModal').classList.contains('open')) closePhoto();
+      });
+
+      // Reduce particles substantially on phones.
+      const scene = document.querySelector('a-scene');
+      scene.addEventListener('loaded', () => {
+        const dust = document.getElementById('dust');
+        if (dust) {
+          dust.setAttribute('particle-system', `preset: dust; color: #ffb4cc, #ffffff; particleCount: ${IS_MOBILE ? 220 : 620}; size: ${IS_MOBILE ? .22 : .32}; maxAge: 5; velocityValue: 0 .08 0; velocitySpread: .12 .06 .12`);
+        }
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <audio id="bgMusic" loop src="music.mp3"></audio>
+
+  <div id="entry">
+    <div class="entry-card">
+      <p class="entry-kicker">HASRIEYANNIE · PRIVATE COLLECTION</p>
+      <h1>The Memory Gallery</h1>
+      <p>Fifty memories across two floors, with one final photograph kept in the vault.</p>
+
+      <div class="entry-rules">
+        <div class="entry-rule"><b>LOOK</b> swipe / drag</div>
+        <div class="entry-rule"><b>WALK</b> hold ↑ / WASD</div>
+        <div class="entry-rule"><b>INSPECT</b> tap a photo</div>
+      </div>
+
+      <button class="enter-btn" type="button" onclick="startExperience()">Enter the gallery</button>
+      <small class="entry-note">headphones recommended · mobile friendly</small>
+    </div>
+  </div>
+
+  <div id="hud">
+    <div class="hud-top">
+      <div class="hud-group">
+        <button class="hud-btn" type="button" onclick="window.location.href='../index.html'">← Yannie World</button>
+        <button class="hud-btn" id="musicBtn" type="button" onclick="toggleMusic()">♫ Music</button>
+      </div>
+      <div id="floorLabel">Ground Gallery · 01–25</div>
+    </div>
+
+    <div class="floor-nav" aria-label="Museum floor navigation">
+      <button type="button" class="active" data-floor="ground" onclick="setFloor('ground')">G</button>
+      <button type="button" data-floor="upper" onclick="setFloor('upper')">1</button>
+      <button type="button" data-floor="vault" onclick="setFloor('vault')">V</button>
+    </div>
+
+    <div id="reticle"></div>
+    <div id="walkButton" role="button" aria-label="Hold to walk forward"></div>
+    <div id="tip"></div>
+  </div>
+
+  <div id="photoModal">
+    <div class="photo-sheet">
+      <button class="close-photo" type="button" onclick="closePhoto()">×</button>
+      <img id="inspectImage" alt="Selected museum memory">
+      <div class="photo-caption">
+        <div>
+          <small id="inspectKicker">GROUND GALLERY</small>
+          <strong id="inspectTitle">Memory 01</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a-scene
+    memory-gallery
+    background="color: #0d070a"
+    fog="type: linear; color: #0d070a; near: 28; far: 58"
+    renderer="antialias: true; colorManagement: true; physicallyCorrectLights: false; precision: mediump"
+    loading-screen="dotsColor: #ff78a9; backgroundColor: #0d070a"
+    vr-mode-ui="enabled: false">
+
+    <!-- PLAYER -->
+    <a-entity id="rig" position="0 0 15.2" rotation="0 0 0" museum-mover>
+      <a-camera
+        position="0 1.65 0"
+        look-controls="touchEnabled: true; mouseEnabled: true; magicWindowTrackingEnabled: false"
+        wasd-controls="acceleration: 38"
+        cursor="rayOrigin: mouse; fuse: false"
+        raycaster="objects: .clickable; far: 30">
+      </a-camera>
+    </a-entity>
+
+    <!-- LIGHTING -->
+    <a-light type="ambient" color="#704052" intensity="0.95"></a-light>
+    <a-light type="point" position="0 6 0" color="#ffc1d7" intensity="0.95" distance="36"></a-light>
+    <a-light type="point" position="0 14 0" color="#ffdbea" intensity="0.62" distance="33"></a-light>
+    <a-light type="point" position="14 8 0" color="#ff89b3" intensity="0.28" distance="22"></a-light>
+    <a-light type="point" position="-14 8 0" color="#ff89b3" intensity="0.28" distance="22"></a-light>
+
+    <!-- SUBTLE DUST -->
+    <a-entity id="dust" position="0 9 0"></a-entity>
+
+    <!-- GROUND FLOOR -->
+    <a-cylinder position="0 -.08 0" radius="22.6" height=".16" segments-radial="48" material="color: #1b0e14; metalness: .12; roughness: .58"></a-cylinder>
+    <a-ring position="0 .02 0" rotation="-90 0 0" radius-inner="6.2" radius-outer="21.4" segments-theta="64" material="color: #24111a; metalness: .10; roughness: .55"></a-ring>
+    <a-ring position="0 .035 0" rotation="-90 0 0" radius-inner="12.3" radius-outer="13.1" segments-theta="64" material="color: #7f304f; roughness: .8"></a-ring>
+
+    <!-- Entrance carpet -->
+    <a-plane position="0 .045 18" rotation="-90 0 0" width="4" height="8.5" material="color: #762743; roughness: .88"></a-plane>
+
+    <!-- Central sculpture -->
+    <a-cylinder position="0 .55 0" radius="2.15" height="1.1" segments-radial="32" material="color: #321823; metalness: .2; roughness: .5"></a-cylinder>
+    <a-ring position="0 2.25 0" rotation="0 0 0" radius-inner="1.9" radius-outer="2.05" material="color: #d186a0; metalness: .55; roughness: .25" animation="property: rotation; to: 0 360 0; dur: 40000; loop: true; easing: linear"></a-ring>
+    <a-text value="Y" position="0 2.2 .03" align="center" color="#ffd6e5" scale="4 4 4" font="mozillavr"></a-text>
+
+    <!-- Ground benches -->
+    <a-box position="0 .5 8" width="5" height=".55" depth="1.35" material="color: #482230; roughness: .68"></a-box>
+    <a-box position="0 .5 -8" width="5" height=".55" depth="1.35" material="color: #482230; roughness: .68"></a-box>
+
+    <!-- UPPER FLOOR -->
+    <a-ring position="0 8 0" rotation="-90 0 0" radius-inner="9.7" radius-outer="22.1" segments-theta="64" material="color: #211018; metalness: .1; roughness: .55"></a-ring>
+    <a-ring position="0 8.04 0" rotation="-90 0 0" radius-inner="12.4" radius-outer="13.0" segments-theta="64" material="color: #733049; roughness: .78"></a-ring>
+
+    <!-- Glassy inner rail, intentionally translucent but not reflective-heavy -->
+    <a-cylinder position="0 8.8 0" radius="9.9" height="1.6" open-ended="true" segments-radial="48" material="color: #ddb6c6; transparent: true; opacity: .10; metalness: .15; roughness: .25; side: double"></a-cylinder>
+
+    <!-- Ceiling -->
+    <a-ring position="0 15.4 0" rotation="-90 0 0" radius-inner="3.4" radius-outer="22.3" segments-theta="64" material="color: #13090e; roughness: .82"></a-ring>
+    <a-sphere radius=".4" position="0 14.9 0" material="color: #fff1f6; shader: flat"></a-sphere>
+
+    <!-- FLOOR TITLES -->
+    <a-text value="THE MEMORY GALLERY" position="0 4.4 20.2" rotation="0 180 0" align="center" color="#ffd0e1" width="10"></a-text>
+    <a-text value="GROUND COLLECTION  01—25" position="0 3.7 20.2" rotation="0 180 0" align="center" color="#a96f83" width="7"></a-text>
+
+    <a-text value="UPPER COLLECTION  26—50" position="0 12 20.2" rotation="0 180 0" align="center" color="#ffd0e1" width="8"></a-text>
+
+    <!-- THE VAULT -->
+    <a-entity position="0 8 -20">
+      <a-box position="0 3 -2.9" width="10.5" height="6.7" depth=".34" material="color: #10070b; roughness: .92"></a-box>
+      <a-box position="-5.15 3 .4" width=".28" height="6.7" depth="6.5" material="color: #10070b; roughness: .92"></a-box>
+      <a-box position="5.15 3 .4" width=".28" height="6.7" depth="6.5" material="color: #10070b; roughness: .92"></a-box>
+      <a-box position="0 6.25 .4" width="10.5" height=".28" depth="6.5" material="color: #10070b; roughness: .92"></a-box>
+
+      <a-light type="spot" position="0 5.8 0" rotation="-25 0 0" angle="26" intensity="2.2" color="#ff9cbe" penumbra=".75" distance="12"></a-light>
+
+      <a-box position="0 3 -2.65" width="3.7" height="4.8" depth=".12" material="color: #c47f96; metalness: .5; roughness: .32"></a-box>
+      <a-image class="clickable" position="0 3 -2.56" width="3.28" height="4.35" src="photos/special.jpg" onclick="openPhoto('special')"></a-image>
+      <a-text value="THE VAULT" position="0 .5 -2.54" align="center" color="#c7869e" width="7"></a-text>
+      <a-text value="My Most Prized Possession" position="0 .04 -2.54" align="center" color="#ffe1ec" width="6"></a-text>
+    </a-entity>
+  </a-scene>
+</body>
+</html>

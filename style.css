@@ -2179,3 +2179,108 @@ body.tonight-mode .music-player{filter:saturate(.8) brightness(.86);}
 @media(prefers-reduced-motion:reduce){
   .editorial-current-photo img,.portal-room,.sidequest-card{transition:none !important;}
 }
+
+/* =========================================================
+   ROAD TO MIDNIGHT + SPM ERA — seasonal layer
+   ========================================================= */
+:root{
+  --midnight-ink:#3f2431;
+  --midnight-paper:#fff8fa;
+  --midnight-pink:#e47ea4;
+  --midnight-wine:#4b2637;
+  --midnight-night:#1d1219;
+}
+
+.seasonal-arc{
+  width:min(1180px,calc(100% - 40px));
+  margin:28px auto 56px;
+  position:relative;
+}
+.seasonal-hero{
+  display:grid;
+  grid-template-columns:minmax(0,1.2fr) minmax(320px,.8fr);
+  gap:18px;
+  padding:clamp(28px,5vw,58px);
+  border:1px solid rgba(90,47,66,.12);
+  border-radius:32px;
+  background:
+    radial-gradient(circle at 82% 18%,rgba(228,126,164,.18),transparent 28%),
+    linear-gradient(135deg,#fff9fb 0%,#f8e8ee 100%);
+  box-shadow:0 24px 80px rgba(69,34,49,.08);
+  overflow:hidden;
+}
+.seasonal-hero::after{
+  content:"✦";
+  position:absolute;
+  right:4%; top:2%;
+  font:700 clamp(90px,15vw,180px)/1 Georgia,serif;
+  color:rgba(180,82,119,.055);
+  pointer-events:none;
+}
+.seasonal-copy,.seasonal-progress-card{position:relative;z-index:1}
+.seasonal-kicker{margin:0 0 10px;font-size:.72rem;letter-spacing:.18em;font-weight:800;color:#a64c71}
+.seasonal-copy h2{margin:0;max-width:760px;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(3rem,6vw,6rem);line-height:.87;color:var(--midnight-wine);letter-spacing:-.04em}
+.seasonal-copy>p:not(.seasonal-kicker):not(.seasonal-date){max-width:650px;margin:20px 0 0;color:#80606d;line-height:1.72}
+.midnight-countdown{display:flex;gap:8px;margin:30px 0 10px;flex-wrap:wrap}
+.midnight-countdown div{min-width:88px;padding:13px 15px;border-radius:17px;background:rgba(255,255,255,.68);border:1px solid rgba(92,50,68,.10);backdrop-filter:blur(8px)}
+.midnight-countdown strong{display:block;font:700 clamp(1.65rem,3vw,2.5rem)/1 "Cormorant Garamond",Georgia,serif;color:#4d2939}
+.midnight-countdown span{display:block;margin-top:4px;font-size:.56rem;font-weight:800;letter-spacing:.16em;color:#a56a7f}
+.seasonal-date{margin:0!important;font-size:.68rem!important;letter-spacing:.13em;color:#9a7181!important;font-weight:700}
+.seasonal-progress-card{align-self:end;padding:22px;border-radius:24px;background:rgba(255,255,255,.62);border:1px solid rgba(83,42,59,.1);backdrop-filter:blur(12px)}
+.seasonal-progress-head,.seasonal-progress-meta{display:flex;justify-content:space-between;gap:12px;align-items:center}.seasonal-progress-head span{font-size:.66rem;font-weight:800;letter-spacing:.13em;color:#704354}.seasonal-progress-head strong{font-family:"Cormorant Garamond",serif;font-size:1.7rem;color:#4f2b3b}.seasonal-progress-track,.spm-progress-track{height:6px;border-radius:999px;background:rgba(90,43,62,.10);overflow:hidden;margin:14px 0 10px}.seasonal-progress-track i,.spm-progress-track i{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#ad4c73,#eb8db0);transition:width .7s ease}.seasonal-progress-meta{font-size:.66rem;color:#9a7080}
+.seasonal-room-button{width:100%;margin-top:18px;padding:14px 16px;border:0;border-radius:17px;background:#4b2637;color:#fff;display:flex;align-items:center;gap:13px;text-align:left;cursor:pointer}.seasonal-room-button>span:first-child{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1);font-size:1.2rem}.seasonal-room-button small,.seasonal-room-button strong{display:block}.seasonal-room-button small{font-size:.55rem;letter-spacing:.13em;color:#eabbd0}.seasonal-room-button strong{margin-top:2px;font-family:"Cormorant Garamond",serif;font-size:1.35rem}
+.seasonal-reveals{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}.seasonal-reveal{min-height:148px;padding:18px;border-radius:20px;border:1px solid rgba(81,43,59,.10);background:#fff9fb;color:#533040;transition:transform .25s ease,opacity .25s ease}.seasonal-reveal>span{font-size:.58rem;font-weight:900;letter-spacing:.15em;color:#b4587c}.seasonal-reveal strong{display:block;margin-top:12px;font-family:"Cormorant Garamond",serif;font-size:1.45rem}.seasonal-reveal p{margin:8px 0 0;font-size:.78rem;line-height:1.55;color:#876675}.seasonal-reveal.is-locked{filter:saturate(.4);opacity:.45}.seasonal-reveal.is-locked strong,.seasonal-reveal.is-locked p{visibility:hidden}.seasonal-reveal.is-locked::after{content:"LOCKED";display:block;margin-top:26px;font-size:.58rem;letter-spacing:.15em;font-weight:900;color:#9c7a88}
+
+.spm-hq{margin-top:14px;padding:clamp(24px,4vw,42px);border-radius:28px;background:linear-gradient(145deg,#fffaf7,#f5e8e5);border:1px solid rgba(95,56,54,.1);box-shadow:0 20px 55px rgba(65,36,38,.06)}
+.spm-hq[hidden]{display:none!important}.spm-hq-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}.spm-hq-head h3{margin:3px 0 0;font-family:"Cormorant Garamond",serif;font-size:clamp(2.4rem,5vw,4.4rem);line-height:.92;color:#4b3034}.spm-overall{text-align:right}.spm-overall strong{display:block;font-family:"Cormorant Garamond",serif;font-size:2.4rem;color:#7b3c50}.spm-overall span{font-size:.55rem;letter-spacing:.14em;font-weight:800;color:#9d7377}.spm-intro{max-width:720px;color:#806566;line-height:1.65}.spm-next-card{margin-top:18px;padding:20px;border-radius:20px;background:#4b2b34;color:#fff;display:grid;grid-template-columns:1fr auto;gap:3px 20px;align-items:end}.spm-next-card small{font-size:.56rem;letter-spacing:.15em;color:#e8bac8}.spm-next-card strong{font:700 2rem/1 "Cormorant Garamond",serif}.spm-next-card span{grid-column:2;grid-row:1/3;color:#f6d8e2;font-size:.8rem}.spm-next-card p{grid-column:1/-1;margin:10px 0 0;padding-top:10px;border-top:1px solid rgba(255,255,255,.12);font-size:.74rem;color:#edced9}.spm-subjects{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:12px}.spm-subject{display:grid;grid-template-columns:76px 1fr auto;gap:12px;align-items:center;padding:13px 14px;border-radius:16px;background:rgba(255,255,255,.68);border:1px solid rgba(83,49,54,.08)}.spm-subject time{font-size:.62rem;font-weight:900;letter-spacing:.07em;color:#9c5a6c}.spm-subject strong{font-size:.82rem;color:#54363c}.spm-subject span{font-size:.6rem;color:#997b80}.spm-subject.done{opacity:.52}.spm-subject.done span::before{content:"✓ ";color:#8a5364}.spm-subject.next{border-color:rgba(192,91,127,.45);box-shadow:0 0 0 3px rgba(192,91,127,.06)}.spm-support-row{margin-top:12px;display:flex;align-items:center;gap:12px}.spm-support-row button{border:0;border-radius:999px;padding:11px 15px;background:#e8c3cc;color:#603a45;font-weight:800;font-size:.7rem;cursor:pointer}.spm-support-row p{margin:0;color:#806366;font-size:.78rem}
+
+/* whole-site seasonal atmosphere */
+body.season-road:not(.tonight-mode){background:#fff9fb}
+body.season-road #website>nav button.active{box-shadow:inset 0 -2px 0 #b74f77}
+body.season-road .portal-room{border-color:rgba(166,76,113,.16)}
+body.season-spm-prelude .seasonal-hero,body.season-spm-active .seasonal-hero{background:linear-gradient(135deg,#fffaf6,#f3e7e4)}
+body.season-spm-active .portal-scene *,body.season-spm-active .editorial-current-photo img{animation-duration:0s!important}
+body.season-spm-active .seasonal-hero::after{content:"SPM";font-family:"Cormorant Garamond",serif;letter-spacing:-.07em}
+body.season-final-act:not(.tonight-mode),body.season-final-day:not(.tonight-mode){background:#24151d;color:#f8eaf0}
+body.season-final-act .seasonal-hero,body.season-final-day .seasonal-hero{background:radial-gradient(circle at 75% 15%,rgba(228,126,164,.2),transparent 27%),linear-gradient(145deg,#38212d,#1d1219);border-color:rgba(255,255,255,.08)}
+body.season-final-act .seasonal-copy h2,body.season-final-day .seasonal-copy h2{color:#fff5f8}body.season-final-act .seasonal-copy>p,body.season-final-day .seasonal-copy>p{color:#d7b8c5!important}body.season-final-act .midnight-countdown div,body.season-final-day .midnight-countdown div{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.08)}body.season-final-act .midnight-countdown strong,body.season-final-day .midnight-countdown strong{color:#fff}body.season-final-act .midnight-countdown span,body.season-final-day .midnight-countdown span{color:#d9aabd}.seasonal-final-pulse{animation:seasonalPulse 1.5s ease-in-out infinite alternate}@keyframes seasonalPulse{to{transform:scale(1.025);box-shadow:0 0 0 8px rgba(225,107,151,.08)}}
+
+.midnight-dock{position:fixed;right:18px;bottom:18px;z-index:8800;width:min(260px,calc(100vw - 36px));padding:12px 14px;border-radius:18px;background:rgba(62,32,45,.91);border:1px solid rgba(255,255,255,.12);color:#fff;box-shadow:0 14px 45px rgba(31,13,21,.2);backdrop-filter:blur(14px);cursor:pointer}.midnight-dock small{display:block;font-size:.52rem;letter-spacing:.15em;color:#e9b8cb}.midnight-dock strong{display:block;margin-top:2px;font:700 1.1rem/1.1 "Cormorant Garamond",serif}.midnight-dock span{display:block;margin-top:5px;font-size:.62rem;color:#e9ccd8}.midnight-dock.is-spm{background:rgba(81,52,55,.92)}
+
+@media(max-width:800px){
+  .seasonal-arc{width:calc(100% - 24px);margin:16px auto 42px}.seasonal-hero{grid-template-columns:1fr;padding:24px 18px;border-radius:25px}.seasonal-copy h2{font-size:clamp(3.1rem,14vw,5rem)}.midnight-countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.midnight-countdown div{min-width:0;padding:11px 8px}.midnight-countdown strong{font-size:1.75rem}.seasonal-reveals{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:4px}.seasonal-reveal{flex:0 0 76vw;scroll-snap-align:start}.spm-hq{padding:22px 16px}.spm-hq-head{display:block}.spm-overall{text-align:left;display:flex;align-items:baseline;gap:8px;margin-top:10px}.spm-subjects{grid-template-columns:1fr}.spm-next-card{grid-template-columns:1fr}.spm-next-card span{grid-column:1;grid-row:auto}.midnight-dock{right:12px;bottom:82px;width:220px}.mobile-editorial-dock~.midnight-dock{bottom:86px}
+}
+
+/* Midnight Room overlay */
+.midnight-overlay{position:fixed;inset:0;z-index:12000;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(24,13,20,.76);backdrop-filter:blur(18px)}
+.midnight-overlay.open{display:flex}.midnight-panel{position:relative;width:min(720px,100%);max-height:90vh;overflow:auto;padding:clamp(24px,5vw,48px);border-radius:30px;background:linear-gradient(145deg,#fff9fb,#f4e1e9);box-shadow:0 30px 100px rgba(27,12,20,.4);color:#4d2939}.midnight-close{position:absolute;right:18px;top:18px;width:40px;height:40px;border:0;border-radius:50%;background:#4c2938;color:#fff;font-size:1.2rem;cursor:pointer}.midnight-panel small{font-size:.6rem;letter-spacing:.16em;font-weight:900;color:#aa5878}.midnight-panel h3{margin:8px 0 0;font:700 clamp(2.8rem,7vw,5.6rem)/.9 "Cormorant Garamond",serif;letter-spacing:-.035em}.midnight-panel>p{color:#816371;line-height:1.7}.midnight-reveal-stack{display:grid;gap:8px;margin-top:20px}.midnight-reveal-line{padding:15px 16px;border-radius:16px;background:rgba(255,255,255,.62);border:1px solid rgba(83,44,60,.09)}.midnight-reveal-line strong{display:block;font-family:"Cormorant Garamond",serif;font-size:1.4rem}.midnight-reveal-line p{margin:5px 0 0;color:#836674;font-size:.78rem;line-height:1.55}.midnight-door{margin-top:18px;padding:18px;border-radius:20px;background:#442332;color:#fff;text-align:center}.midnight-door strong{display:block;font:700 2rem/1 "Cormorant Garamond",serif}.midnight-door span{display:block;margin-top:7px;font-size:.67rem;letter-spacing:.08em;color:#e8c5d2}.midnight-sequence{display:grid;gap:18px}.midnight-sequence .question{padding:22px;border-radius:22px;background:#4b2637;color:#fff}.midnight-sequence .question h4{margin:0;font:700 clamp(2.2rem,6vw,4rem)/.95 "Cormorant Garamond",serif}.midnight-sequence .question p{color:#eacbd7;line-height:1.65}.midnight-answer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}.midnight-answer-grid button{border:1px solid rgba(255,255,255,.14);border-radius:15px;padding:13px 10px;background:rgba(255,255,255,.08);color:#fff;font-weight:800;cursor:pointer}.midnight-answer-grid button:first-child{background:#e17da2;border-color:#e17da2}.midnight-response{margin-top:14px;padding:14px;border-radius:15px;background:rgba(255,255,255,.09);color:#f4dce6}.midnight-response[hidden]{display:none}.midnight-post-note{padding:18px;border-radius:18px;background:#fff;border:1px solid rgba(87,48,64,.09)}
+@media(max-width:640px){.midnight-panel{padding:28px 18px 22px}.midnight-answer-grid{grid-template-columns:1fr}.midnight-panel h3{font-size:3.3rem}}
+
+
+/* =========================================================
+   ROAD TO MIDNIGHT V1.1 — visible hero + interactive Act I
+   ========================================================= */
+.seasonal-arc{scroll-margin-top:24px}
+.seasonal-hero{position:relative;isolation:isolate}
+.midnight-countdown{position:relative}
+.midnight-countdown::before{content:"LIVE COUNTDOWN";position:absolute;left:0;top:-15px;font-size:.5rem;letter-spacing:.18em;font-weight:900;color:#b25b7e}
+.midnight-countdown strong{font-variant-numeric:tabular-nums}
+.midnight-countdown div:last-child strong{animation:rtmSecondBeat 1s ease-out infinite}
+@keyframes rtmSecondBeat{0%{transform:translateY(-1px);opacity:.72}22%,100%{transform:none;opacity:1}}
+.seasonal-reveal{cursor:pointer;position:relative;outline:none}
+.seasonal-reveal:hover,.seasonal-reveal:focus-visible{transform:translateY(-3px);box-shadow:0 14px 38px rgba(78,39,56,.10)}
+.seasonal-reveal.is-current{border-color:rgba(190,79,121,.35);box-shadow:0 0 0 4px rgba(228,126,164,.07)}
+.seasonal-reveal.is-current::before{content:"OPEN NOW";position:absolute;right:14px;top:14px;padding:5px 7px;border-radius:999px;background:#55283b;color:#fff;font-size:.48rem;font-weight:900;letter-spacing:.12em}
+.seasonal-reveal.is-locked::after{content:"LOCKED · TAP FOR DATE"}
+
+.act-one-signal>small,.locked-transmission>small{display:block;color:#ba6284;font-size:.6rem;font-weight:900;letter-spacing:.16em}
+.act-one-signal h3,.locked-transmission h3{margin:7px 0 10px;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(3rem,8vw,5rem);line-height:.9;color:#4b2637}
+.act-one-signal>p,.locked-transmission>p{max-width:600px;color:#846372;line-height:1.7}
+.signal-reveal-button{width:100%;margin:22px 0 16px;padding:18px;border:1px solid rgba(91,44,63,.13);border-radius:20px;background:linear-gradient(135deg,#52293b,#321d27);color:#fff;display:grid;grid-template-columns:46px 1fr;grid-template-rows:auto auto;text-align:left;column-gap:12px;cursor:pointer;box-shadow:0 14px 36px rgba(71,34,50,.14)}
+.signal-reveal-button>span{grid-row:1/3;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.09);font-size:1.35rem;animation:rtmSignalGlow 2.1s ease-in-out infinite alternate}
+.signal-reveal-button strong{align-self:end;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.45rem}.signal-reveal-button small{align-self:start;color:#e9b9cc;font-size:.56rem;letter-spacing:.12em;text-transform:uppercase}.signal-reveal-button.revealed{opacity:.7;cursor:default}
+@keyframes rtmSignalGlow{to{transform:rotate(18deg) scale(1.08);box-shadow:0 0 0 7px rgba(255,255,255,.05)}}
+.signal-secret{padding:24px;border-radius:22px;background:linear-gradient(145deg,#fff7fa,#f4dfe8);border:1px solid rgba(109,52,76,.11);opacity:0;transform:translateY(8px);transition:.45s ease}
+.signal-secret.show{opacity:1;transform:none}.signal-secret>span{display:block;font-size:.56rem;font-weight:900;letter-spacing:.16em;color:#a64d70}.signal-secret>strong{display:block;margin:6px 0 12px;font:700 clamp(2.6rem,8vw,5rem)/.9 "Cormorant Garamond",Georgia,serif;color:#4b2637;letter-spacing:-.03em}.signal-secret>p{max-width:620px;margin:0;color:#775764;line-height:1.65}.signal-mini-countdown{display:flex;align-items:baseline;gap:9px;margin-top:20px;padding-top:16px;border-top:1px solid rgba(85,40,58,.12)}.signal-mini-countdown b{font:700 2rem/1 "Cormorant Garamond",serif;color:#4b2637}.signal-mini-countdown span{font-size:.68rem;color:#96707f}.signal-mini-countdown em{margin-left:auto;font-style:normal;font-size:.7rem;font-weight:800;color:#af587a;font-variant-numeric:tabular-nums}
+.signal-next,.locked-date{margin-top:14px;padding:17px 18px;border-radius:18px;background:#fff9fb;border:1px solid rgba(91,45,64,.10)}.signal-next small,.locked-date span{display:block;font-size:.52rem;font-weight:900;letter-spacing:.15em;color:#aa5777}.signal-next strong,.locked-date strong{display:block;margin-top:4px;font-family:"Cormorant Garamond",serif;font-size:1.5rem;color:#4b2637}.signal-next span,.locked-date em{display:block;margin-top:3px;color:#8d6978;font-size:.7rem;font-style:normal}.locked-date em{margin-top:10px;font-weight:800;color:#b2597c;font-variant-numeric:tabular-nums}
+@media(max-width:740px){.seasonal-arc{margin-top:12px}.seasonal-hero{padding-top:34px}.midnight-countdown::before{top:-14px}.signal-mini-countdown{flex-wrap:wrap}.signal-mini-countdown em{width:100%;margin-left:0}}

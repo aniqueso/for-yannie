@@ -1131,6 +1131,7 @@ window.addEventListener("DOMContentLoaded",()=>{
     setupMakeoverInteractions();
     setupHomeWorld();
     setupEditorialV4();
+    setupRoadToMidnight();
     setupYannieDay();
     startDecorations();
     scheduleNotification();
@@ -1430,3 +1431,316 @@ function setupEditorialV4(){
     window.addEventListener("resize", editorialUpdatePastCover, {passive:true});
     document.addEventListener("keydown",e=>{ if(e.key === "Escape") editorialCloseMore(); });
 }
+
+/* =========================================================
+   ROAD TO MIDNIGHT + SPM ERA 2026
+   Malaysia time targets are encoded with +08:00 offsets.
+   ========================================================= */
+let rtmStarted = false;
+let rtmTickTimer = null;
+let rtmRenderTimer = null;
+
+const RTM = {
+    storyStart: new Date("2026-09-14T00:00:00+08:00"),
+    october: new Date("2026-10-01T00:00:00+08:00"),
+    november: new Date("2026-11-01T00:00:00+08:00"),
+    spmPrelude: new Date("2026-11-09T00:00:00+08:00"),
+    spmStart: new Date("2026-11-23T00:00:00+08:00"),
+    spmLastPaperEnd: new Date("2026-12-16T17:00:00+08:00"),
+    spmDayEnd: new Date("2026-12-17T00:00:00+08:00"),
+    finalAct: new Date("2026-12-17T00:00:00+08:00"),
+    christmasEve: new Date("2026-12-24T00:00:00+08:00"),
+    dec31: new Date("2026-12-31T00:00:00+08:00"),
+    midnight: new Date("2027-01-01T00:00:00+08:00")
+};
+
+const YANNIE_SPM = [
+    {key:"bm", date:"2026-11-23", label:"23 NOV", subject:"Bahasa Melayu", detail:"Mendengar 9:00 · K1 10:45 · K2 2:30", start:"2026-11-23T09:00:00+08:00", end:"2026-11-23T17:00:00+08:00"},
+    {key:"bi", date:"2026-11-24", label:"24 NOV", subject:"English", detail:"Listening 9:00 · Paper 1 11:00 · Paper 2 2:30", start:"2026-11-24T09:00:00+08:00", end:"2026-11-24T16:00:00+08:00"},
+    {key:"pi", date:"2026-11-25", label:"25 NOV", subject:"Pendidikan Islam", detail:"Kertas 1 · 8:15–10:45", start:"2026-11-25T08:15:00+08:00", end:"2026-11-25T10:45:00+08:00"},
+    {key:"math", date:"2026-11-26", label:"26 NOV", subject:"Matematik", detail:"K1 8:15 · K2 10:45", start:"2026-11-26T08:15:00+08:00", end:"2026-11-26T13:15:00+08:00"},
+    {key:"sej", date:"2026-11-30", label:"30 NOV", subject:"Sejarah", detail:"K1 8:15 · K2 10:30", start:"2026-11-30T08:15:00+08:00", end:"2026-11-30T13:00:00+08:00"},
+    {key:"tas", date:"2026-11-30", label:"30 NOV", subject:"Tasawwur Islam", detail:"2:30–5:00", start:"2026-11-30T14:30:00+08:00", end:"2026-11-30T17:00:00+08:00"},
+    {key:"sci", date:"2026-12-03", label:"03 DEC", subject:"Sains", detail:"K1 8:15 · K2 10:30", start:"2026-12-03T08:15:00+08:00", end:"2026-12-03T13:00:00+08:00"},
+    {key:"eko", date:"2026-12-07", label:"07 DEC", subject:"Ekonomi", detail:"K1 8:15 · K2 10:45", start:"2026-12-07T08:15:00+08:00", end:"2026-12-07T13:00:00+08:00"},
+    {key:"geo", date:"2026-12-16", label:"16 DEC", subject:"Geografi", detail:"K1 11:45 · K2 2:30", start:"2026-12-16T11:45:00+08:00", end:"2026-12-16T17:00:00+08:00"}
+].map(x=>({...x,startAt:new Date(x.start),endAt:new Date(x.end)}));
+
+const RTM_REVEALS = [
+    {at:new Date("2026-09-14T00:00:00+08:00"), title:"The Mystery", body:"One date. No explanation yet."},
+    {at:new Date("2026-10-01T00:00:00+08:00"), title:"The Past", body:"There was a point where this stopped being just another conversation."},
+    {at:new Date("2026-11-01T00:00:00+08:00"), title:"The Present", body:"Somewhere along the way, random updates and ordinary days became part of the story."},
+    {at:new Date("2026-12-17T00:00:00+08:00"), title:"The Future", body:"SPM is finished. There was something waiting here the whole time."},
+    {at:new Date("2026-12-20T00:00:00+08:00"), title:"How we started", body:"A customer, a conversation, and a story neither of us could have planned."},
+    {at:new Date("2026-12-23T00:00:00+08:00"), title:"How you became normal", body:"Calls, updates, tired days, stupid moments — the things that quietly became familiar."},
+    {at:new Date("2026-12-26T00:00:00+08:00"), title:"Why I made this", body:"Because the small things mattered enough that I wanted somewhere to keep them."},
+    {at:new Date("2026-12-28T00:00:00+08:00"), title:"One question left", body:"Everything else has already been said in pieces."}
+];
+
+const SPM_SUPPORT = [
+    "One paper at a time. You do not have to finish the whole month today.",
+    "Bad revision hour? Fine. Reset and do the next small thing.",
+    "Drink water. Yes, this website is reminding you.",
+    "You do not need to feel ready to start answering.",
+    "Finish the paper in front of you. Future papers can wait their turn.",
+    "Rest is part of preparation too.",
+    "Do one question. Then one more. That is enough momentum.",
+    "No dramatic all-nighter arc please 😭 sleep matters.",
+    "Whatever happened in the last paper stays in the last paper.",
+    "You are allowed to be tired and still keep going.",
+    "A hard paper is hard for everyone sitting it, not just you.",
+    "Read carefully first. Panic later. Preferably never.",
+    "Almost there. Do not mentally finish SPM before the final paper does.",
+    "The website will still be here after you finish. Focus on this first."
+];
+
+function rtmDiffParts(target, now=new Date()){
+    const ms=Math.max(0,target-now);
+    const total=Math.floor(ms/1000);
+    return {days:Math.floor(total/86400),hours:Math.floor((total%86400)/3600),minutes:Math.floor((total%3600)/60),seconds:total%60,ms};
+}
+function rtmPad(n){return String(n).padStart(2,"0")}
+function rtmPct(now,start,end){return Math.max(0,Math.min(100,((now-start)/(end-start))*100))}
+function rtmFormatDuration(ms){
+    if(ms<=0)return "now";
+    const t=Math.floor(ms/1000),d=Math.floor(t/86400),h=Math.floor((t%86400)/3600),m=Math.floor((t%3600)/60);
+    if(d>0)return `${d} day${d===1?"":"s"} · ${h} hr`;
+    if(h>0)return `${h} hr · ${m} min`;
+    return `${Math.max(1,m)} min`;
+}
+function rtmPhase(now){
+    if(now<RTM.october)return {cls:"season-road",act:"ACT I · THE MYSTERY",title:"Something is changing.",body:"Yannie World has a destination now. One date has appeared — but it is only the first signal.",next:"01 OCT",room:"SIGNAL 01",eyebrow:"NEW TODAY"};
+    if(now<RTM.november)return {cls:"season-road",act:"ACT II · THE PAST",title:"Before the next chapter, look backwards.",body:"October is about how ordinary moments slowly became part of Yannie World.",next:"01 NOV",room:"THE NEXT CHAPTER",eyebrow:"STILL SEALED"};
+    if(now<RTM.spmPrelude)return {cls:"season-road",act:"ACT III · THE PRESENT",title:"The things that became normal.",body:"Different routines, random updates, tired days — the present became its own kind of memory.",next:"09 NOV",room:"MIDNIGHT",eyebrow:"QUIETLY WAITING"};
+    if(now<RTM.spmStart)return {cls:"season-spm-prelude",act:"SPM PRELUDE",title:"A little detour.",body:"Before whatever comes next, something bigger comes first. Road to Midnight can wait.",next:"23 NOV",room:"MIDNIGHT",eyebrow:"PAUSED FOR SPM"};
+    if(now<RTM.spmLastPaperEnd)return {cls:"season-spm-active",act:"SPM ERA",title:"Finish this chapter first.",body:"The mystery is still here. It just knows when to be quiet.",next:"16 DEC",room:"01.01",eyebrow:"QUIETLY WAITING"};
+    if(now<RTM.spmDayEnd)return {cls:"season-spm-active",act:"SPM · 100%",title:"You’re done.",body:"Whatever the papers felt like, you made it through the whole thing. Close this chapter tonight.",next:"17 DEC",room:"ROAD TO MIDNIGHT",eyebrow:"RETURNS TOMORROW"};
+    if(now<RTM.dec31)return {cls:"season-final-act",act:"FINAL ACT · THE FUTURE",title:"There was something waiting for you.",body:"SPM is over. Road to Midnight is back — and suddenly it is very close.",next:"31 DEC",room:"MIDNIGHT",eyebrow:"THE ROOM IS OPEN"};
+    if(now<RTM.midnight)return {cls:"season-final-day",act:"FINAL ACT · TONIGHT",title:"Tonight.",body:"Everything that changed since September was leading here.",next:"00:00",room:"THE FINAL DOOR",eyebrow:"OPENS AT MIDNIGHT"};
+    return {cls:"season-post",act:"CHAPTER TWO",title:"The rest cannot be pre-written.",body:"Road to Midnight is finished. What comes next depends on real life, not a timer.",next:"NOW",room:"CHAPTER TWO",eyebrow:"01.01.2027 →"};
+}
+
+function rtmRenderCountdown(now){
+    const p=rtmDiffParts(RTM.midnight,now);
+    const ids={midnightDays:p.days,midnightHours:rtmPad(p.hours),midnightMinutes:rtmPad(p.minutes),midnightSeconds:rtmPad(p.seconds)};
+    Object.entries(ids).forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.textContent=val});
+}
+function rtmRenderReveals(now){
+    document.querySelectorAll(".seasonal-reveal[data-unlock]").forEach(card=>{
+        const unlockAt=new Date(card.dataset.unlock);
+        const open=now>=unlockAt;
+        card.classList.toggle("is-locked",!open);
+        card.classList.toggle("is-current",open && (!card.nextElementSibling || now<new Date(card.nextElementSibling.dataset.unlock || RTM.midnight)));
+        card.setAttribute("aria-label",open?`${card.querySelector("strong")?.textContent || "Road to Midnight"} — open`:`Locked until ${unlockAt.toLocaleDateString("en-MY",{day:"2-digit",month:"long",year:"numeric",timeZone:"Asia/Kuala_Lumpur"})}`);
+    });
+}
+function rtmRenderSPM(now){
+    const hq=document.getElementById("spmHQ");
+    if(!hq)return;
+    const visible=now>=RTM.spmPrelude && now<RTM.finalAct;
+    hq.hidden=!visible;
+    if(!visible)return;
+
+    const pre=now<RTM.spmStart;
+    const finished=now>=RTM.spmLastPaperEnd;
+    let pct=pre?0:rtmPct(now,RTM.spmStart,RTM.spmLastPaperEnd);
+    if(finished)pct=100;
+    document.getElementById("spmPercent").textContent=`${Math.round(pct)}%`;
+    document.getElementById("spmProgressFill").style.width=`${pct}%`;
+    document.getElementById("spmDayLabel").textContent=pre?"PREPARATION":finished?"COMPLETE":"EXAM JOURNEY";
+    document.getElementById("spmTitle").textContent=pre?"One thing comes first.":finished?"SPM: complete.":"Yannie's SPM Era";
+    document.getElementById("spmIntro").textContent=pre
+        ?"Two weeks to settle in, prepare, and make the website a little quieter. The speaking components are already behind you."
+        :finished
+            ?"Geografi was the final paper in this subject set. The Road to Midnight returns on 17 December."
+            :"No pressure from this website. Just the paper in front of you, then the next one.";
+
+    const next=YANNIE_SPM.find(e=>now<e.endAt);
+    const nextCard=document.getElementById("spmNextCard");
+    if(next){
+        const started=now>=next.startAt;
+        document.getElementById("spmNextSubject").textContent=next.subject;
+        document.getElementById("spmNextTime").textContent=`${next.label} · ${next.detail}`;
+        document.getElementById("spmNextCountdown").textContent=started?"This paper block is happening now. One thing at a time.":`Starts in ${rtmFormatDuration(next.startAt-now)}`;
+        nextCard?.classList.toggle("seasonal-final-pulse",started);
+    }else{
+        document.getElementById("spmNextSubject").textContent="All nine subjects finished";
+        document.getElementById("spmNextTime").textContent="16 DEC · 5:00 PM";
+        document.getElementById("spmNextCountdown").textContent="100%. Close the SPM chapter.";
+        nextCard?.classList.remove("seasonal-final-pulse");
+    }
+
+    const list=document.getElementById("spmSubjects");
+    if(list){
+        list.innerHTML=YANNIE_SPM.map(e=>{
+            const done=now>=e.endAt, isNext=next?.key===e.key;
+            return `<article class="spm-subject ${done?"done":""} ${isNext?"next":""}"><time>${e.label}</time><strong>${e.subject}</strong><span>${done?"finished":e.detail}</span></article>`;
+        }).join("");
+    }
+}
+function rtmSupportMessage(now){
+    const day=Math.max(0,Math.floor((now-RTM.spmPrelude)/86400000));
+    return SPM_SUPPORT[day%SPM_SUPPORT.length];
+}
+function rtmRender(now=new Date()){
+    const phase=rtmPhase(now);
+    document.body.classList.remove("season-road","season-spm-prelude","season-spm-active","season-final-act","season-final-day","season-post");
+    document.body.classList.add(phase.cls);
+    const set=(id,val)=>{const el=document.getElementById(id);if(el)el.textContent=val};
+    set("seasonalKicker",phase.cls.includes("spm")?"SPM ERA · 2026":"ROAD TO MIDNIGHT ✦");
+    set("seasonalTitle",phase.title);set("seasonalBody",phase.body);set("seasonalActLabel",phase.act);set("seasonalNextChange",`Next change · ${phase.next}`);set("seasonalRoomTitle",phase.room);set("seasonalRoomEyebrow",phase.eyebrow);
+
+    const pct=now>=RTM.midnight?100:rtmPct(now,RTM.storyStart,RTM.midnight);
+    set("seasonalProgressPct",`${Math.round(pct)}%`);
+    const fill=document.getElementById("seasonalProgressFill");if(fill)fill.style.width=`${pct}%`;
+    const lived=Math.max(1,Math.floor((now-RTM.storyStart)/86400000)+1);set("seasonalDaysLived",`Day ${lived}`);
+    rtmRenderCountdown(now);rtmRenderReveals(now);rtmRenderSPM(now);
+
+    const dock=document.getElementById("midnightDock");
+    if(dock){
+        const spm=now>=RTM.spmPrelude&&now<RTM.finalAct;
+        dock.classList.toggle("is-spm",spm);
+        const diff=spm && now<RTM.spmStart?rtmDiffParts(RTM.spmStart,now):rtmDiffParts(RTM.midnight,now);
+        dock.querySelector("small").textContent=spm?"SPM ERA":"ROAD TO MIDNIGHT ✦";
+        dock.querySelector("strong").textContent=spm?(now<RTM.spmStart?`${diff.days} days until written SPM`:now<RTM.spmLastPaperEnd?`${Math.round(rtmPct(now,RTM.spmStart,RTM.spmLastPaperEnd))}% through the exam era`:"SPM complete"):`${diff.days}d ${rtmPad(diff.hours)}h ${rtmPad(diff.minutes)}m`;
+        dock.querySelector("span").textContent=spm?"tap for SPM HQ":"01.01.2027 · tap to open";
+    }
+}
+function injectMidnightOverlay(){
+    if(document.getElementById("midnightOverlay"))return;
+    const wrap=document.createElement("div");
+    wrap.id="midnightOverlay";wrap.className="midnight-overlay";wrap.innerHTML=`
+      <div class="midnight-panel" role="dialog" aria-modal="true" aria-labelledby="midnightOverlayTitle">
+        <button type="button" class="midnight-close" aria-label="Close">×</button>
+        <div id="midnightOverlayBody"></div>
+      </div>`;
+    wrap.querySelector(".midnight-close")?.addEventListener("click",()=>wrap.classList.remove("open"));
+    wrap.addEventListener("click",e=>{if(e.target===wrap)wrap.classList.remove("open")});
+    document.body.appendChild(wrap);
+}
+function rtmSetRelationshipStatus(status){
+    localStorage.setItem("yannieRelationshipStatus",status);
+    const response=document.getElementById("midnightAnswerResponse");
+    if(!response)return;
+    response.hidden=false;
+    response.textContent=status==="together"?"Chapter Two begins here. No promises about what it looks like yet — we get to make that part for real.":status==="thinking"?"That’s okay. There isn’t a countdown on your answer. Take the time you need.":"Then let’s talk about it properly. The website can wait.";
+}
+function rtmFormatUnlockDate(date){
+    return new Intl.DateTimeFormat("en-MY",{day:"2-digit",month:"long",year:"numeric",timeZone:"Asia/Kuala_Lumpur"}).format(date).toUpperCase();
+}
+function renderActOneSignal(){
+    injectMidnightOverlay();
+    const overlay=document.getElementById("midnightOverlay"),body=document.getElementById("midnightOverlayBody");
+    if(!overlay||!body)return;
+    const p=rtmDiffParts(RTM.midnight,new Date());
+    body.innerHTML=`
+      <div class="act-one-signal">
+        <small>ACT I · THE MYSTERY</small>
+        <h3 id="midnightOverlayTitle">Signal 01</h3>
+        <p>A new date has appeared inside Yannie World. Today, that is all the website is willing to admit.</p>
+        <button type="button" class="signal-reveal-button" id="signalRevealButton"><span>✦</span><strong>Reveal the first signal</strong><small>tap once</small></button>
+        <div class="signal-secret" id="signalSecret" hidden>
+          <span>DESTINATION FOUND</span>
+          <strong>01 · 01 · 2027</strong>
+          <p>Yannie World is no longer only an archive of things that already happened. Something here is being built for a day that hasn't happened yet.</p>
+          <div class="signal-mini-countdown"><b>${p.days}</b><span>days remain</span><em>${rtmPad(p.hours)}:${rtmPad(p.minutes)}:${rtmPad(p.seconds)}</em></div>
+        </div>
+        <div class="signal-next"><small>NEXT TRANSMISSION</small><strong>01 OCTOBER</strong><span>The Past begins to unlock.</span></div>
+      </div>`;
+    body.querySelector("#signalRevealButton")?.addEventListener("click",()=>{
+        const secret=body.querySelector("#signalSecret"),btn=body.querySelector("#signalRevealButton");
+        if(secret){secret.hidden=false;requestAnimationFrame(()=>secret.classList.add("show"));}
+        if(btn){btn.disabled=true;btn.classList.add("revealed");btn.querySelector("strong").textContent="Signal revealed";}
+        try{localStorage.setItem("rtmSignal01Seen","1")}catch(e){}
+    });
+    if(localStorage.getItem("rtmSignal01Seen")==="1"){
+        const secret=body.querySelector("#signalSecret"),btn=body.querySelector("#signalRevealButton");
+        if(secret){secret.hidden=false;secret.classList.add("show");}
+        if(btn){btn.disabled=true;btn.classList.add("revealed");btn.querySelector("strong").textContent="Signal revealed";}
+    }
+    overlay.classList.add("open");
+}
+function renderLockedRevealCard(card){
+    injectMidnightOverlay();
+    const overlay=document.getElementById("midnightOverlay"),body=document.getElementById("midnightOverlayBody");
+    if(!overlay||!body)return;
+    const unlockAt=new Date(card.dataset.unlock);
+    const p=rtmDiffParts(unlockAt,new Date());
+    body.innerHTML=`<div class="locked-transmission"><small>ROAD TO MIDNIGHT</small><h3 id="midnightOverlayTitle">Not yet.</h3><p>This part of the story is already here, but it isn't supposed to open today.</p><div class="locked-date"><span>UNLOCKS</span><strong>${rtmFormatUnlockDate(unlockAt)}</strong><em>${p.days}d ${rtmPad(p.hours)}h ${rtmPad(p.minutes)}m</em></div></div>`;
+    overlay.classList.add("open");
+}
+function rtmOpenRevealCard(card){
+    const now=new Date(),unlockAt=new Date(card.dataset.unlock);
+    if(now<unlockAt){renderLockedRevealCard(card);return;}
+    if(unlockAt.getTime()===RTM.storyStart.getTime() && now<RTM.october){renderActOneSignal();return;}
+    renderMidnightOverlay(now);
+}
+function renderMidnightOverlay(now=new Date()){
+    injectMidnightOverlay();
+    const overlay=document.getElementById("midnightOverlay"),body=document.getElementById("midnightOverlayBody");
+    if(!overlay||!body)return;
+    const unlocked=RTM_REVEALS.filter(x=>now>=x.at);
+    const relationshipStatus=localStorage.getItem("yannieRelationshipStatus")||"waiting";
+    if(now<RTM.midnight){
+        const diff=rtmDiffParts(RTM.midnight,now);
+        body.innerHTML=`
+          <small>ROAD TO MIDNIGHT</small>
+          <h3 id="midnightOverlayTitle">${now<RTM.finalAct?"Still sealed.":"Midnight Room"}</h3>
+          <p>${now<RTM.spmPrelude?"Yannie World is revealing this story slowly. Nothing here needs to be rushed.":now<RTM.finalAct?"This room is quiet while SPM comes first.":"The final pieces are arriving. The last door still has a clock on it."}</p>
+          <div class="midnight-reveal-stack">${unlocked.map(x=>`<article class="midnight-reveal-line"><strong>${x.title}</strong><p>${x.body}</p></article>`).join("")}</div>
+          <div class="midnight-door"><small>FINAL DOOR</small><strong>${diff.days}d ${rtmPad(diff.hours)}:${rtmPad(diff.minutes)}:${rtmPad(diff.seconds)}</strong><span>01 JANUARY 2027 · 12:00 AM MYT</span></div>`;
+    }else{
+        body.innerHTML=`
+          <div class="midnight-sequence">
+            <div><small>01 · 01 · 2027</small><h3 id="midnightOverlayTitle">There was one thing left to say.</h3><p>Yannie World started as somewhere to keep memories. I don’t want it to only look backwards anymore.</p></div>
+            <div class="midnight-post-note"><strong>I want to make new memories with you too.</strong><p>Not because a countdown reached zero, but because everything before it made me want to ask properly.</p></div>
+            <div class="question"><small>THE QUESTION</small><h4>Would you be my girlfriend?</h4><p>Whatever your answer is, it should be your answer — not something a website tries to pressure out of you.</p>
+              <div class="midnight-answer-grid">
+                <button type="button" data-midnight-answer="together">Yes ♡</button>
+                <button type="button" data-midnight-answer="thinking">I need a little time</button>
+                <button type="button" data-midnight-answer="talk">Let’s talk about it</button>
+              </div>
+              <div class="midnight-response" id="midnightAnswerResponse" ${relationshipStatus==="waiting"?"hidden":""}>${relationshipStatus==="together"?"Chapter Two begins here. No promises about what it looks like yet — we get to make that part for real.":relationshipStatus==="thinking"?"That’s okay. There isn’t a countdown on your answer. Take the time you need.":relationshipStatus==="talk"?"Then let’s talk about it properly. The website can wait.":""}</div>
+            </div>
+          </div>`;
+        body.querySelectorAll("[data-midnight-answer]").forEach(btn=>btn.addEventListener("click",()=>rtmSetRelationshipStatus(btn.dataset.midnightAnswer)));
+    }
+    overlay.classList.add("open");
+}
+function rtmOpenSeasonalRoom(){
+    const now=new Date();
+    if(now<RTM.october){renderActOneSignal();return;}
+    if(now>=RTM.spmPrelude && now<RTM.finalAct){
+        document.getElementById("spmHQ")?.scrollIntoView({behavior:"smooth",block:"center"});
+        return;
+    }
+    renderMidnightOverlay(now);
+}
+function injectMidnightDock(){
+    if(document.getElementById("midnightDock"))return;
+    const d=document.createElement("button");d.type="button";d.id="midnightDock";d.className="midnight-dock";d.innerHTML="<small>ROAD TO MIDNIGHT ✦</small><strong>loading…</strong><span>01.01.2027</span>";d.addEventListener("click",()=>{
+        if(!document.getElementById("home")?.classList.contains("active"))showSection("home");
+        setTimeout(()=>document.getElementById("seasonalArc")?.scrollIntoView({behavior:"smooth",block:"start"}),100);
+    });document.body.appendChild(d);
+}
+function setupRoadToMidnight(){
+    if(rtmStarted||!document.getElementById("seasonalArc"))return;
+    rtmStarted=true;
+    injectMidnightDock();
+    injectMidnightOverlay();
+    const support=document.getElementById("spmSupportText");if(support)support.textContent=rtmSupportMessage(new Date());
+    document.getElementById("spmSupportButton")?.addEventListener("click",()=>{if(support)support.textContent=SPM_SUPPORT[Math.floor(Math.random()*SPM_SUPPORT.length)]});
+    document.getElementById("seasonalRoomButton")?.addEventListener("click",rtmOpenSeasonalRoom);
+    document.querySelectorAll(".seasonal-reveal[data-unlock]").forEach(card=>{
+        card.addEventListener("click",()=>rtmOpenRevealCard(card));
+        card.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();rtmOpenRevealCard(card);}});
+    });
+    rtmRender();
+    rtmTickTimer=setInterval(()=>rtmRenderCountdown(new Date()),1000);
+    rtmRenderTimer=setInterval(()=>rtmRender(new Date()),30000);
+}
+
+// Independent boot: Road to Midnight must still work even if an older Yannie World feature throws during startup.
+window.addEventListener("DOMContentLoaded",()=>{
+    try{setupRoadToMidnight();}catch(err){console.error("Road to Midnight startup failed",err);}
+});

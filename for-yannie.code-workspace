@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "for-yannie",
+			"path": "../../for-yannie"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "for-yannie"
+	}
+}
