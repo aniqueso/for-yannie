@@ -1,0 +1,13 @@
+{
+  "device": "laptop",
+  "activity": "Testing Yannie Live",
+  "category": "testing",
+  "detail": "First live update",
+  "battery": 77,
+  "charging": true,
+  "location_label": "Home",
+  "sharing": true,
+  "share_activity": true,
+  "share_battery": true,
+  "share_location": true
+}

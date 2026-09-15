@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#2a1420">
+  <title>Aniq Live · Yannie World</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --ink:#4d2b39;
+      --muted:#8d6f7c;
+      --paper:#fff8fa;
+      --blush:#f7dce6;
+      --rose:#e77fa4;
+      --rose-dark:#b65379;
+      --wine:#2a1420;
+      --line:rgba(91,48,65,.13);
+      --shadow:0 24px 70px rgba(78,35,54,.12);
+    }
+
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html{background:var(--paper)}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family:"DM Sans",sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at 15% 0%,rgba(231,127,164,.16),transparent 30rem),
+        radial-gradient(circle at 100% 24%,rgba(247,220,230,.86),transparent 34rem),
+        var(--paper);
+    }
+
+    button,input{font:inherit}
+    button{cursor:pointer}
+
+    .shell{
+      width:min(1060px,calc(100% - 28px));
+      margin:auto;
+      padding:18px 0 52px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:14px;
+    }
+
+    .btn{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.76);
+      color:var(--ink);
+      border-radius:999px;
+      padding:10px 14px;
+      text-decoration:none;
+      font-size:11px;
+      font-weight:800;
+      backdrop-filter:blur(12px);
+    }
+
+    .brand{text-align:center}
+    .brand small{
+      display:block;
+      font-size:8px;
+      letter-spacing:.2em;
+      font-weight:800;
+      color:var(--rose-dark);
+    }
+    .brand strong{
+      font:700 25px/1 "Cormorant Garamond",serif;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:34px;
+      padding:clamp(24px,5vw,52px);
+      min-height:330px;
+      background:linear-gradient(145deg,#fff9fb,#f8e0e9);
+      box-shadow:var(--shadow);
+    }
+
+    .hero::before{
+      content:"";
+      position:absolute;
+      width:330px;
+      height:330px;
+      border-radius:50%;
+      right:-120px;
+      top:-130px;
+      background:radial-gradient(circle,rgba(231,127,164,.24),transparent 68%);
+      animation:glow 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow{
+      to{transform:translate(-25px,20px) scale(1.08)}
+    }
+
+    .eyebrow{
+      position:relative;
+      z-index:1;
+      margin:0 0 12px;
+      font-size:9px;
+      letter-spacing:.2em;
+      font-weight:800;
+      color:var(--rose-dark);
+    }
+
+    .hero h1{
+      position:relative;
+      z-index:1;
+      margin:0;
+      max-width:730px;
+      font:700 clamp(48px,9vw,92px)/.84 "Cormorant Garamond",serif;
+      letter-spacing:-.045em;
+    }
+
+    .hero-copy{
+      position:relative;
+      z-index:1;
+      max-width:590px;
+      margin:17px 0 0;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.65;
+    }
+
+    .presence{
+      position:relative;
+      z-index:1;
+      display:flex;
+      align-items:center;
+      gap:11px;
+      margin-top:30px;
+    }
+
+    .dot{
+      width:11px;
+      height:11px;
+      border-radius:50%;
+      background:#a38d96;
+      box-shadow:0 0 0 6px rgba(163,141,150,.12);
+    }
+
+    .dot.live{
+      background:#64b881;
+      box-shadow:0 0 0 6px rgba(100,184,129,.14);
+      animation:pulse 1.8s infinite;
+    }
+
+    @keyframes pulse{
+      50%{box-shadow:0 0 0 12px rgba(100,184,129,0)}
+    }
+
+    .presence strong{font-size:12px}
+    .presence span{
+      display:block;
+      margin-top:2px;
+      color:var(--muted);
+      font-size:10px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:15px;
+      margin-top:15px;
+    }
+
+    .card{
+      border:1px solid var(--line);
+      border-radius:28px;
+      background:rgba(255,255,255,.75);
+      box-shadow:0 14px 44px rgba(78,35,54,.07);
+      padding:23px;
+      backdrop-filter:blur(14px);
+    }
+
+    .label{
+      font-size:8px;
+      letter-spacing:.18em;
+      font-weight:800;
+      color:var(--rose-dark);
+      text-transform:uppercase;
+    }
+
+    .activity-card{
+      min-height:255px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+
+    .activity-icon{
+      margin:16px 0 12px;
+      font-size:40px;
+    }
+
+    .activity-card h2{
+      margin:0;
+      font:700 clamp(34px,5vw,56px)/.96 "Cormorant Garamond",serif;
+    }
+
+    .activity-card p{
+      margin:9px 0 0;
+      color:var(--muted);
+      font-size:12px;
+      line-height:1.55;
+    }
+
+    .pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-top:20px;
+    }
+
+    .pill{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:8px 10px;
+      background:#fffafd;
+      color:#755260;
+      font-size:9px;
+      font-weight:800;
+    }
+
+    .device-list{
+      display:grid;
+      gap:11px;
+      margin-top:13px;
+    }
+
+    .device{
+      border:1px solid var(--line);
+      border-radius:20px;
+      padding:15px;
+      background:#fffafd;
+    }
+
+    .device-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+    }
+
+    .device-name{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      font-size:11px;
+      font-weight:800;
+    }
+
+    .device-state{
+      font-size:8px;
+      font-weight:800;
+      letter-spacing:.09em;
+      color:var(--muted);
+      text-transform:uppercase;
+    }
+
+    .battery{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:9px;
+      align-items:center;
+      margin-top:12px;
+    }
+
+    .track{
+      height:8px;
+      overflow:hidden;
+      border-radius:999px;
+      background:#efdee5;
+    }
+
+    .fill{
+      height:100%;
+      width:0;
+      border-radius:inherit;
+      background:linear-gradient(90deg,#c85e87,#e991b0);
+      transition:width .4s ease;
+    }
+
+    .battery-text{
+      font-size:9px;
+      font-weight:800;
+      color:#765361;
+    }
+
+    .lower{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:15px;
+      margin-top:15px;
+    }
+
+    .lower h3{
+      margin:9px 0 4px;
+      font:700 35px/1 "Cormorant Garamond",serif;
+    }
+
+    .lower p{
+      margin:0;
+      color:var(--muted);
+      font-size:10px;
+      line-height:1.5;
+    }
+
+    .privacy{
+      margin-top:15px;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      padding:17px 19px;
+      border-radius:22px;
+      background:var(--wine);
+      color:#ffe9f1;
+    }
+
+    .privacy b{
+      display:block;
+      margin-bottom:3px;
+      font-size:10px;
+    }
+
+    .privacy p{
+      margin:0;
+      color:#d8bec8;
+      font-size:9px;
+      line-height:1.55;
+    }
+
+    .gate{
+      position:fixed;
+      inset:0;
+      z-index:100;
+      display:grid;
+      place-items:center;
+      padding:20px;
+      background:rgba(21,8,14,.9);
+      backdrop-filter:blur(18px);
+    }
+
+    .gate.hidden{display:none}
+
+    .gate-box{
+      width:min(430px,100%);
+      padding:28px;
+      border-radius:28px;
+      background:#fff8fa;
+      box-shadow:0 30px 100px rgba(0,0,0,.35);
+    }
+
+    .gate-box h2{
+      margin:7px 0 6px;
+      font:700 43px/1 "Cormorant Garamond",serif;
+    }
+
+    .gate-box p{
+      margin:0;
+      color:var(--muted);
+      font-size:11px;
+      line-height:1.55;
+    }
+
+    .gate-row{
+      display:flex;
+      gap:8px;
+      margin-top:17px;
+    }
+
+    .gate-row input{
+      min-width:0;
+      flex:1;
+      border:1px solid var(--line);
+      border-radius:15px;
+      padding:12px;
+      outline:none;
+      background:white;
+      color:var(--ink);
+    }
+
+    .gate-row button{
+      border:0;
+      border-radius:15px;
+      padding:0 17px;
+      background:var(--rose-dark);
+      color:white;
+      font-weight:800;
+    }
+
+    .gate-error{
+      min-height:17px;
+      margin-top:8px;
+      color:#b4475f;
+      font-size:9px;
+    }
+
+    .footer{
+      margin-top:20px;
+      text-align:center;
+      color:#9b7d89;
+      font-size:8px;
+      letter-spacing:.08em;
+    }
+
+    @media(max-width:760px){
+      .shell{width:min(100% - 20px,1060px);padding-top:10px}
+      .brand small{display:none}
+      .hero{
+        min-height:370px;
+        border-radius:27px;
+        padding:28px 21px;
+      }
+      .hero h1{font-size:clamp(55px,17vw,78px)}
+      .grid,.lower{grid-template-columns:1fr}
+      .card{border-radius:24px;padding:20px}
+      .activity-card{min-height:220px}
+      .btn{padding:9px 11px;font-size:9px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="gate" id="gate">
+    <div class="gate-box">
+      <div class="label">PRIVATE · YANNIE LIVE</div>
+      <h2>Live access.</h2>
+      <p>Enter the private code Aniq gave you. The code is checked by the server and is not stored inside this page.</p>
+
+      <div class="gate-row">
+        <input id="code" type="password" placeholder="Access code" autocomplete="off">
+        <button id="enterBtn">Enter</button>
+      </div>
+
+      <div class="gate-error" id="error"></div>
+    </div>
+  </div>
+
+  <main class="shell">
+    <header class="topbar">
+      <a class="btn" href="index.html">← Yannie World</a>
+      <div class="brand">
+        <small>YANNIE WORLD</small>
+        <strong>Aniq Live</strong>
+      </div>
+      <button class="btn" id="refreshBtn">↻ Refresh</button>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">ANIQ, SOMEWHERE RIGHT NOW...</p>
+      <h1 id="heroActivity">Off the radar.</h1>
+      <p class="hero-copy" id="heroCopy">Waiting for the next voluntary update from one of Aniq's devices.</p>
+
+      <div class="presence">
+        <div class="dot" id="dot"></div>
+        <div>
+          <strong id="presenceTitle">No recent update</strong>
+          <span id="presenceSub">—</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card activity-card">
+        <div>
+          <div class="label">RIGHT NOW</div>
+          <div class="activity-icon" id="activityIcon">☾</div>
+          <h2 id="activityName">Nothing shared.</h2>
+          <p id="activityDetail">Activity sharing is paused or waiting for a device update.</p>
+        </div>
+
+        <div class="pills">
+          <span class="pill" id="devicePill">DEVICE · —</span>
+          <span class="pill" id="statusPill">STATUS · —</span>
+          <span class="pill" id="updatedPill">UPDATED · —</span>
+        </div>
+      </article>
+
+      <aside class="card">
+        <div class="label">DEVICES</div>
+
+        <div class="device-list">
+          <div class="device">
+            <div class="device-head">
+              <div class="device-name">💻 Laptop</div>
+              <div class="device-state" id="laptopState">waiting</div>
+            </div>
+            <div class="battery">
+              <div class="track"><div class="fill" id="laptopFill"></div></div>
+              <div class="battery-text" id="laptopBattery">—</div>
+            </div>
+          </div>
+
+          <div class="device">
+            <div class="device-head">
+              <div class="device-name">📱 iPhone</div>
+              <div class="device-state" id="iphoneState">waiting</div>
+            </div>
+            <div class="battery">
+              <div class="track"><div class="fill" id="iphoneFill"></div></div>
+              <div class="battery-text" id="iphoneBattery">—</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="lower">
+      <article class="card">
+        <div class="label">WHEREABOUTS</div>
+        <h3 id="where">Not shared</h3>
+        <p id="whereText">Only a coarse label such as Home, Campus or Out will ever appear here.</p>
+      </article>
+
+      <article class="card">
+        <div class="label">SHARING</div>
+        <h3 id="sharing">Private by default</h3>
+        <p id="sharingText">Activity, battery and whereabouts can be controlled independently from Aniq's devices.</p>
+      </article>
+    </section>
+
+    <div class="privacy">
+      <div>♡</div>
+      <div>
+        <b>Shared intentionally by Aniq.</b>
+        <p>Yannie Live does not show screen contents, messages, browser searches, passwords, exact coordinates, or other people's private information.</p>
+      </div>
+    </div>
+
+    <div class="footer">YANNIE LIVE · PRESENCE, NOT SURVEILLANCE</div>
+  </main>
+
+  <script>
+    const API="/api/live-status";
+    const STALE=120000;
+    const POLL=15000;
+
+    let token=localStorage.getItem("yannieLiveViewToken")||"";
+
+    const $=id=>document.getElementById(id);
+
+    function ago(iso){
+      if(!iso)return "—";
+
+      const diff=Date.now()-new Date(iso).getTime();
+      const s=Math.max(0,Math.floor(diff/1000));
+
+      if(s<10)return "just now";
+      if(s<60)return `${s}s ago`;
+
+      const m=Math.floor(s/60);
+      if(m<60)return `${m}m ago`;
+
+      const h=Math.floor(m/60);
+      if(h<24)return `${h}h ago`;
+
+      return `${Math.floor(h/24)}d ago`;
+    }
+
+    function icon(category=""){
+      const c=category.toLowerCase();
+
+      if(c.includes("game"))return "🎮";
+      if(c.includes("code")||c.includes("study"))return "⌨️";
+      if(c.includes("music"))return "♫";
+      if(c.includes("video")||c.includes("watch"))return "▶";
+      if(c.includes("social"))return "☁";
+      if(c.includes("away"))return "☾";
+      if(c.includes("brows"))return "◌";
+
+      return "♡";
+    }
+
+    function renderDevice(prefix,d){
+      const state=$(prefix+"State");
+      const fill=$(prefix+"Fill");
+      const battery=$(prefix+"Battery");
+
+      if(!d){
+        state.textContent="waiting";
+        fill.style.width="0%";
+        battery.textContent="—";
+        return;
+      }
+
+      const fresh=Date.now()-new Date(d.updated_at).getTime()<STALE;
+
+      if(d.sharing===false)state.textContent="paused";
+      else if(fresh)state.textContent="live";
+      else state.textContent=ago(d.updated_at);
+
+      if(Number.isFinite(Number(d.battery))){
+        const n=Math.max(0,Math.min(100,Number(d.battery)));
+        fill.style.width=n+"%";
+        battery.textContent=`${Math.round(n)}%${d.charging?" · charging":""}`;
+      }else{
+        fill.style.width="0%";
+        battery.textContent=d.charging?"charging":"—";
+      }
+    }
+
+    function render(data){
+      const devices=Array.isArray(data.devices)?data.devices:[];
+      const laptop=devices.find(d=>d.device==="laptop");
+      const iphone=devices.find(d=>d.device==="iphone");
+
+      renderDevice("laptop",laptop);
+      renderDevice("iphone",iphone);
+
+      const active=data.active || [...devices]
+        .filter(d=>d.sharing!==false)
+        .sort((a,b)=>new Date(b.updated_at)-new Date(a.updated_at))[0];
+
+      if(active){
+        const recent=Date.now()-new Date(active.updated_at).getTime()<STALE;
+
+        $("dot").classList.toggle("live",recent);
+        $("presenceTitle").textContent=recent?"Active recently":"Last seen";
+        $("presenceSub").textContent=ago(active.updated_at);
+
+        const name=active.activity || (recent?"Around":"Off the radar.");
+        const category=active.category || "presence";
+
+        $("heroActivity").textContent=name;
+        $("heroCopy").textContent=recent
+          ?"A small live window into what Aniq chose to share — never his actual screen."
+          :`Last voluntary update was ${ago(active.updated_at)}.`;
+
+        $("activityIcon").textContent=icon(category);
+        $("activityName").textContent=name;
+        $("activityDetail").textContent=active.detail || "Shared from Aniq's device.";
+
+        $("devicePill").textContent=`DEVICE · ${active.device==="iphone"?"IPHONE":"LAPTOP"}`;
+        $("statusPill").textContent=`STATUS · ${String(category).toUpperCase()}`;
+        $("updatedPill").textContent=`UPDATED · ${ago(active.updated_at).toUpperCase()}`;
+      }else{
+        $("dot").classList.remove("live");
+        $("presenceTitle").textContent="No recent update";
+        $("presenceSub").textContent="—";
+        $("heroActivity").textContent="Off the radar.";
+        $("heroCopy").textContent="Waiting for the next voluntary update from one of Aniq's devices.";
+        $("activityIcon").textContent="☾";
+        $("activityName").textContent="Nothing shared.";
+        $("activityDetail").textContent="Activity sharing is paused or waiting for a device update.";
+        $("devicePill").textContent="DEVICE · —";
+        $("statusPill").textContent="STATUS · —";
+        $("updatedPill").textContent="UPDATED · —";
+      }
+
+      const newestLocation=[iphone,laptop]
+        .filter(Boolean)
+        .sort((a,b)=>new Date(b.updated_at)-new Date(a.updated_at))
+        .find(d=>d.location_label);
+
+      if(newestLocation){
+        $("where").textContent=newestLocation.location_label;
+        $("whereText").textContent=`Coarse place label only · updated ${ago(newestLocation.updated_at)}.`;
+      }else{
+        $("where").textContent="Not shared";
+        $("whereText").textContent="Aniq has not shared a current place label.";
+      }
+
+      const activeShares=devices.filter(d=>d.sharing!==false);
+
+      $("sharing").textContent=activeShares.length?"Sharing is on":"Sharing paused";
+      $("sharingText").textContent=activeShares.length
+        ?"Only the fields Aniq enabled are visible here."
+        :"No device is currently sharing live information.";
+    }
+
+    function showGate(message=""){
+      $("gate").classList.remove("hidden");
+      $("error").textContent=message;
+    }
+
+    function hideGate(){
+      $("gate").classList.add("hidden");
+      $("error").textContent="";
+    }
+
+    async function load(showError=false){
+      if(!token){
+        showGate();
+        return;
+      }
+
+      try{
+        const res=await fetch(API,{
+          headers:{"x-view-token":token},
+          cache:"no-store"
+        });
+
+        if(res.status===401){
+          token="";
+          localStorage.removeItem("yannieLiveViewToken");
+          showGate("That access code didn't work.");
+          return;
+        }
+
+        if(!res.ok)throw new Error(`HTTP ${res.status}`);
+
+        const data=await res.json();
+
+        hideGate();
+        render(data);
+      }catch(err){
+        console.error(err);
+
+        if(showError){
+          $("presenceTitle").textContent="Couldn't update";
+          $("presenceSub").textContent="Try again in a moment";
+        }
+      }
+    }
+
+    async function enter(){
+      const value=$("code").value.trim();
+
+      if(!value){
+        $("error").textContent="Enter the private code first.";
+        return;
+      }
+
+      token=value;
+      localStorage.setItem("yannieLiveViewToken",token);
+      await load(true);
+    }
+
+    $("enterBtn").addEventListener("click",enter);
+    $("code").addEventListener("keydown",e=>{
+      if(e.key==="Enter")enter();
+    });
+
+    $("refreshBtn").addEventListener("click",()=>load(true));
+
+    if(token)load();
+    else showGate();
+
+    setInterval(()=>load(false),POLL);
+  </script>
+</body>
+</html>
