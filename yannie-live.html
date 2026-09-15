@@ -269,6 +269,14 @@
       text-transform:uppercase;
     }
 
+    .device-activity{
+      margin-top:9px;
+      color:var(--ink);
+      font-size:11px;
+      font-weight:700;
+      line-height:1.35;
+    }
+
     .battery{
       display:grid;
       grid-template-columns:1fr auto;
@@ -497,6 +505,7 @@
               <div class="device-name">💻 Laptop</div>
               <div class="device-state" id="laptopState">waiting</div>
             </div>
+            <div class="device-activity" id="laptopActivity">No activity yet</div>
             <div class="battery">
               <div class="track"><div class="fill" id="laptopFill"></div></div>
               <div class="battery-text" id="laptopBattery">—</div>
@@ -508,6 +517,7 @@
               <div class="device-name">📱 iPhone</div>
               <div class="device-state" id="iphoneState">waiting</div>
             </div>
+            <div class="device-activity" id="iphoneActivity">No activity yet</div>
             <div class="battery">
               <div class="track"><div class="fill" id="iphoneFill"></div></div>
               <div class="battery-text" id="iphoneBattery">—</div>
@@ -587,11 +597,13 @@
       const state=$(prefix+"State");
       const fill=$(prefix+"Fill");
       const battery=$(prefix+"Battery");
+      const activity=$(prefix+"Activity");
 
       if(!d){
         state.textContent="waiting";
         fill.style.width="0%";
         battery.textContent="—";
+        if(activity) activity.textContent="No activity yet";
         return;
       }
 
@@ -600,6 +612,12 @@
       if(d.sharing===false)state.textContent="paused";
       else if(fresh)state.textContent="live";
       else state.textContent=ago(d.updated_at);
+
+      if(activity){
+        activity.textContent=d.sharing===false
+          ? "Sharing paused"
+          : (d.activity || "Activity not shared");
+      }
 
       if(Number.isFinite(Number(d.battery))){
         const n=Math.max(0,Math.min(100,Number(d.battery)));
@@ -619,11 +637,41 @@
       renderDevice("laptop",laptop);
       renderDevice("iphone",iphone);
 
+      const laptopFresh = laptop && laptop.sharing!==false &&
+        Date.now()-new Date(laptop.updated_at).getTime()<STALE;
+      const iphoneFresh = iphone && iphone.sharing!==false &&
+        Date.now()-new Date(iphone.updated_at).getTime()<STALE;
+
       const active=data.active || [...devices]
         .filter(d=>d.sharing!==false)
         .sort((a,b)=>new Date(b.updated_at)-new Date(a.updated_at))[0];
 
-      if(active){
+      if(laptopFresh && iphoneFresh){
+        $("dot").classList.add("live");
+        $("presenceTitle").textContent="Both devices are live";
+        $("presenceSub").textContent=`Laptop ${ago(laptop.updated_at)} · iPhone ${ago(iphone.updated_at)}`;
+
+        const iphoneIsMusic=(iphone.category||"").toLowerCase().includes("music");
+        const primary=iphoneIsMusic ? iphone : active;
+        const other=primary.device==="iphone" ? laptop : iphone;
+
+        $("heroActivity").textContent=primary.activity || "Two devices live.";
+        $("heroCopy").textContent=iphoneIsMusic
+          ? `${iphone.activity || "Music on iPhone"} · Laptop: ${laptop.activity || "active"}`
+          : `Laptop: ${laptop.activity || "active"} · iPhone: ${iphone.activity || "active"}`;
+
+        $("activityIcon").textContent=icon(primary.category || "presence");
+        $("activityName").textContent=iphoneIsMusic
+          ? (iphone.activity || "Listening on iPhone")
+          : "Two devices live.";
+        $("activityDetail").textContent=iphoneIsMusic
+          ? `Meanwhile on laptop: ${laptop.activity || "active"}.`
+          : `Laptop: ${laptop.activity || "active"} · iPhone: ${iphone.activity || "active"}`;
+
+        $("devicePill").textContent="DEVICES · LAPTOP + IPHONE";
+        $("statusPill").textContent="STATUS · BOTH LIVE";
+        $("updatedPill").textContent="UPDATED · JUST NOW";
+      }else if(active){
         const recent=Date.now()-new Date(active.updated_at).getTime()<STALE;
 
         $("dot").classList.toggle("live",recent);
